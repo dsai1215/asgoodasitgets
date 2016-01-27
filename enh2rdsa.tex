@@ -1,0 +1,314 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+
+\usepackage{macros}
+
+\begin{filecontents*}{reference.bib}
+@IEEEtranBSTCTL{IEEEexample:BSTcontrol,
+CTLdash_repeated_names= "no",
+}
+
+@article{prashanth2015rdsa,
+  title={{Adaptive system optimization using random directions stochastic approximation}},
+  author={Prashanth, L.A. and Shalabh Bhatnagar and  Michael Fu and Steve Marcus},
+  journal={arXiv preprint arXiv:1307.3176v2},
+  year={2014}
+}
+
+@article{spall_adaptive,
+author = {J. C. Spall},
+title = {{Adaptive stochastic approximation by the simultaneous perturbation method}},
+journal = {IEEE Trans. Autom. Contr.},
+volume =  {45},
+year = {2000},
+pages = {1839--1853}
+}
+
+
+\end{filecontents*}
+
+
+\title{\LARGE \bf
+Enhanced Adaptive Random direction Stochastic approximation
+}
+
+
+
+\author{D. Sai Koti Reddy$^\dagger$, Prashanth L A$^\sharp$, Shalabh Bhatnagar$^\ddag$
+\thanks{
+$^\dagger$ Department of Computer Science and Automation,
+Indian Institute of Science, Bangalore,
+E-Mail: danda.reddy@csa.iisc.ernet.in}
+\thanks{
+$^\sharp$ Institute for Systems Research, University of Maryland, College Park, Maryland,
+E-Mail: prashanth@isr.umd.edu.
+}
+\thanks{
+$^\ddag$ Department of Computer Science and Automation,
+Indian Institute of Science, Bangalore,
+E-Mail: shalabh@csa.iisc.ernet.in
+}
+}
+
+
+
+\begin{document}
+
+
+\nocite{*}
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+
+
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{INTRODUCTION}
+\section{Gradient estimate}\label{sec:grad}
+The gradient estimate in this paper is same as that of in \cite{prashanth2015rdsa}.
+\subsection*{\textbf{Uniform perturbations}}
+Choose $d_n^i$, $ i=1,\ldots,N$ to be i.i.d. $U[-\eta,\eta]$ for some $\eta>0$, where $U[-\eta,\eta]$ denotes the uniform distribution on the interval $[-\eta,\eta]$.
+The RDSA estimate of the gradient is given by
+\begin{align}
+\label{eq:grad-unif}
+\widehat\nabla f(x_n) = \frac3{\eta^2} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
+\end{align}
+
+\subsection*{\textbf{Asymmetric Bernoulli perturbations}}
+Choose $d_n^i$, $i=1,\ldots,N$, i.i.d. as follows: 
+\begin{equation}
+\label{eq:det-proj}
+ d_n^i =
+  \begin{cases}
+   -1 &  \text{ w.p. } \dfrac{(1+\epsilon)}{(2+\epsilon)}, \\
+   1+\epsilon &  \text{ w.p. } \dfrac{1}{(2+\epsilon)},
+  \end{cases}
+\end{equation}
+where $\epsilon>0$ is a constant that can be chosen to be arbitrarily small.
+Note that $E d_n^i = 0$, $E (d_n^i)^2 = 1+\epsilon$ and $E (d_n^i)^4 = \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$.
+Then, the RDSA estimate of the gradient is given by
+\begin{align}
+\label{eq:grad-ber}
+\widehat\nabla f(x_n) = \frac1{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
+\end{align}
+
+
+
+\section{enhanced second-order rdsa} \label{sec:e2rdsa}
+The iterative scheme for the proposed second-ordered adaptive search algorithms is of the following form :
+\begin{align}
+\label{eq:e2rdsa}
+x_{n+1} = x_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(x_n), \\
+\overline H_n = (1-w_{n})  \overline H_{n-1} + w_{n} ( \widehat H_n - \hat{ \Psi }_{n}).\label{eq:2rdsa-H}
+\end{align}
+In the above, 
+\begin{itemize}
+ \item $\widehat\nabla f(x_n)$ is the estimate of $\nabla f(x_n)$ and this corresponds to  the uniform  and   asymmetric Bernoulli variant gradient estimates proposed in \cite{prashanth2015rdsa}.
+ \item $\widehat H_n$ is an estimate of the true Hessian ${\nabla}^2 f(\cdot)$, with $\widehat H_0 = I$. 
+ \item $\overline H_n$ is a smoothed version of $\widehat H_n$, which is crucial to ensure convergence. 
+ \item $\Upsilon$ is an operator that projects a matrix onto the set of positive definite matrices. Update \eqref{eq:2rdsa-H} does not necessarily ensure that $\overline H_n$ is invertible and without $\Upsilon$, the parameter update \eqref{eq:e2rdsa} may not move along a descent direction - see conditions (C7) and (C12) in Section \ref{sec:2rdsa-results} below for the precise requirements on the matrix projection operator.
+ \item $\hat{\Psi}_{n}$ term is feedback term, which will be discussed later.
+ \item $w_{n}$ are weights, which will be presented later.
+\end{itemize}
+
+
+\subsection{Hessian estimate}
+
+\subsubsection*{\textbf{Uniform perturbations}}
+
+\begin{align}
+\label{eq:2rdsa-estimate-unif}
+&\widehat H_n = \dfrac{9}{2\eta^4} M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where } \\
+& M_n =
+\left[
+\begin{array}{cccc}
+\frac{5}{2}\left((d_n^1)^2-\frac{\eta^2}{3}\right) & \cdots & d_n^1 d_n^N\\
+d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
+d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
+\end{array}
+\right].\nonumber
+\end{align}
+%Henceforth, we shall refer to algorithm \eqref{eq:2rdsa}--\eqref{eq:2rdsa-H} with Hessian estimate \eqref{eq:2rdsa-estimate} as 2RDSA.
+
+\subsubsection*{\textbf{Asymmetric Bernoulli perturbations}}
+
+\begin{align}
+\label{eq:2rdsa-estimate-ber}
+&\widehat H_n = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where }\\
+& M_n =
+\left[
+\begin{array}{cccc}
+\frac{1}{\kappa}\left((d_n^1)^2-(1+\epsilon)\right) & \cdots & \frac{1}{2(1+\epsilon)^2}d_n^1 d_n^N\\
+\frac{1}{2(1+\epsilon)^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2(1+\epsilon)^2}d_n^2 d_n^N\\
+\frac{1}{2(1+\epsilon)^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
+\end{array}
+\right],\nonumber
+\end{align}
+where $\kappa = E (d_n^i)^4 \left(1- \dfrac{(1+\epsilon)^2}{E (d_n^i)^4 }\right)$, with $E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, $i=1,\ldots,N$.
+
+\subsection{Main results}
+\label{sec:2rdsa-results}
+ $\mathcal{F}_n = \sigma(x_m,m\le n)$ denotes the underlying sigma-field. 
+We make the following assumptions that are similar to those in \cite{spall_adaptive}:
+\begin{enumerate}[label=(\textbf{C\arabic*})]
+\item  The function
+$f$ is four-times differentiable\footnote{Here $\nabla^4 f(x) = \dfrac{\partial^4 f (x)}{\partial x\tr \partial x\tr \partial x\tr \partial x\tr}$ denotes the fourth derivate of $f$ at $x$ and $\nabla^4_{i_1 i_2 i_3 i_4} f(x)$ denotes the $(i_1 i_2 i_3 i_4)$th entry of $\nabla^4 f(x)$, for $i_1, i_2, i_3,i_4=1,\ldots, N$.} with $\left|\nabla^4_{i_1 i_2 i_3 i_4} f(x) \right| < \infty$, for $i_1, i_2, i_3,i_4=1,\ldots, N$ and for all $x\in \R^N$. 
+
+%\item  For some $\rho>0$  and almost all $x_n$, the function $f$ is four-times differentiable with a uniformly (in $n$) bounded fourth derivative for all $x$ such that $\left\| x_n - x\right\| \le \rho$. 
+
+\item For each $n$ and all $x$, there exists a $\rho>0$ not dependent on $n$ and $x$, such that $(x-x^*)\tr \bar f_n(x) \ge \rho \left\| x_n - x\right\|$, where $\bar f_n(x) = \Upsilon(\overline H_n)^{-1} \nabla f(x)$.
+
+\item $\{\xi_n, \xi_n^+,\xi_n^-, n=1,2,\ldots\}$ satisfy $\E\left[\left. \xi_n^+ + \xi_n^- - 2 \xi_n \right| \F_n\right] = 0$, for all $n$. 
+
+\item  Same as (A4). %$\{d_n^i, i=1,\ldots,N, n=1,2,\ldots\}$ are i.i.d. and independent of $\F_n$.
+
+\item Same as (A5).
+
+\item For each $i=1,\ldots,N$ and any $\rho>0$, 
+$P(\{ \bar f_{ni} (x_n) \ge 0 \text{ i.o}\} \cap \{ \bar f_{ni} (x_n) < 0 \text{ i.o}\} \mid \{ |x_{ni} - x^*_i| \ge \rho\quad \forall n\}) =0.$
+
+\item The operator $\Upsilon$ satisfies $\delta_n^2 \Upsilon(H_n)^{-1} \rightarrow 0$ a.s. and  $E(\left\| \Upsilon(H_n)^{-1}\right\|^{2+\zeta}) \le \rho$ for some $\zeta, \rho>0$.
+
+\item For any $\tau >0$ and nonempty $S \subseteq \{1,\ldots,N\}$, there exists a $\rho'(\tau,S)>\tau$ such that 
+$$ \limsup_{n\rightarrow \infty} \left| \dfrac{\sum_{i \notin S} (x-x^*)_i \bar f_{ni}(x)}{\sum_{i \in S} (x-x^*)_i \bar f_{ni}(x)}               \right| < 1 \text{ a.s.}$$
+for all $|(x-x^*)_i| < \tau$ when $i \notin S$ and $|(x-x^*)_i| \ge \rho'(\tau,S)$ when $i\in S$.
+\item For some $\alpha_0, \alpha_1>0$ and for all $n$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$ and $\E f(x_n\pm \delta_n d_n)^{2} \le \alpha_1$. 
+\item  $\sum_n \frac{1}{(n+1)^{2}\delta_n^{2}} < \infty$.
+\end{enumerate}
+\begin{lemma}(\textbf{Bias in Hessian estimate})
+\label{lemma:2rdsa-bias}
+Under (C1)-(C10), with $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-unif} or \eqref{eq:2rdsa-estimate-ber}, we have a.s. that\footnote{Here $\widehat H_n(i,j)$ and $\nabla^2_{ij}f(\cdot)$ denote the $(i,j)$th entry in the Hessian estimate $\widehat H_n$ and the true Hessian $\nabla^2 f(\cdot)$, respectively.}, for $i,j = 1,\ldots,N$,
+\begin{align}
+\left|\E\left[
+\left. \widehat H_n(i,j) \right| \F_n \right] - \nabla^2_{ij} f(x_n)\right| = O(\delta_n^2).
+\end{align} 
+\end{lemma}
+\begin{proof}
+Proof was given in \cite{prashanth2015rdsa}.
+\end{proof}
+\subsubsection{Finding feedback term}
+Now consider the following 
+\begin{align}
+\E[\widehat H_n \mid \F_n] = &  \E\left[\left. M_n \left(\sum\limits_{i=1}^{N-1} (d_n^i)^2 \nabla^2_{ii} f(x_n) \right.\right.\right.\nonumber\\
+&\left.\left.\left.+ 2\sum\limits_{i=1}^N\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n) + O(\delta_n^2)\right)\right| \F_n\right]. \label{eq:h1}
+\end{align}
+
+In analyzing the $lth$ diagonal term of above expression, the following term
+
+\begin{align}
+& \E\left[\left.\dfrac{45}{4\eta^4} \left((d_n^l)^2-\frac{\eta^2}{3}\right) \left(2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\right)\right| \F_{n}\right]\nonumber \\ &= 0 \nonumber.\label{eq:h2}
+\end{align}
+The matrix form for the above term is as follows 
+\begin{align}
+\Psi_{n}^{1}(\nabla^2 f(x_n)) = [M_n]_{D}\left(d_{n}\tr \, [\nabla^2 f(x_n)]_{N} \, d_{n}\right).
+\end{align}
+where for a matrix $[.]_{D}$ refers to keeping all its diagonal elements intact and making all its remaining elements zero. vice versa for $[.]_{N}$.\\
+
+In analyzing the off-diagonal term($(k,l)$ where $k < l$) of the expression \eqref{eq:h1}, the following term
+\begin{align}
+& \dfrac{9}{2\eta^4} \E\left[\left.d_n^k d_n^l   \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n)\right)\right| \F_n \right] = 0\nonumber\\
+\end{align}
+The matrix notation for the above expression is as follows
+\begin{align}
+\Psi_{n}^{2}(\nabla^2 f(x_n)) = [M_n]_{N}\left(d_{n}\tr \, [\nabla^2 f(x_n)]_{D} \, d_{n}\right).
+\end{align}
+Now consider the following
+\begin{align}
+\Psi_{n}(H) &= \Psi_{n}^{1}(H) + \Psi_{n}^{2}(H)\nonumber\\
+&= [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right) +  [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right).
+\end{align}
+The feedback term presented in \eqref{eq:e2rdsa} is of the following form
+\begin{align}
+\hat{\Psi}_{n} = \Psi_{n} (\overline H_{n-1}).
+\end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{CONCLUSIONS}
+
+
+\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
+                                  % on the last page of the document manually. It shortens
+                                  % the textheight of the last page by a suitable amount.
+                                  % This command does not take effect until the next page
+                                  % so it should come on the page before the last. Make
+                                  % sure that you do not shorten the textheight too much.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{APPENDIX}
+
+
+
+\section*{ACKNOWLEDGMENT}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\bstctlcite{IEEEexample:BSTcontrol}
+\bibliographystyle{IEEEtran}
+\bibliography{reference}
+
+
+
+\end{document}

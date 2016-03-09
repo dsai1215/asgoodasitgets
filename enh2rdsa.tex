@@ -151,13 +151,13 @@ The Hessian estimate $\widehat H_n$ can be simplified as follows:
 \begin{align}
 \widehat H_n & = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right) \nonumber \\
 & =  M_n \left[\left(\dfrac{f(x_n+\delta_n d_n) + f(x_n-\delta_n d_n) - 2 f(x_n)}{\delta_n^2}\right) \right.\nonumber \\&\hspace{10em}+\left. \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2}\right)\right] \nonumber \\
-& = M_n \left(d_n\tr \nabla^2 f(x_n) d_n +  O(\delta_n^2) + \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right)\nonumber \\
-& = M_n \left(d_n\tr \nabla^2 f(x_n) d_n +  O(\delta_n^2) + O(\delta_n^{-2})\right). \label{eq:h0}
+& = M_n \left(d_n\tr \nabla^2 f(x_n) d_n +  O(\delta_n^2) + \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right)\label{eq:h0}
+%& = M_n \left(d_n\tr \nabla^2 f(x_n) d_n +  O(\delta_n^2) + O(\delta_n^{-2})\right). \label{eq:h0}
 \end{align}
-From the above equation and using the fact that $\E\left[\left.\xi_n^+ + \xi_n^- - 2\xi_n \right| \F_n\right] = 0$, we obtain
+Analyzing the first term on the RHS above, we obtain
 \begin{align}
-&\E[\widehat H_n \mid \F_n] =   \E\left[\left. M_n \left(\sum\limits_{i=1}^{N-1} (d_n^i)^2 \nabla^2_{ii} f(x_n) \right.\right.\right.\nonumber\\
-&\qquad\left.\left.\left.+ 2\sum\limits_{i=1}^N\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n) + O(\delta_n^2)\right)\right| \F_n\right]. \label{eq:h1}
+&\E[M_n \left(d_n\tr \nabla^2 f(x_n) d_n\right) \mid \F_n] =   \E\left[\left. M_n \times\right.\right.\nonumber\\
+&\left.\left.\left(\sum\limits_{i=1}^{N-1} (d_n^i)^2 \nabla^2_{ii} f(x_n) + 2\sum\limits_{i=1}^N\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n) \right)\right| \F_n\right]. \label{eq:h1}
 \end{align}
 In analyzing the $l$th diagonal term of above expression, the following zero-mean term appears (see the proof of Lemma 4 in \cite{prashanth2015rdsa}):
 \begin{align*}
@@ -171,19 +171,26 @@ where for a matrix $[.]_{D}$ refers to keeping all its diagonal elements intact 
 
 In analyzing the off-diagonal term($(k,l)$ where $k < l$) of \eqref{eq:h1}, the following zero-mean term appears:
 \begin{align}
-& \dfrac{9}{2\eta^4} \E\left[\left.d_n^k d_n^l   \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n)\right)\right| \F_n \right] = 0
+& \dfrac{9}{2\eta^4} \E\left[\left.d_n^k d_n^l   \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n)\right)\right| \F_n \right] = 0. 
 \end{align}
 The term on the LHS above, denoted by $\Psi_{n}^{2}(\nabla^2 f(x_n))$, can be written in matrix form as follows: 
 \begin{align}\label{eq:ndmat}
 \Psi_{n}^{2}(\nabla^2 f(x_n)) = [M_n]_{N}\left(d_{n}\tr \, [\nabla^2 f(x_n)]_{D} \, d_{n}\right).
 \end{align}
 From the foregoing, the per-iteration Hessian estimate $\widehat H_n$ can be re-written as follows:
-$$ \widehat H_n = \nabla^2 f(x_n) + \Psi_{n}(\nabla^2 f(x_n)) + +  O(\delta_n^2) + O(\delta_n^{-2}),$$
+\begin{align}
+ \E\left[\left.\widehat H_n\right| \F_n\right] = & \nabla^2 f(x_n) + \E\left[\left.\Psi_{n}(\nabla^2 f(x_n))\right| \F_n\right]  +  O(\delta_n^2)\nonumber\\
+&+\E\left[\left.\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right| \F_n\right], \label{eq:hnhat}
+\end{align}
 where, for any matrix $H$, 
 \begin{align}
 &\Psi_{n}(H) = \Psi_{n}^{1}(H) + \Psi_{n}^{2}(H)\nonumber\\
 &\qquad= [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right) +  [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right).
 \end{align}
+In the RHS of \eqref{eq:hnhat}, it is easy to see that that the second term involving $\Psi_{n}$ and the last term involving the noise are zero-mean. Moreover, since the noise is bounded by assumption, the last term in \eqref{eq:hnhat} vanishes asymptotically at the rate $O(\delta_n^{-2})$. So, the error in estimating the Hessian is due to the second term, which involves the perturbations $d_n$. This motivates the term $\widehat \Psi_n$ in the update rule \eqref{eq:e2rdsa}. 
+ %and using the fact that $\E\left[\left.\xi_n^+ + \xi_n^- - 2\xi_n \right| \F_n\right] = 0$
+
+
 Given that we operate in a simulation optimization setting, which implies $\nabla^2 f$ is not known, we construct the feedback term $\widehat \Psi_n$ in \eqref{eq:e2rdsa} by using $\overline H_{n-1}$ as a proxy for $\nabla^2 f$, i.e.,
 \begin{align}
 \widehat \Psi_n = \Psi_{n} (\overline H_{n-1}).
@@ -276,16 +283,53 @@ See Lemma 4 in \cite{prashanth2015rdsa}.
 
 \section{SIMULATION EXPERIMENTS}
 \label{sec:expts}
+\subsection{Implementation}
 We compare the performance of 2RDSA-IH, 2RDSA and 2SPSA, using the following loss function in $N=10$ dimensions:
 \begin{align} 
 f(x) = x\tr A\tr A x + 0.1 \sum_{j=1}^N (Ax)^3_j + 0.01 \sum_{j=1}^N (Ax)^4_j,\label{eq:4thorder}
  \end{align} 
 where $A$ is such that $NA$ is an upper triangular matrix with each entry one, $b$ is the $N$-dimensional vector of ones. The noise structure is similar to that used in \cite{spall_adaptive}. For any $x$, the noise is $[x\tr, 1]z$, where $z \approx \N(0,\sigma^2 I_{11\times11})$. We set $\sigma=0.1$ in our experiments. The optimum $x^*$ for $f$ is $x^*=0$, with $f(x^*) = 0$. 
 
-For all algorithms, we set $\delta_n = 3.8/n^{0.101}$ and $a_n = 1/n^{0.6}$. These choices have been used  for 2SPSA implementations before (see \cite{spall_adaptive}) and have demonstrated good finite-sample performance empirically, while satisfying the theoretical requirements needed for asymptotic convergence. 2SPSA algorithm uses Bernoulli $\pm 1$-valued perturbations, while 2RDSA/2RDSA-IH come in two variants - one that uses $U[-1,1]$ distributed perturbations and the other that uses asymmetric Bernoulli perturbations. For all the algorithms, the initial point $x_0$ is the $N$-dimensional vector of ones.  For both 2SPSA and 2RDSA/2RDSA-IH, an initial $20\%$ of the the simulation budget was used up by 1SPSA/1RDSA and the resulting iterate was used to initialize 2SPSA/2RDSA. The distribution parameter $\epsilon$ is set to $0.0001$ for 2RDSA and to $0.01$ for 1RDSA. 
+For all algorithms, we set $\delta_n = 3.8/n^{0.101}$ and $a_n = 1/n^{0.6}$. These choices have been used  for 2SPSA implementations before (see \cite{spall_adaptive}) and have demonstrated good finite-sample performance empirically, while satisfying the theoretical requirements needed for asymptotic convergence. 2SPSA algorithm uses Bernoulli $\pm 1$-valued perturbations, while 2RDSA/2RDSA-IH come in two variants - one that uses $U[-1,1]$ distributed perturbations (referred to as 2RDSA-Unif/2RDSA-IH-Unif) and the other that uses asymmetric Bernoulli perturbations (referred to as 2RDSA-AsymBer/2RDSA-IH-AsymBer). For all the algorithms, the initial point $x_0$ is the $N$-dimensional vector of ones.  For both 2SPSA and 2RDSA/2RDSA-IH, an initial $20\%$ of the the simulation budget was used up by 1SPSA/1RDSA and the resulting iterate was used to initialize 2SPSA/2RDSA. The distribution parameter $\epsilon$ is set to $0.0001$ for 2RDSA and to $0.01$ for 1RDSA. 
 
+\subsection{Results}
+We use normalized loss and normalized MSE (NMSE) as performance metrics for evaluating the algorithms. 
+NMSE is the ratio $\l x_{n_\text{end}} - x^* \r^2 / \l x_0 - x^*\r^2$, while normalized loss is the ratio $f(x_{n_\text{end}})/f(x_0)$.  Here $n_\text{end}$ denotes the iteration number when the algorithm stopped updating its parameter. Note that $n_\text{end}$ is a function of the simulation budget. 2RDSA/2RDSA-IH use only three simulations per-iteration and hence, $n_\text{end}$ is $1/3$rd of the simulation budget, while it is $1/4$th of the simulation budget for 2SPSA, since the latter algorithm uses four simulations per-iteration. 
 
+\textit{\textbf{Observation 1:} Among 2RDSA schemes, 2RDSA-IH performs better than regular 2RDSA, for both perturbation choices.}
 
+\textit{\textbf{Observation 2:} 2RDSA-IH outperforms both 2SPSA and 2SPSA-IH.}
+
+\begin{table*}
+\centering
+ \caption{Normalized loss values for fourth-order objective \eqref{eq:4thorder} with and without noise:\\ standard error from $500$ replications shown after $\pm$}
+\label{tab:mse-4thf}
+\begin{tabular}{|c|c|c|c|}
+\toprule
+\rowcolor{gray!20}
+\multicolumn{4}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0.1$}}}\\[1.7em]
+%&&&\\
+\midrule
+ \textbf{With/without improved} & \multirow{2}{*}{\textbf{2SPSA}} & \multirow{2}{*}{\textbf{2RDSA-Unif}} & \multirow{2}{*}{\textbf{2RDSA-AsymBer}} \\
+ \textbf{ Hessian (IH) estimation} & & & \\
+ \midrule
+ no IH & $0.0132 \pm 0.0267$ & $0.0115 \pm 0.0214$ & $0.0471 \pm 0.021$ \\
+&&&\\
+ IH & $0.0104 \pm 0.0355$ & $0.0271 \pm 0.0538$ & $\bm{0.0099 \pm 0.0014}$\\
+ \bottomrule
+ %%%%%%%%%%%%2nd ordr
+\rowcolor{gray!20}
+\multicolumn{4}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0$}}}\\[1.7em]
+\midrule
+ \textbf{With/without improved} & \multirow{2}{*}{\textbf{2SPSA}} & \multirow{2}{*}{\textbf{2RDSA-Unif}} & \multirow{2}{*}{\textbf{2RDSA-AsymBer}} \\
+ \textbf{ Hessian (IH) estimation} & & & \\
+ \midrule
+ no IH & $0.0795 \pm 0.0234$ & $0.0813 \pm 0.0275$ & $0.0199 \pm 0.0114$ \\
+&&&\\
+ IH & $0.0628 \pm 0.0234$ & $0.0214 \pm 0.00376$ & $\bm{0.0098 \pm 0.00147}$\\
+ \bottomrule
+\end{tabular}
+\end{table*}
 
 
 

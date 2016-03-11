@@ -348,54 +348,8 @@ The feedback term that we propose can be easily extended to the case of uniform 
 
 \subsection{Main results}
 \label{sec:2rdsa-results}
- $\mathcal{F}_n = \sigma(x_m,m\le n)$ denotes the underlying sigma-field. 
-We make the following assumptions that are similar to those in \cite{spall_adaptive}:
-\begin{enumerate}[label=(\textbf{C\arabic*})]
-\item  The function
-$f$ is four-times differentiable\footnote{Here $\nabla^4 f(x) = \dfrac{\partial^4 f (x)}{\partial x\tr \partial x\tr \partial x\tr \partial x\tr}$ denotes the fourth derivate of $f$ at $x$ and $\nabla^4_{i_1 i_2 i_3 i_4} f(x)$ denotes the $(i_1 i_2 i_3 i_4)$th entry of $\nabla^4 f(x)$, for $i_1, i_2, i_3,i_4=1,\ldots, N$.} with $\left|\nabla^4_{i_1 i_2 i_3 i_4} f(x) \right| < \infty$, for $i_1, i_2, i_3,i_4=1,\ldots, N$ and for all $x\in \R^N$. 
 
-%\item  For some $\rho>0$  and almost all $x_n$, the function $f$ is four-times differentiable with a uniformly (in $n$) bounded fourth derivative for all $x$ such that $\left\| x_n - x\right\| \le \rho$. 
-
-\item For each $n$ and all $x$, there exists a $\rho>0$ not dependent on $n$ and $x$, such that $(x-x^*)\tr \bar f_n(x) \ge \rho \left\| x_n - x\right\|$, where $\bar f_n(x) = \Upsilon(\overline H_n)^{-1} \nabla f(x)$.
-
-\item $\{\xi_n, \xi_n^+,\xi_n^-, n=1,2,\ldots\}$ satisfy $\E\left[\left. \xi_n^+ + \xi_n^- - 2 \xi_n \right| \F_n\right] = 0$, for all $n$. 
-
-\item  Same as (A4). %$\{d_n^i, i=1,\ldots,N, n=1,2,\ldots\}$ are i.i.d. and independent of $\F_n$.
-
-\item Same as (A5).
-
-\item For each $i=1,\ldots,N$ and any $\rho>0$, 
-$P(\{ \bar f_{ni} (x_n) \ge 0 \text{ i.o}\} \cap \{ \bar f_{ni} (x_n) < 0 \text{ i.o}\} \mid \{ |x_{ni} - x^*_i| \ge \rho\quad \forall n\}) =0.$
-
-\item The operator $\Upsilon$ satisfies $\delta_n^2 \Upsilon(H_n)^{-1} \rightarrow 0$ a.s. and  $E(\left\| \Upsilon(H_n)^{-1}\right\|^{2+\zeta}) \le \rho$ for some $\zeta, \rho>0$.
-
-\item For any $\tau >0$ and nonempty $S \subseteq \{1,\ldots,N\}$, there exists a $\rho'(\tau,S)>\tau$ such that 
-$$ \limsup_{n\rightarrow \infty} \left| \dfrac{\sum_{i \notin S} (x-x^*)_i \bar f_{ni}(x)}{\sum_{i \in S} (x-x^*)_i \bar f_{ni}(x)}               \right| < 1 \text{ a.s.}$$
-for all $|(x-x^*)_i| < \tau$ when $i \notin S$ and $|(x-x^*)_i| \ge \rho'(\tau,S)$ when $i\in S$.
-\item For some $\alpha_0, \alpha_1>0$ and for all $n$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$ and $\E f(x_n\pm \delta_n d_n)^{2} \le \alpha_1$. 
-\item  $\sum_n \frac{1}{(n+1)^{2}\delta_n^{2}} < \infty$.
-\end{enumerate}
-\begin{lemma}(\textbf{Bias in Hessian estimate})
-\label{lemma:2rdsa-bias}
-Under (C1)-(C10), with $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-unif} or \eqref{eq:2rdsa-estimate-ber}, we have a.s. that\footnote{Here $\widehat H_n(i,j)$ and $\nabla^2_{ij}f(\cdot)$ denote the $(i,j)$th entry in the Hessian estimate $\widehat H_n$ and the true Hessian $\nabla^2 f(\cdot)$, respectively.}, for $i,j = 1,\ldots,N$,
-\begin{align}
-\left|\E\left[
-\left. \widehat H_n(i,j) \right| \F_n \right] - \nabla^2_{ij} f(x_n)\right| = O(\delta_n^2).
-\end{align} 
-\end{lemma}
-\begin{proof}
-See Lemma 4 in \cite{prashanth2015rdsa}.
-\end{proof}
-
-\begin{theorem}(\textbf{Strong Convergence of Hessian})
-\label{thm:2rdsa-H}
-Under (C1)-(C10), we have that 
-$$\overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty.$$ 
-In the above, $\overline H_n$ is updated according to \eqref{eq:2rdsa-H} and $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-ber} or \eqref{eq:2rdsa-estimate-unif}. 
-\end{theorem}
-\begin{proof}
-to be done.
-\end{proof}
+\input{results}
 
 \section{SIMULATION EXPERIMENTS}
 \label{sec:expts}

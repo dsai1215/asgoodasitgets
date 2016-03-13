@@ -76,3 +76,72 @@ The main claim now follows since
 $$ \overline H_n = \sum_{k=0}^n \dfrac{\delta_k^4 \left(\widehat H_k - \Psi_k \right)}{\sum_{i=0}^n \delta_i^4}.$$
 \end{proof}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%% Quadratic case
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{align}
+ \widehat H_n =    \Phi_n(\nabla^2 f(x_n)) &+\Psi_{n}(\nabla^2 f(x_n)) +  O(\delta_n^2)\nonumber\\
+&+\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right) \label{eq:hnhat-ext}
+\end{align}
+Where, for any matrix $H$, 
+\begin{align}
+&\Phi_{n}(H) = [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right) +  [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right).
+\end{align}
+And $\Psi_n(H)$ is defined in the equation \eqref{eq:psi}.
+\begin{theorem}(\textbf{})
+\label{thm:quad-bound}
+Suppose $f$ is quadratic function and only noise-free measurements  of $f$ are used to form $\widehat H_n$ in \eqref{eq:2rdsa-estimate-ber}. Suppose $0 < w_0\leq1$ and $w_n = w/n^r$, $n=1,2,\ldots,k$, where $1/2 < r < 1$ and $0 < w \leq 1$. Suppose the  conditions $\ldots\ldots\ldots\ldots\ldots\ldots\ldots$ hold and $d_n$ are identically distributed for each $n$. Further, Suppose $\nabla^2 f(x^*) > 0$ and $\Upsilon$ in \eqref{eq:e2rdsa} is such that $\E(\parallel \Upsilon(\overline H_n) - \overline H_n\parallel^2) = o(e^{-2wn^{1-r}/(1-r)})$ and $\parallel \Upsilon(H) - H \parallel^2 / (1+\parallel H \parallel^2)$ is uniformly bounded with respect to the set of symmetric $H \in \mathbb{R}^{p \times p}$. Then $trace[\E (\Lambda_n \tr \Lambda_n)] = O(e^{-2wn^{1-r} / {1-r}})$. Where $\Lambda_k = \overline H_k - H^*$
+\end{theorem}
+\begin{proof}
+The proof consists of three parts. Those are as folllows
+\begin{enumerate}[]
+  \item proof of MSE convergence of $\overline H_k$.
+  \item derivation of convenient representation of $trace[\E (\Lambda_n \tr \Lambda_n)]$.
+  \item derivation of main big-$O$ result.
+\end{enumerate}
+\emph{$Part(i)$ : MSE convergence of $\overline H_n$ :} This part follows from theorem 3 of \cite{spall-jacobian} .\\
+\emph{$Part(ii)$ :Representation of $trace[\E (\Lambda_n \tr \Lambda_n)]$ :} Let $\Lambda_n' = \Upsilon(\overline H_k) - H^*$. From \eqref{eq:2rdsa-H} we can write
+\begin{align}\label{eq:2rdsa-quadthm}
+\overline H_n = \overline H_{n-1} - w_n (\overline H_{n-1} - \hat H_n + \hat \Psi_n).
+\end{align}
+ From the equations \eqref{eq:2rdsa-quadthm} and using the fact for the quadratic case $\hat H_n = \Phi_n(H^*) + \Psi_n(H^*)$ ,  we can write 
+ \begin{align}\label{eq:lambdak}
+ \Lambda_n &= \Lambda_{n-1} - w_n ( H_{n-1} - \hat H_n + \hat \Psi_n) \nonumber\\&= (1-w_n) \Lambda_{n-1} - w_n (H^* + \hat \Psi_n - \hat H_n ) \nonumber\\&= (1-w_n) \Lambda_{n-1} - w_n (H^*+\hat \Psi_n -\Phi_n(H^*) - \Psi_n(H^*)\nonumber\\&= (1-w_n) \Lambda_{n-1} - w_n \Psi_n(\Upsilon(\overline H_{n-1})) \nonumber\\& \hspace{2.6cm}+ w_n (\Phi_k(H^*) - H^*)\nonumber\\&= (1-w_n) \Lambda_{n-1} - w_n\Psi_n(\Lambda_{n-1}')+ w_n (\Phi_k(H^*) - H^*)
+ \end{align}
+ Where last equality followed from the form of $\Psi(.)$ in the equation \eqref{eq:psi}. Then
+ \begin{align}\label{lambda-exp}
+ \Lambda_n  = & \left[ \prod_{k=1}^n (1-w_k) \right]\Lambda_0 \nonumber\\ &- \sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right] w_k \Psi_k(\Lambda_{k-1}') \nonumber\\ &+ \sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right] w_k (\Phi_k(H^*) - H^*) \hspace{0.2cm} a.s.
+ \end{align}
+ (note : $\prod_{j=n+1}^n (1-w_j) = 1$ for all n).
+ Let us  characterise $trace[\E(\Lambda_n\tr \Lambda_n)]$ using \eqref{lambda-exp}. From independence of $d_k$ along k, \eqref{lambda-exp} represent martingale difference sequence, leading to 
+ \begin{align}\label{eq:exp-lambda2}
+ & \E (\Lambda_n \tr \Lambda_n) =  \left[ \prod_{k=1}^n (1-w_k) \right]^2 \E (\Lambda_0 \tr \Lambda_0)  \nonumber\\ &+ \sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right]^2 w_k^2   \E (\Psi_k(\Lambda_{k-1}') \tr \Psi_k(\Lambda_{k-1}'))  \nonumber\\ &+ \sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right]^2 w_k^2  \nonumber\\& \hspace{2cm} \times \E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*)) \nonumber\\&+\sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right]^2 w_k^2 \E\left(\Psi_k \tr (\Phi_k(H^*) - H^*))\right).
+ \end{align}
+ From the independence of $d_k$'s and $\Lambda_{k-1}'$ and using Cauchy-Schwartz inequality we get 
+ \begin{align}\label{eq:trace}
+ & trace \left[\E (\Lambda_n \tr \Lambda_n)\right] \leq \left[ \prod_{k=1}^n (1-w_k) \right]^2 trace \left[\E (\Lambda_0 \tr \Lambda_0)\right]  \nonumber\\ &+ \sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right]^2 w_k^2  \,\,\tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)  \nonumber\\ &+ \sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right]^2 w_k^2  \nonumber\\&  \hspace{0.5cm}\times trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right] + \nonumber\\ &+ \sum_{k=1}^n \left[\prod_{j=k+1}^n (1-w_j)\right]^2 w_k^2   \tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)^{1/2} \nonumber\\&  \times trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right]^{1/2}.
+ \end{align}
+Note that $1-w_k = e^{-w_k}(1-O(w_k^2))$, where the $O(w_k^2)$ term is strictly positive for $0 < w_k <1$ by the convexity of $e^{-w_k}$. Let $w(i,j) = \sum_{k=i}^j w_k$ and $a_{kn} = \left[\prod_{i=k+1}^n (1- O(w_i^2))\right]^2$ and $a_{nn} = 1$. Then
+\begin{align}\label{eq:wij}
+ & trace \left[\E (\Lambda_n \tr \Lambda_n)\right] \leq e^{-2 w(1,n)} a_{0n} trace \left[\E (\Lambda_0 \tr \Lambda_0)\right]  \nonumber\\ &+ e^{-2 w(1,n)} \sum_{k=1}^n e^{2 w(1,k)} a_{kn} w_k^2  \,\,\tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)  \nonumber\\ &+ e^{-2 w(1,n)} \sum_{k=1}^n e^{2 w(1,k)} a_{kn} w_k^2  \nonumber\\&  \hspace{0.5cm}\times trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right] \nonumber\\ &+ e^{-2 w(1,n)} \sum_{k=1}^n e^{2 w(1,k)} a_{kn} w_k^2  \tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)^{1/2} \nonumber\\&  \times trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right]^{1/2}.
+ \end{align} 
+From the hypothesis $0 < w_k < 1$ for all $k \geq 2$ and $r > 0.5$, the $a_{kn}$ are uniformly bounded in magnitude. Further by the facts $\sum_{k=i}^j w_k \to \infty$ as $j-i \to \infty$.
+\begin{align}\label{eq:intwts}
+w(i,j) = \int_i^j \frac{w}{x^r} dx + O(1) &= \left(\frac{w}{1-r}\right)(j^{1-r}-i^{1-r})\nonumber\\ &\hspace{2cm}+O(1)
+\end{align}
+From the \eqref{eq:wij} and \eqref{eq:intwts}
+\begin{align}\label{eq:thmwts}
+ & trace \left[\E (\Lambda_n \tr \Lambda_n)\right] =  e^{-2 w(1,n)} a_{0n} trace \left[\E (\Lambda_0 \tr \Lambda_0)\right]  \nonumber\\ &+ \bar a_n e^{-2 w n^{1-r}/(1-r)} \sum_{k=1}^n e^{2 w k^{1-r}/(1-r)}  \times \frac{w^2}{k^{2 r}} \nonumber\\& \hspace{3.5cm} \times \tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)  \nonumber\\ &+ \bar a_n e^{-2 w n^{1-r}/(1-r)} \sum_{k=1}^n e^{2 w k^{1-r}/(1-r)}  \times \frac{w^2}{k^{2 r}}  \nonumber\\&  \hspace{0.5cm}\times trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right] \nonumber\\ &+ \bar a_n e^{-2 w n^{1-r}/(1-r)} \sum_{k=1}^n e^{2 w k^{1-r}/(1-r)}  \times \frac{w^2}{k^{2 r}}  \nonumber\\&\hspace{3.5cm}\times \tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)^{1/2}\nonumber\\&\times trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right]^{1/2}.
+\end{align} $\bar a_n$ is uniformly bounded in magnitude by the corresponding uniform boundedness of the $a_{kn}$.\\
+\emph{$Part(iii)$ The big-O result on rate of convergence:}
+ We have two extra terms term three and four for \eqref{eq:intwts} when compared to \cite{spall-jacobian}. Let us consider third term, we know that $trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right]$ bounded uniformly for for every $k$. Then  $\bar b_n e^{-2 w n^{1-r}/(1-r)} \sum_{k=1}^n e^{2 w k^{1-r}/(1-r)}  \times \frac{w^2}{k^{2 r}} \to 0$ as $n \to \infty$ by Kronecker's lemma and $\sum_{k=1}^n \frac{1}{k^{2 r}} < \infty$ because $1/2 < r < 1$.  Again by using uniform boundedness of $trace\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right]$ we can rewrite  the fourth term in \eqref{eq:intwts} as follows 
+ \begin{align}\label{eq:fourthterm}
+ \bar b_n e^{-2 w n^{1-r}/(1-r)} \sum_{k=1}^n e^{2 w k^{1-r}/(1-r)}  \frac{w^2}{k^{2 r}} \nonumber \\ \hspace{3cm}\times \tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)^{1/2}
+ \end{align}
+ Hence the contradiction proof given in theorem 3,part (iii) of \cite{spall-jacobian} will follow from now on by using the fact that term in \eqref{eq:fourthterm} is $O(second term)$ of \eqref{eq:thmwts}. 
+ 
+ 
+\end{proof}

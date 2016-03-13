@@ -1,5 +1,4 @@
- $\mathcal{F}_n = \sigma(x_m,m\le n)$ denotes the underlying sigma-field. 
-We make the following assumptions that are similar to those in \cite{spall_adaptive}:
+We make the same assumptions as those used in the analysis of \cite{prashanth2015rdsa}, with a few minor alterations. The assumptions are listed below:
 \begin{enumerate}[label=(\textbf{C\arabic*})]
 \item  The function
 $f$ is four-times differentiable\footnote{Here $\nabla^4 f(x) = \dfrac{\partial^4 f (x)}{\partial x\tr \partial x\tr \partial x\tr \partial x\tr}$ denotes the fourth derivate of $f$ at $x$ and $\nabla^4_{i_1 i_2 i_3 i_4} f(x)$ denotes the $(i_1 i_2 i_3 i_4)$th entry of $\nabla^4 f(x)$, for $i_1, i_2, i_3,i_4=1,\ldots, N$.} with $\left|\nabla^4_{i_1 i_2 i_3 i_4} f(x) \right| < \infty$, for $i_1, i_2, i_3,i_4=1,\ldots, N$ and for all $x\in \R^N$. 
@@ -8,11 +7,13 @@ $f$ is four-times differentiable\footnote{Here $\nabla^4 f(x) = \dfrac{\partial^
 
 \item For each $n$ and all $x$, there exists a $\rho>0$ not dependent on $n$ and $x$, such that $(x-x^*)\tr \bar f_n(x) \ge \rho \left\| x_n - x\right\|$, where $\bar f_n(x) = \Upsilon(\overline H_n)^{-1} \nabla f(x)$.
 
-\item $\{\xi_n, \xi_n^+,\xi_n^-, n=1,2,\ldots\}$ satisfy $\E\left[\left. \xi_n^+ + \xi_n^- - 2 \xi_n \right| \F_n\right] = 0$, for all $n$. 
+\item $\{\xi_n, \xi_n^+,\xi_n^-, n=1,2,\ldots\}$ satisfy $\E\left[\left. \xi_n^+ + \xi_n^- - 2 \xi_n \right| \F_n\right] = 0$, for all $n$, where $\mathcal{F}_n = \sigma(x_m,m\le n)$ denotes the underlying sigma-field.. 
 
-\item  Same as (A4). %$\{d_n^i, i=1,\ldots,N, n=1,2,\ldots\}$ are i.i.d. and independent of $\F_n$.
+\item $\{d_n^i, i=1,\ldots,N, n=1,2,\ldots\}$ are i.i.d. and independent of $\F_n$.
 
-\item Same as (A5).
+\item  The step-sizes $a_n$ and perturbation constants $\delta_n$ are positive, for all $n$ and satisfy
+$$\hspace{-2em} a_n, \delta_n \rightarrow 0\text{ as } n \rightarrow \infty, 
+\sum_n a_n=\infty \text{ and } \sum_n \left(\frac{a_n}{\delta_n}\right)^2 <\infty.$$
 
 \item For each $i=1,\ldots,N$ and any $\rho>0$, 
 $P(\{ \bar f_{ni} (x_n) \ge 0 \text{ i.o}\} \cap \{ \bar f_{ni} (x_n) < 0 \text{ i.o}\} \mid \{ |x_{ni} - x^*_i| \ge \rho\quad \forall n\}) =0.$
@@ -22,9 +23,11 @@ $P(\{ \bar f_{ni} (x_n) \ge 0 \text{ i.o}\} \cap \{ \bar f_{ni} (x_n) < 0 \text{
 \item For any $\tau >0$ and nonempty $S \subseteq \{1,\ldots,N\}$, there exists a $\rho'(\tau,S)>\tau$ such that 
 $$ \limsup_{n\rightarrow \infty} \left| \dfrac{\sum_{i \notin S} (x-x^*)_i \bar f_{ni}(x)}{\sum_{i \in S} (x-x^*)_i \bar f_{ni}(x)}               \right| < 1 \text{ a.s.}$$
 for all $|(x-x^*)_i| < \tau$ when $i \notin S$ and $|(x-x^*)_i| \ge \rho'(\tau,S)$ when $i\in S$.
-\item For some $\alpha_0, \alpha_1>0$ and for all $n$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$ and $\E f(x_n\pm \delta_n d_n)^{2} \le \alpha_1$. 
-\item  $\sum_n \frac{1}{(n+1)^{2}\delta_n^{2}} < \infty$.
+\item For some $\alpha_0, \alpha_1>0$ and for all $n$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$,  $\E f(x_n\pm \delta_n d_n)^{2} \le \alpha_1$ and $\E \left(\left\| \Upsilon(\overline H_n \right\|^2 \mid \F_n\right) \le \alpha_1$. 
+\item  $\delta_n = \frac{\delta_0}{(n+1)^{\varsigma}}$, where $\delta_0 > 0$ and $0 < \varsigma \le 1/8$.
 \end{enumerate}
+The reader is referred to Section II-B of \cite{prashanth2015rdsa} for a detailed discussion of the above assumptions. We remark here that (C1)-(C8) are identical to that in \cite{prashanth2015rdsa}, while (C9) and (C10) introduce minor additional requirements on $\left\| \Upsilon(\overline H_n \right\|^2$ and $\delta_n$, respectively and these are inspired by \cite{spall-jacobian}.
+
 \begin{lemma}(\textbf{Bias in Hessian estimate})
 \label{lemma:2rdsa-bias}
 Under (C1)-(C10), with $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-unif} or \eqref{eq:2rdsa-estimate-ber}, we have a.s. that\footnote{Here $\widehat H_n(i,j)$ and $\nabla^2_{ij}f(\cdot)$ denote the $(i,j)$th entry in the Hessian estimate $\widehat H_n$ and the true Hessian $\nabla^2 f(\cdot)$, respectively.}, for $i,j = 1,\ldots,N$,
@@ -44,6 +47,32 @@ $$\overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty
 In the above, $\overline H_n$ is updated according to \eqref{eq:2rdsa-H} and $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-ber} or \eqref{eq:2rdsa-estimate-unif}. 
 \end{theorem}
 \begin{proof}
-to be done.
+
+For proving the main claim regarding $\overline H_n$, we closely follow the approach used to prove a corresponding result for 2SPSA (see Theorem 1 in \cite{spall-jacobian}). 
+The first step is to prove the following:
+\begin{align}
+\sum_{k=0}^n \dfrac{\delta_k^4 \left(\widehat H_k - \widehat \Psi_k - \E(\widehat H_k \mid \F_k)\right)}{\sum_{i=0}^n \delta_i^4} \rightarrow 0.
+\label{eq:step1}
+\end{align}
+
+By a completely parallel argument to that used in the proof of Theorem 1 in \cite{spall-jacobian}, we obtain: For any $i,j = 1,\ldots,N$,
+\begin{align*}
+\E \left[\left((\widehat {H_k})_{i,j} - (\widehat {\Psi_k})_{i,j} - \E((\widehat {H_k})_{i,j} \mid \F_k)\right)^2\right] = O(\delta_k^{-4}).
+\end{align*}
+Now \eqref{eq:step1} follows by an application of Kronecker's Lemma along with the martingale convergence theorem (see Theorem 6.2.1 of \cite{lahaprobability}).
+
+From Lemma \ref{lemma:2rdsa-bias}, we have 
+$$ \E[ \widehat H_k \mid \F_k] = \nabla^2 f(x_n) + O(\delta_n^2) \text{ a.s.}$$
+Since the Hessian is continuous near $x_n$ and $x_n$ converges almost surely to $x^*$, we have
+\footnote{Since assumptions (C1)-(C10) here are similar to that in \cite{prashanth2015rdsa}, Theorem 5 of \cite{prashanth2015rdsa} holds here as well. In particular, this implies almost sure convergence of $x_n$ to $x^*$.}
+\begin{align*}
+\sum_{k=0}^n \dfrac{\delta_k^4 \left(\E(\widehat H_k \mid \F_k)\right)}{\sum_{i=0}^n \delta_i^4} 
+=&\sum_{k=0}^n \dfrac{\delta_k^4 \left(\nabla^2 f(x_n) + O(\delta_n^2)\right)}{\sum_{i=0}^n \delta_i^4}\\
+=&\sum_{k=0}^n \dfrac{\delta_k^4 \left(\nabla^2 f(x^*) + o(1)\right)}{\sum_{i=0}^n \delta_i^4}\\
+&\rightarrow \nabla^2 f(x^*) \text{ a.s. as } n \rightarrow \infty.
+\end{align*}
+The last step above follows from Toeplitz Lemma (see p. 89 of \cite{lahaprobability}) after observing that $\sum_{i=0}^n \delta_i^4 \rightarrow \infty$ due to (C10). 
+The main claim now follows since 
+$$ \overline H_n = \sum_{k=0}^n \dfrac{\delta_k^4 \left(\widehat H_k - \Psi_k \right)}{\sum_{i=0}^n \delta_i^4}.$$
 \end{proof}
 

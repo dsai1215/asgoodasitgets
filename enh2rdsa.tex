@@ -60,9 +60,13 @@ E-Mail: shalabh@csa.iisc.ernet.in
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-to be done
-
-
+We propose an improved Hessian estimation scheme for the second-order random directions stochastic approximation (2RDSA) algorithm \cite{prashanth2015rdsa}. The proposed scheme, inspired by \cite{spall-jacobian}, reduces the error in the Hessian estimate by 
+\begin{inparaenum}[\bfseries (i)]
+	\item incorporating a zero-mean feedback term; and
+	\item optimizing the step-sizes used in the Hessian recursion of 2RDSA.
+\end{inparaenum}
+We prove that 2RDSA with our Hessian improvement scheme (2RDSA-IH) converges asymptotically to the true Hessian. Moreover, for the special of a quadratic objective, we provide a convergence rate result for 2RDSA-IH that is of the same order - in the number of iterations of Hessian recursion - as that of 2SPSA with improved Hessian estimation (2SPSA-IH) \cite{spall-jacobian}. This result is significant because 2RDSA-IH achieves the same accuracy as 2SPSA-IH, despite 2RDSA-IH requiring only 75\% of the simulation cost per-iteration for 2SPSA-IH. 
+Numerical experiments show that 2RDSA-IH outperforms both 2SPSA-IH and 2RDSA without the improved Hessian estimation scheme.
 \end{abstract}
 
 
@@ -109,10 +113,18 @@ Our work in this paper is centered on improving the 2RDSA scheme of \cite{prasha
 \label{fig:so}
 \end{figure}
 
-Items (i) and (ii) are inspired by the corresponding improvements to the Hessian estimation recursion in 2SPSA - see \cite{spall-jacobian}. While item (ii) is a relatively straightforward migration to the 2RDSA setting, item (i) is a non-trivial contribution, primarily because the Hessian estimate in 2RDSA is entirely different from that in 2SPSA and the feedback term that we incorporate in 2RDSA to improve the Hessian estimate neither correlates with that in 2SPSA nor follows from the analysis in \cite{spall-jacobian}. Further, we show empirically that 2RDSA with feedback that we propose here outperforms both 2SPSA with feedback and 2RDSA without feedback. Our contribution is important because 2RDSA with feedback, like 2RDSA, has lower simulation cost per iteration than 2SPSA and unlike 2RDSA, has an improved Hessian estimation scheme.
+Items (i) and (ii) are inspired by the corresponding improvements to the Hessian estimation recursion in 2SPSA - see \cite{spall-jacobian}. While item (ii) is a relatively straightforward migration to the 2RDSA setting, item (i) is a non-trivial contribution, primarily because the Hessian estimate in 2RDSA is entirely different from that in 2SPSA and the feedback term that we incorporate in 2RDSA to improve the Hessian estimate neither correlates with that in 2SPSA nor follows from the analysis in \cite{spall-jacobian}. 
 
-\textbf{paper organisation need to be written.}
+We establish that the proposed improvements to Hessian estimation in 2RDSA results ensures that the resulting 2RDSA-IH algorithm is provably convergent to the true Hessian. Moreover, we show, for the special case of a quadratic objective, that	2RDSA-IH results in a convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA-IH, while achieving the same accuracy as 2SPSA-IH. 
+Further, we show empirically that 2RDSA-IH that we propose here outperforms both 2SPSA-IH of \cite{spall-jacobian} and regular 2RDSA of \cite{prashanth2015rdsa}. Our contribution is important because 2RDSA-IH, like 2RDSA, has lower simulation cost per iteration than 2SPSA and unlike 2RDSA, has an improved Hessian estimation scheme.
+
+The rest of the paper is organized as follows: In Section~\ref{sec:2rdsa-ih}, we
+describe the improved Hessian estimation scheme, which is incorporated into the  second-order RDSA algorithm from \cite{prashanth2015rdsa}. In Section \ref{sec:2rdsa-results}, we present the theoretical results for the second-order RDSA algorithm with our improved Hessian estimation scheme.
+In Section~\ref{sec:expts}, we present the results from numerical experiments and finally, in  Section~\ref{sec:conclusions}, provide the concluding remarks.
+
+
 \section{SECOND-ORDER RDSA WITH IMPROVED HESSIAN ESTIMATION (2RDSA-IH)}
+\label{sec:2rdsa-ih}
 The second-order RDSA with improved Hessian estimate performs an update iteration as follows:
 \begin{align}
 \label{eq:e2rdsa}
@@ -351,7 +363,7 @@ The feedback term that we propose can be easily extended to the case of uniform 
 %Henceforth, we shall refer to algorithm \eqref{eq:2rdsa}--\eqref{eq:2rdsa-H} with Hessian estimate \eqref{eq:2rdsa-estimate} as 2RDSA.
 
 
-\subsection{Main results}
+\section{CONVERGENCE RESULTS}
 \label{sec:2rdsa-results}
 
 \input{results}
@@ -387,7 +399,6 @@ For all algorithms, we set $\delta_n = 3.8/n^{0.101}$ and $a_n = 1/n^{0.6}$. The
 \subsection{Results}
 We use normalized loss and normalized MSE (NMSE) as performance metrics for evaluating the algorithms. 
 NMSE is the ratio $\l x_{n_\text{end}} - x^* \r^2 / \l x_0 - x^*\r^2$, while normalized loss is the ratio $f(x_{n_\text{end}})/f(x_0)$.  Here $n_\text{end}$ denotes the iteration number when the algorithm stopped updating its parameter. Note that $n_\text{end}$ is a function of the simulation budget. 2RDSA/2RDSA-IH use only three simulations per-iteration and hence, $n_\text{end}$ is $1/3$rd of the simulation budget, while it is $1/4$th of the simulation budget for 2SPSA, since the latter algorithm uses four simulations per-iteration. 
-
 
 \begin{table}
 \centering
@@ -562,7 +573,8 @@ anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
 \end{figure} 
 
 
-Tables \ref{tab:norloss-4thf}--\ref{tab:norloss-quadratic} present the normalized loss values observed for the three algorithms - 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer - with/without feedback and for the fourth-order and quadratic loss functions, respectively. Table \ref{tab:nmse-quadratic} presents the NMSE values obtained for the aforementioned algorithms with the quadratic loss. Figure \ref{fig:norlossvssims} plots the normalized loss as a function of the simulation budget with the fourth-order loss objective with $\sigma=0.1$ (see Figure \ref{fig:norlossvssimsNoiseless} in the appendix that are similar results with $\sigma = 0$). From the results in Tables \ref{tab:norloss-4thf}--\ref{tab:nmse-quadratic} and Fig \ref{fig:norlossvssims}, we make the following observations:
+Tables \ref{tab:norloss-4thf}--\ref{tab:norloss-quadratic} present the normalized loss values observed for the three algorithms - 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer - with/without feedback and for the fourth-order and quadratic loss functions, respectively. Table \ref{tab:nmse-quadratic} presents the NMSE values obtained for the aforementioned algorithms with the quadratic loss. The results in Tables \ref{tab:norloss-4thf}--\ref{tab:nmse-quadratic} are obtained after running all the algorithms with a budget of $10000$ function evaluations.
+ Figure \ref{fig:norlossvssims} plots the normalized loss as a function of the simulation budget with the fourth-order loss objective with $\sigma=0.1$ (see Figures \ref{fig:norlossvssimsNoiseless}--\ref{fig:norlossvssimsNoiseless} in the appendix for similar results with $\sigma = 0$ for fourth-order loss and $\sigma=0.1$ for quadratic loss). From the results in Tables \ref{tab:norloss-4thf}--\ref{tab:nmse-quadratic} and Fig \ref{fig:norlossvssims}, we make the following observations:
  
 \textit{\textbf{Observation 1:} Among 2RDSA schemes, 2RDSA-IH performs better than regular 2RDSA, for both perturbation choices.}
 
@@ -574,9 +586,12 @@ Tables \ref{tab:norloss-4thf}--\ref{tab:norloss-quadratic} present the normalize
 
 
 \section{CONCLUSIONS}
-to be done.
+\label{sec:conclusions}
+We presented an improved Hessian estimation scheme for the second-order random directions stochastic approximation (2RDSA) algorithm \cite{prashanth2015rdsa}. 
+The proposed scheme was shown to be provably convergent to the true Hessian and as a special case, for a quadratic objective resulted in a  convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA-IH, while achieving the same accuracy as 2SPSA-IH. 
+Numerical experiments demonstrated that 2RDSA-IH outperforms both 2SPSA-IH and 2RDSA without the improved Hessian estimation scheme.
 
-\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
+%\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
                                   % on the last page of the document manually. It shortens
                                   % the textheight of the last page by a suitable amount.
                                   % This command does not take effect until the next page
@@ -592,9 +607,14 @@ to be done.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{APPENDIX}
-\begin{figure}
+%%\section*{APPENDIX}
+\appendix
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[h]
     \centering
+		\begin{tabular}{c}
+		\begin{subfigure}{0.5\textwidth}
 \tabl{c}{\scalebox{0.9}{\begin{tikzpicture}
       \begin{axis}[
 	xlabel={number of simulations},
@@ -631,13 +651,100 @@ anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
       \addplot [thick, violet, mark=*,mark options={scale=0.75}] table [x index=0, y index=11,col sep=comma] {norloss_vs_simulations.csv};
       \end{axis}
       \end{tikzpicture}}\\}
-			\caption{Normalized loss vs. number of simulations for fourth-order loss \eqref{eq:4thorder} with $\sigma=0$ for 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer algorithms with/without improved Hessian estimation: bands around the curves represent standard error from $500$ replications. }
+			\caption{Fourth-order loss \eqref{eq:4thorder} with $\sigma=0$. }
       \label{fig:norlossvssimsNoiseless} 
-\end{figure} 
- 
+\end{subfigure} 
+\\[2ex] 
+%%%%%%% Norloss-Quadratic-noisy %%%%%%%%%%%%%%
+\begin{subfigure}{0.5\textwidth}
+\tabl{c}{\scalebox{0.9}{\begin{tikzpicture}
+      \begin{axis}[
+	xlabel={number of simulations},
+	ylabel={Normalized loss},
+       legend entries={
+	 ,2SPSA,,2SPSA-IH,,2RDSA-Unif,,2RDSA-Unif-IH,,2RDSA-AsymBer,,2RDSA-AsymBer-IH },
+        %legend pos=outer north east,
+			legend style={
+at={(0,0)},
+anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
+      % 2SPSA
+      \errorband[red!50!white, opacity=0.3]{quad_norloss_vs_simulations_noisycase.csv}{0}{1}{2}
+      \addplot [thick, red,mark=square*,mark options={scale=0.7}] table [x index=0, y index=1,col sep=comma] {quad_norloss_vs_simulations_noisycase.csv};
+			%%% With IH
+      % 2SPSA
+      \errorband[darkgray!50!white, opacity=0.3]{quad_norloss_vs_simulations_noisycase.csv}{0}{7}{8}
+      \addplot [thick, darkgray,mark=*,mark options={scale=0.75}] table [x index=0, y index=7,col sep=comma] {quad_norloss_vs_simulations_noisycase.csv};
+			
+      % 2RDSA-Unif
+      \errorband[blue!50!white, opacity=0.3]{quad_norloss_vs_simulations_noisycase.csv}{0}{3}{4}
+      \addplot [thick, blue,mark=square*,mark options={scale=0.7}] table [x index=0, y index=3,col sep=comma] {quad_norloss_vs_simulations_noisycase.csv};
+			%%% With IH
+      % 2RDSA-Unif
+      \errorband[magenta!50!white, opacity=0.3]{quad_norloss_vs_simulations_noisycase.csv}{0}{9}{10}
+      \addplot [thick, magenta,mark=*,mark options={scale=0.75}] table [x index=0, y index=9,col sep=comma] {quad_norloss_vs_simulations_noisycase.csv};
 
 
+      % 2RDSA-AsymBer
+      \errorband[green!50!white, opacity=0.3]{quad_norloss_vs_simulations_noisycase.csv}{0}{5}{6}
+      \addplot [thick, darkgreen,mark=square*,mark options={scale=0.7}] table [x index=0, y index=5,col sep=comma] {quad_norloss_vs_simulations_noisycase.csv};
+			%%% With IH	
+      % 2RDSA-AsymBer
+      \errorband[violet!50!white, opacity=0.3]{quad_norloss_vs_simulations_noisycase.csv}{0}{11}{12}
+      \addplot [thick, violet, mark=*,mark options={scale=0.75}] table [x index=0, y index=11,col sep=comma] {quad_norloss_vs_simulations_noisycase.csv};
+      \end{axis}
+      \end{tikzpicture}}\\}
+			\caption{Quadratic loss \eqref{eq:quadratic} with $\sigma=0.1$. }
+      \label{fig:QuadnorlossvssimsNoisy} 
+\end{subfigure} 
+		\end{tabular}
+			\caption{Normalized loss vs. number of simulations in two different loss settings for 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer algorithms with/without improved Hessian estimation. }
+      \label{fig:extras} 
+		\end{figure}
 
+
+%%%%%%% Norloss-Quadratic-noisefree %%%%%%%%%%%%%%
+%\begin{figure}
+    %\centering
+%\tabl{c}{\scalebox{0.9}{\begin{tikzpicture}
+      %\begin{axis}[
+	%xlabel={number of simulations},
+	%ylabel={Normalized loss},
+       %legend entries={
+	 %,2SPSA,,2SPSA-IH,,2RDSA-Unif,,2RDSA-Unif-IH,,2RDSA-AsymBer,,2RDSA-AsymBer-IH },
+        %%legend pos=outer north east,
+			%legend style={
+%at={(0,0)},
+%anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
+      %% 2SPSA
+      %\errorband[red!50!white, opacity=0.3]{quad_norloss_vs_simulations.csv}{0}{1}{2}
+      %\addplot [thick, red,mark=square*,mark options={scale=0.7}] table [x index=0, y index=1,col sep=comma] {quad_norloss_vs_simulations.csv};
+			%%%% With IH
+      %% 2SPSA
+      %\errorband[darkgray!50!white, opacity=0.3]{quad_norloss_vs_simulations.csv}{0}{7}{8}
+      %\addplot [thick, darkgray,mark=*,mark options={scale=0.75}] table [x index=0, y index=7,col sep=comma] {quad_norloss_vs_simulations.csv};
+			%
+      %% 2RDSA-Unif
+      %\errorband[blue!50!white, opacity=0.3]{quad_norloss_vs_simulations.csv}{0}{3}{4}
+      %\addplot [thick, blue,mark=square*,mark options={scale=0.7}] table [x index=0, y index=3,col sep=comma] {quad_norloss_vs_simulations.csv};
+			%%%% With IH
+      %% 2RDSA-Unif
+      %\errorband[magenta!50!white, opacity=0.3]{quad_norloss_vs_simulations.csv}{0}{9}{10}
+      %\addplot [thick, magenta,mark=*,mark options={scale=0.75}] table [x index=0, y index=9,col sep=comma] {quad_norloss_vs_simulations.csv};
+%
+%
+      %% 2RDSA-AsymBer
+      %\errorband[green!50!white, opacity=0.3]{quad_norloss_vs_simulations.csv}{0}{5}{6}
+      %\addplot [thick, darkgreen,mark=square*,mark options={scale=0.7}] table [x index=0, y index=5,col sep=comma] {quad_norloss_vs_simulations.csv};
+			%%%% With IH	
+      %% 2RDSA-AsymBer
+      %\errorband[violet!50!white, opacity=0.3]{quad_norloss_vs_simulations.csv}{0}{11}{12}
+      %\addplot [thick, violet, mark=*,mark options={scale=0.75}] table [x index=0, y index=11,col sep=comma] {quad_norloss_vs_simulations.csv};
+      %\end{axis}
+      %\end{tikzpicture}}\\}
+			%\caption{Normalized loss vs. number of simulations for quadratic loss \eqref{eq:quadratic} with $\sigma=0$ for 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer algorithms with/without improved Hessian estimation. }
+      %\label{fig:QuadnorlossvssimsNoiseless} 
+%\end{figure} 
+%
 
 
 

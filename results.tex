@@ -47,7 +47,6 @@ $$\overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty
 In the above, $\overline H_n$ is updated according to \eqref{eq:2rdsa-H} and $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-ber} or \eqref{eq:2rdsa-estimate-unif}. 
 \end{theorem}
 \begin{proof}
-
 For proving the main claim regarding $\overline H_n$, we closely follow the approach used to prove a corresponding result for 2SPSA (see Theorem 1 in \cite{spall-jacobian}). 
 The first step is to prove the following:
 \begin{align}
@@ -161,6 +160,4 @@ From the \eqref{eq:wij} and \eqref{eq:intwts}
  \bar b_n e^{-2 w n^{1-r}/(1-r)} \sum_{k=1}^n e^{2 w k^{1-r}/(1-r)}  \frac{w^2}{k^{2 r}} \nonumber \\ \hspace{3cm}\times \tau\left(\E (\Lambda_{k-1}' \otimes \Lambda_{k-1}')\right)^{1/2}
  \end{align}
  Hence the contradiction proof given in theorem 3,part (iii) of \cite{spall-jacobian} will follow from now on by using the fact that term in \eqref{eq:fourthterm} is $O(second term)$ of \eqref{eq:thmwts}. 
- 
- 
 \end{proof}

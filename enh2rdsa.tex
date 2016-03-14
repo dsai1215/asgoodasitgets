@@ -76,7 +76,7 @@ We consider the following \textit{simulation optimization} problem:
 \begin{align}
 \mbox{Find } x^* = \arg\min_{x \in \R^N} f(x). \label{eq:pb}
 \end{align}
-The aim is to find an algorithm that solves \eqref{eq:pb} given only noise-corrupted measurements of the objective $f$ - see Figure \ref{fig:so}.
+The aim is to find an algorithm that solves \eqref{eq:pb} given only noise-corrupted measurements of the objective $f$, as illustrated in Figure \ref{fig:so}.
 A natural solution approach is to devise an algorithm that incrementally updates the parameter, say $x_n$, in the descent direction using the gradient and/or Hessian of the objective $f$. However, gradient/Hessian of $f$ are unavailable directly and need to be estimated from samples of $f$. 
 To overcome this, we adopt the simultaneous perturbation (SP) approach - a popular and efficient idea especially in high dimensional problems - see \cite{bhatnagar-book} for a comprehensive treatment of this subject matter. 
 
@@ -129,7 +129,7 @@ The second-order RDSA with improved Hessian estimate performs an update iteratio
 \begin{align}
 \label{eq:e2rdsa}
 x_{n+1} = x_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(x_n), \\
-\overline H_n = (1-w_{n})  \overline H_{n-1} + w_{n} ( \widehat H_n - \widehat \Psi_n),\label{eq:2rdsa-H}
+\overline H_n = (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),\label{eq:2rdsa-H}
 \end{align}
 where $\widehat\nabla f(x_n)$ is the estimate of $\nabla f(x_n)$, 
  %and this corresponds to  the uniform  and   asymmetric Bernoulli variant gradient estimates proposed in \cite{prashanth2015rdsa}.
@@ -138,7 +138,7 @@ $\overline H_n$ is an estimate of the true Hessian ${\nabla}^2 f(\cdot)$, $\Upsi
 The recursion \eqref{eq:e2rdsa} is identical to that in 2RDSA, while the Hessian estimation recursion \eqref{eq:2rdsa-H} differs as follows:\\
 \begin{inparaenum}[\bfseries (i)]
 \item  $\widehat \Psi_n$ is a zero-mean feedback term that reduces the error in Hessian estimate; and\\
-\item $w_n$ is a general step-size that we optimize to improve the Hessian estimate.
+\item $b_n$ is a general step-size that we optimize to improve the Hessian estimate.
 \end{inparaenum}
 
 On the other hand, $\widehat H_n$ is identical to that in 2RDSA, i.e., it estimates the true Hessian in each iteration using $3$ function evaluations. %Further, $\widehat H_0 = I$. 
@@ -147,13 +147,13 @@ For the sake of completeness, we provide below the construction for $\widehat\na
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \algblock{PEval}{EndPEval}
-\algnewcommand\algorithmicPEval{\textbf{\em Function evaluation (Trajectory 1)}}
+\algnewcommand\algorithmicPEval{\textbf{\em Function evaluation 1}}
  \algnewcommand\algorithmicendPEval{}
 \algrenewtext{PEval}[1]{\algorithmicPEval\ #1}
 \algrenewtext{EndPEval}{\algorithmicendPEval}
 
 \algblock{PEvalPrime}{EndPEvalPrime}
-\algnewcommand\algorithmicPEvalPrime{\textbf{\em Function evaluation (Trajectory 2)}}
+\algnewcommand\algorithmicPEvalPrime{\textbf{\em Function evaluation 2}}
  \algnewcommand\algorithmicendPEvalPrime{}
 \algrenewtext{PEvalPrime}[1]{\algorithmicPEvalPrime\ #1}
 \algrenewtext{EndPEvalPrime}{\algorithmicendPEvalPrime}
@@ -169,7 +169,7 @@ For the sake of completeness, we provide below the construction for $\widehat\na
 \algtext*{EndPImp}
 %%%%%%%%%%%%%%%% alg-custom-block %%%%%%%%%%%%
 \algblock{PEvalPrimeDouble}{EndPEvalPrimeDouble}
-\algnewcommand\algorithmicPEvalPrimeDouble{\textbf{\em Function evaluation (Trajectory 3)}}
+\algnewcommand\algorithmicPEvalPrimeDouble{\textbf{\em Function evaluation 3}}
  \algnewcommand\algorithmicendPEvalPrimeDouble{}
 \algrenewtext{PEvalPrimeDouble}[1]{\algorithmicPEvalPrimeDouble\ #1}
 \algrenewtext{EndPEvalPrimeDouble}{\algorithmicendPEvalPrimeDouble}
@@ -188,29 +188,35 @@ For the sake of completeness, we provide below the construction for $\widehat\na
 \begin{algorithm}[t]
 \begin{algorithmic}
 \State {\bf Input:} 
-initial parameter $x_0 \in \R^N$, perturbation constants $\delta_n>0$, step-sizes $\{a_n, w_n\}$, operator $\Upsilon$.
+initial parameter $x_0 \in \R^N$, perturbation constants $\delta_n>0$, step-sizes $\{a_n, b_n\}$, operator $\Upsilon$.
 \For{$n = 0,1,2,\ldots$}	
-	\State Generate $\{d_n^{i}, i=1,\ldots,N\}$ using asymmetric Bernoulli distribution \eqref{eq:det-proj}, independent of $\{d_m, m=0,1,\ldots,n-1\}$.
+	\State Generate $\{d_n^{i}, i=1,\ldots,N\}$, independent of $\{d_m, m=0,1,\ldots,n-1\}$. 
+	\State For any $i=1,\ldots,N$, $d_n^{i}$ is distributed either as an asymmetric Bernoulli (see \eqref{eq:det-proj}) or Uniform $U[-\eta,\eta]$ for some $\eta >0$ (see Remark \ref{remark:unif}). 
 	\PEval
-	    \State Obtain $f(x_n+\delta_n d_n)$.
+	    \State Obtain $y_n^+ = f(x_n+\delta_n d_n) + \xi_n^+$.
   \EndPEval
 	    \PEvalPrime
-	    \State Obtain $f(x_n-\delta_n d_n)$.
+	    \State Obtain $y_n^- = f(x_n-\delta_n d_n) + \xi_n^-$.
 	    \EndPEvalPrime
 	    	    \PEvalPrimeDouble
-	    \State Obtain $f(x_n)$.
+	    \State Obtain $y_n = f(x_n) + \xi_n$.
 	    \EndPEvalPrimeDouble
 	    \PImpNewton
-		\State Update the parameter and Hessian according to \eqref{eq:e2rdsa}--\eqref{eq:2rdsa-H}.
+		\State Update the parameter and Hessian as follows:
+		\begin{align*}
+		x_{n+1} = x_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(x_n), \\
+\overline H_n = (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),
+\end{align*}
+where $\widehat H_n$ is chosen either according to \eqref{eq:2rdsa-estimate-ber} or \eqref{eq:2rdsa-estimate-unif}.
 		\EndPImpNewton
 \EndFor
 \State {\bf Return} $x_n.$
 \end{algorithmic}
-\caption{Structure of 2RDSA-AsymBer-IH algorithm.}
-\label{alg:structure-2}
+\caption{Structure of 2RDSA-IH algorithm.}
+\label{alg:structure}
 \end{algorithm}
 
-
+Algorithm \ref{alg:structure} presents the pseudocode
 \paragraph{Function evaluations}
 Let $y_n$, $y_n^+$ and $y_n^-$ denote the function evaluations at $x_n$, $x_n+\delta_n d_n$ and $x_n - \delta_n d_n$ respectively, i.e., 
 $y_n = f(x_n) + \xi_n$, $y_n^+ = f(x_n+\delta_n d_n) + \xi_n^+$ and 
@@ -305,13 +311,13 @@ Given that we operate in a simulation optimization setting, which implies $\nabl
 \widehat \Psi_n = \Psi_{n} (\overline H_{n-1}).
 \end{align}
 
-\paragraph{Optimizing step-sizes $w_n$}
-Unlike the feedback term, adapting the idea of optimizing the step-sizes for 2RDSA is relatively straightforward from the corresponding approach for 2SPSA in \cite{spall-jacobian}. The difference here is that there exists only one $N$-dimensional perturbation vector $d_n$ in our setting, while 2SPSA required two such vectors. This in turn implies that only the perturbation constant $\delta_n$ is needed in optimizing $w_n$.
+\paragraph{Optimizing step-sizes $b_n$}
+Unlike the feedback term, adapting the idea of optimizing the step-sizes for 2RDSA is relatively straightforward from the corresponding approach for 2SPSA in \cite{spall-jacobian}. The difference here is that there exists only one $N$-dimensional perturbation vector $d_n$ in our setting, while 2SPSA required two such vectors. This in turn implies that only the perturbation constant $\delta_n$ is needed in optimizing $b_n$.
 
-The optimal choice for $w_n$ in \eqref{eq:2rdsa-H} is the following:
+The optimal choice for $b_n$ in \eqref{eq:2rdsa-H} is the following:
 \begin{align}
 \label{eq:wieghts}
-w_i  = \delta_i^{4}/\sum\limits_{j=0}^{i} \delta_j^{4}.
+b_i  = \delta_i^{4}/\sum\limits_{j=0}^{i} \delta_j^{4}.
 \end{align}
 The main idea behind the above choice is provided below.
 From \eqref{eq:hnhat}, we can infer that
@@ -322,18 +328,19 @@ This is because the third term in \eqref{eq:hnhat} vanishes asymptotically, whil
 
 So, the optimization problem to be solved at instant $n$ is as follows:
 \begin{align}
-\sum \limits_{i=0}^{n} (\tilde w_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:wn-opt}\\
-\tilde w_i \geq 0 ~\forall i \text{ and }\sum \limits_{i=0}^{n} \tilde w_i = 1.
+\sum \limits_{i=0}^{n} (\tilde b_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:wn-opt}\\
+\tilde b_i \geq 0 ~\forall i \text{ and }\sum \limits_{i=0}^{n} \tilde b_i = 1.
 \end{align}
-In the above, $\tilde w_i$ are equivalent to the step-sizes $w_i$ in the following sense:
+The optimization variable $\tilde b_i$ from the above is related to the Hessian recursion \eqref{eq:2rdsa-H} as follows:
 \begin{align}
 \label{eq:hess}
-\overline H_n = \sum\limits_{i=0}^{n} w_k^{(n)}(\widehat H_i -\widehat \Psi_i).
+\overline H_n = \sum\limits_{i=0}^{n} \tilde b_k(\widehat H_i -\widehat \Psi_i).
 \end{align}
-The solution to \eqref{eq:wn-opt} is achieved for $\tilde w_i^* = \delta_i^{4}/\sum \limits_{j=0}^{n} \delta_j^{4}, i=1,\ldots,n$. The optimal choice $\tilde w_i^*$ can be translated to the step-sizes $w_i$, leading to \eqref{eq:wieghts}.
+The solution to \eqref{eq:wn-opt} is achieved for $\tilde b_i^* = \delta_i^{4}/\sum \limits_{j=0}^{n} \delta_j^{4}, i=1,\ldots,n$. The optimal choice $\tilde b_i^*$ can be translated to the step-sizes $b_i$, leading to \eqref{eq:wieghts}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{remark}\textbf{\textit{(Uniform perturbations)}}
+\label{remark:unif}
 In \cite{prashanth2015rdsa}, the authors suggest two alternatives for the distribution of random perturbations $d_n$: the asymmetric Bernoulli, which we described earlier and uniform that we outline next.
 
 Choose $d_n^i$, $ i=1,\ldots,N$ to be i.i.d. $U[-\eta,\eta]$ for some $\eta>0$, where $U[-\eta,\eta]$ denotes the uniform distribution on the interval $[-\eta,\eta]$.
@@ -363,7 +370,7 @@ The feedback term that we propose can be easily extended to the case of uniform 
 %Henceforth, we shall refer to algorithm \eqref{eq:2rdsa}--\eqref{eq:2rdsa-H} with Hessian estimate \eqref{eq:2rdsa-estimate} as 2RDSA.
 
 
-\section{CONVERGENCE RESULTS}
+\section{CONVERGENCE ANALYSIS}
 \label{sec:2rdsa-results}
 
 \input{results}
@@ -394,7 +401,7 @@ In both functions, $A$ is such that $NA$ is an upper triangular matrix with each
 
 
 
-For all algorithms, we set $\delta_n = 3.8/n^{0.101}$ and $a_n = 1/n^{0.6}$. These choices have been used  for 2SPSA implementations before (see \cite{spall_adaptive}) and have demonstrated good finite-sample performance empirically, while satisfying the theoretical requirements needed for asymptotic convergence.  For all the algorithms, the initial point $x_0$ is the $N$-dimensional vector of ones.  For both 2SPSA and 2RDSA/2RDSA-IH, an initial $20\%$ of the  simulation budget was used up by 1SPSA/1RDSA and the resulting iterate was used to initialize 2SPSA/2RDSA. The distribution parameter $\epsilon$ is set to $0.0001$ for 2RDSA and to $0.01$ for 1RDSA. 
+For all algorithms, we set $\delta_n = 3.8/n^{0.101}$ and $a_n = 1/n^{0.6}$, while $b_n$ are set according to \eqref{eq:wieghts}. These choices have been used  for 2SPSA implementations before (see \cite{spall_adaptive}) and have demonstrated good finite-sample performance empirically, while satisfying the theoretical requirements needed for asymptotic convergence.  For all the algorithms, the initial point $x_0$ is the $N$-dimensional vector of ones.  For both 2SPSA and 2RDSA/2RDSA-IH, an initial $20\%$ of the  simulation budget was used up by 1SPSA/1RDSA and the resulting iterate was used to initialize 2SPSA/2RDSA. The distribution parameter $\epsilon$ is set to $0.0001$ for 2RDSA and to $0.01$ for 1RDSA. 
 
 \subsection{Results}
 We use normalized loss and normalized MSE (NMSE) as performance metrics for evaluating the algorithms. 
@@ -573,7 +580,7 @@ anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
 \end{figure} 
 
 
-Tables \ref{tab:norloss-4thf}--\ref{tab:norloss-quadratic} present the normalized loss values observed for the three algorithms - 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer - with/without feedback and for the fourth-order and quadratic loss functions, respectively. Table \ref{tab:nmse-quadratic} presents the NMSE values obtained for the aforementioned algorithms with the quadratic loss. The results in Tables \ref{tab:norloss-4thf}--\ref{tab:nmse-quadratic} are obtained after running all the algorithms with a budget of $10000$ function evaluations.
+Tables \ref{tab:norloss-4thf}--\ref{tab:norloss-quadratic} present the normalized loss values observed for the three algorithms - 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer - with/without improved Hessian estimation scheme and for the fourth-order and quadratic loss functions, respectively. Table \ref{tab:nmse-quadratic} presents the NMSE values obtained for the aforementioned algorithms with the quadratic loss. The results in Tables \ref{tab:norloss-4thf}--\ref{tab:nmse-quadratic} are obtained after running all the algorithms with a budget of $10000$ function evaluations.
  Figure \ref{fig:norlossvssims} plots the normalized loss as a function of the simulation budget with the fourth-order loss objective with $\sigma=0.1$ (see Figures \ref{fig:norlossvssimsNoiseless}--\ref{fig:norlossvssimsNoiseless} in the appendix for similar results with $\sigma = 0$ for fourth-order loss and $\sigma=0.1$ for quadratic loss). From the results in Tables \ref{tab:norloss-4thf}--\ref{tab:nmse-quadratic} and Fig \ref{fig:norlossvssims}, we make the following observations:
  
 \textit{\textbf{Observation 1:} Among 2RDSA schemes, 2RDSA-IH performs better than regular 2RDSA, for both perturbation choices.}
@@ -603,8 +610,10 @@ Numerical experiments demonstrated that 2RDSA-IH outperforms both 2SPSA-IH and 2
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{IEEEtran}
+\bibliography{reference}
 
-
+\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%\section*{APPENDIX}
@@ -615,7 +624,7 @@ Numerical experiments demonstrated that 2RDSA-IH outperforms both 2SPSA-IH and 2
     \centering
 		\begin{tabular}{c}
 		\begin{subfigure}{0.5\textwidth}
-\tabl{c}{\scalebox{0.9}{\begin{tikzpicture}
+\tabl{c}{\scalebox{0.8}{\begin{tikzpicture}
       \begin{axis}[
 	xlabel={number of simulations},
 	ylabel={Normalized loss},
@@ -654,10 +663,11 @@ anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
 			\caption{Fourth-order loss \eqref{eq:4thorder} with $\sigma=0$. }
       \label{fig:norlossvssimsNoiseless} 
 \end{subfigure} 
-\\[2ex] 
+\\
+\\
 %%%%%%% Norloss-Quadratic-noisy %%%%%%%%%%%%%%
 \begin{subfigure}{0.5\textwidth}
-\tabl{c}{\scalebox{0.9}{\begin{tikzpicture}
+\tabl{c}{\scalebox{0.8}{\begin{tikzpicture}
       \begin{axis}[
 	xlabel={number of simulations},
 	ylabel={Normalized loss},
@@ -754,8 +764,6 @@ anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
 
 
 
-\bibliographystyle{IEEEtran}
-\bibliography{reference}
 
 
 

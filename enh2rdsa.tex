@@ -65,7 +65,9 @@ We propose an improved Hessian estimation scheme for the second-order random dir
 	\item incorporating a zero-mean feedback term; and
 	\item optimizing the step-sizes used in the Hessian recursion of 2RDSA.
 \end{inparaenum}
-We prove that 2RDSA with our Hessian improvement scheme (2RDSA-IH) converges asymptotically to the true Hessian. Moreover, for the special of a quadratic objective, we provide a convergence rate result for 2RDSA-IH that is of the same order - in the number of iterations of Hessian recursion - as that of 2SPSA with improved Hessian estimation (2SPSA-IH) \cite{spall-jacobian}. This result is significant because 2RDSA-IH achieves the same accuracy as 2SPSA-IH, despite 2RDSA-IH requiring only 75\% of the simulation cost per-iteration for 2SPSA-IH. 
+We prove that 2RDSA with our Hessian improvement scheme (2RDSA-IH) converges asymptotically to the true Hessian.
+ %Moreover, for the special of a quadratic objective, we provide a convergence rate result for 2RDSA-IH that is of the same order - in the number of iterations of Hessian recursion - as that of 2SPSA with improved Hessian estimation (2SPSA-IH) \cite{spall-jacobian}. 
+The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA with improved Hessian estimation (2SPSA-IH) \cite{spall-jacobian}.
 Numerical experiments show that 2RDSA-IH outperforms both 2SPSA-IH and 2RDSA without the improved Hessian estimation scheme.
 \end{abstract}
 
@@ -114,8 +116,10 @@ Our work in this paper is centered on improving the 2RDSA scheme of \cite{prasha
 \end{figure}
 
 Items (i) and (ii) are inspired by the corresponding improvements to the Hessian estimation recursion in 2SPSA - see \cite{spall-jacobian}. While item (ii) is a relatively straightforward migration to the 2RDSA setting, item (i) is a non-trivial contribution, primarily because the Hessian estimate in 2RDSA is entirely different from that in 2SPSA and the feedback term that we incorporate in 2RDSA to improve the Hessian estimate neither correlates with that in 2SPSA nor follows from the analysis in \cite{spall-jacobian}. 
+The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA-IH. 
 
-We establish that the proposed improvements to Hessian estimation in 2RDSA results ensures that the resulting 2RDSA-IH algorithm is provably convergent to the true Hessian. Moreover, we show, for the special case of a quadratic objective, that	2RDSA-IH results in a convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA-IH, while achieving the same accuracy as 2SPSA-IH. 
+We establish that the proposed improvements to Hessian estimation in 2RDSA are such  that the resulting 2RDSA-IH algorithm is provably convergent to the true Hessian. 
+%Moreover, we show, for the special case of a quadratic objective, that	2RDSA-IH results in a convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. 
 Further, we show empirically that 2RDSA-IH that we propose here outperforms both 2SPSA-IH of \cite{spall-jacobian} and regular 2RDSA of \cite{prashanth2015rdsa}. Our contribution is important because 2RDSA-IH, like 2RDSA, has lower simulation cost per iteration than 2SPSA and unlike 2RDSA, has an improved Hessian estimation scheme.
 
 The rest of the paper is organized as follows: In Section~\ref{sec:2rdsa-ih}, we
@@ -128,12 +132,12 @@ In Section~\ref{sec:expts}, we present the results from numerical experiments an
 The second-order RDSA with improved Hessian estimate performs an update iteration as follows:
 \begin{align}
 \label{eq:e2rdsa}
-x_{n+1} = x_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(x_n), \\
-\overline H_n = (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),\label{eq:2rdsa-H}
+x_{n+1} = & \; x_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(x_n), \\
+\overline H_n = & \; (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),\label{eq:2rdsa-H}
 \end{align}
 where $\widehat\nabla f(x_n)$ is the estimate of $\nabla f(x_n)$, 
  %and this corresponds to  the uniform  and   asymmetric Bernoulli variant gradient estimates proposed in \cite{prashanth2015rdsa}.
-$\overline H_n$ is an estimate of the true Hessian ${\nabla}^2 f(\cdot)$, $\Upsilon(\cdot)$ projects any matrix onto the set of positive definite matrices and $\{a_n, n\ge 0\}$ is a step-size sequence that satisfies standard stochastic approximation conditions. Their are standard procedures such as Cholesky factorization, see \cite{bert22}, for projecting a given square matrix to set of positive definite matrices. Moreover, in the vicinity of a local minimum, one expects the Hessian to be positive definite. In such a case, $\Upsilon$ will represent the identity operator.
+$\overline H_n$ is an estimate of the true Hessian ${\nabla}^2 f(\cdot)$, $\Upsilon(\cdot)$ projects any matrix onto the set of positive definite matrices and $\{a_n, n\ge 0\}$ is a step-size sequence that satisfies standard stochastic approximation conditions. There are standard procedures such as Cholesky factorization, see \cite{bert22}, for projecting a given square matrix to set of positive definite matrices. Moreover, in the vicinity of a local minimum, one expects the Hessian to be positive definite. In such a case, $\Upsilon$ will represent the identity operator.
 
 The recursion \eqref{eq:e2rdsa} is identical to that in 2RDSA, while the Hessian estimation recursion \eqref{eq:2rdsa-H} differs as follows:\\
 \begin{inparaenum}[\bfseries (i)]
@@ -204,8 +208,8 @@ initial parameter $x_0 \in \R^N$, perturbation constants $\delta_n>0$, step-size
 	    \PImpNewton
 		\State Update the parameter and Hessian as follows:
 		\begin{align*}
-		x_{n+1} = x_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(x_n), \\
-\overline H_n = (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),
+		x_{n+1} = & \; x_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(x_n), \\
+\overline H_n = &\; (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),
 \end{align*}
 where $\widehat H_n$ is chosen either according to \eqref{eq:2rdsa-estimate-ber} or \eqref{eq:2rdsa-estimate-unif}.
 		\EndPImpNewton
@@ -217,7 +221,7 @@ where $\widehat H_n$ is chosen either according to \eqref{eq:2rdsa-estimate-ber}
 \end{algorithm}
 
 Algorithm \ref{alg:structure} presents the pseudocode
-\paragraph{Function evaluations}
+\paragraph{\textbf{Function evaluations}}
 Let $y_n$, $y_n^+$ and $y_n^-$ denote the function evaluations at $x_n$, $x_n+\delta_n d_n$ and $x_n - \delta_n d_n$ respectively, i.e., 
 $y_n = f(x_n) + \xi_n$, $y_n^+ = f(x_n+\delta_n d_n) + \xi_n^+$ and 
 $y_n^- = f(x_n-\delta_n d_n) + \xi_n^-$,
@@ -225,7 +229,7 @@ where the noise terms $\xi_n, \xi_n^+, \xi_n^-$ satisfy $\E\left[\left.\xi_n^+ +
 
 Further, $\delta_n, n\geq 0$ is a sequence of diminishing positive real numbers and $d_n = (d_n^1,\ldots,d_n^N)\tr$ is the perturbation random vector at instant $n$ with $d_n^i,i=1,\ldots,N$ given in \eqref{eq:det-proj}.  
 
-\paragraph{Gradient estimate}
+\paragraph{\textbf{Gradient estimate}}
 The RDSA estimate of the gradient $\nabla f(x_n)$ is given by
 \begin{align}
 \label{eq:grad-ber}
@@ -243,7 +247,7 @@ where the perturbations $d_n^i$, $i=1,\ldots,N$ are i.i.d. and distributed  as f
 with $\epsilon>0$ being a constant that can be chosen to be arbitrarily small.
 %Note that $E d_n^i = 0$, $E (d_n^i)^2 = 1+\epsilon$ and $E (d_n^i)^4 = \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$.
 
-\paragraph{Hessian estimate}
+\paragraph{\textbf{Hessian estimate}}
 
 \begin{align}
 \label{eq:2rdsa-estimate-ber}
@@ -260,7 +264,7 @@ with $\epsilon>0$ being a constant that can be chosen to be arbitrarily small.
 \end{align}
 where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
 %%%%%% Feedback
-\paragraph{Feedback term $\widehat \Psi_n$}
+\paragraph{\textbf{Feedback term }$\widehat \Psi_n$}
 The Hessian estimate $\widehat H_n$ can be simplified as follows: 
 \begin{align}
 \widehat H_n & = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right) \nonumber \\
@@ -311,7 +315,7 @@ Given that we operate in a simulation optimization setting, which implies $\nabl
 \widehat \Psi_n = \Psi_{n} (\overline H_{n-1}).
 \end{align}
 
-\paragraph{Optimizing step-sizes $b_n$}
+\paragraph{\textbf{Optimizing the step-sizes }$b_n$}
 Unlike the feedback term, adapting the idea of optimizing the step-sizes for 2RDSA is relatively straightforward from the corresponding approach for 2SPSA in \cite{spall-jacobian}. The difference here is that there exists only one $N$-dimensional perturbation vector $d_n$ in our setting, while 2SPSA required two such vectors. This in turn implies that only the perturbation constant $\delta_n$ is needed in optimizing $b_n$.
 
 The optimal choice for $b_n$ in \eqref{eq:2rdsa-H} is the following:
@@ -595,7 +599,9 @@ Tables \ref{tab:norloss-4thf}--\ref{tab:norloss-quadratic} present the normalize
 \section{CONCLUSIONS}
 \label{sec:conclusions}
 We presented an improved Hessian estimation scheme for the second-order random directions stochastic approximation (2RDSA) algorithm \cite{prashanth2015rdsa}. 
-The proposed scheme was shown to be provably convergent to the true Hessian and as a special case, for a quadratic objective resulted in a  convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA-IH, while achieving the same accuracy as 2SPSA-IH. 
+The proposed scheme was shown to be provably convergent to the true Hessian.
+ %and as a special case, for a quadratic objective resulted in a  convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. 
+The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. 
 Numerical experiments demonstrated that 2RDSA-IH outperforms both 2SPSA-IH and 2RDSA without the improved Hessian estimation scheme.
 
 %\addtolength{\textheight}{-12cm}   % This command serves to balance the column lengths
@@ -613,7 +619,7 @@ Numerical experiments demonstrated that 2RDSA-IH outperforms both 2SPSA-IH and 2
 \bibliographystyle{IEEEtran}
 \bibliography{reference}
 
-\pagebreak
+%\pagebreak
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%\section*{APPENDIX}
@@ -707,7 +713,7 @@ anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
       \label{fig:QuadnorlossvssimsNoisy} 
 \end{subfigure} 
 		\end{tabular}
-			\caption{Normalized loss vs. number of simulations in two different loss settings for 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer algorithms with/without improved Hessian estimation. }
+			\caption{Normalized loss vs. number of simulations in two different loss settings for all the algorithms. }
       \label{fig:extras} 
 		\end{figure}
 

@@ -386,7 +386,7 @@ The feedback term that we propose can be easily extended to the case of uniform 
 \label{sec:expts}
 \subsection{Implementation}
 We test the performance of 2RDSA-Unif, 2RDSA-AsymBer and 2SPSA, with/without improved Hessian estimation. 
-2SPSA algorithm uses Bernoulli $\pm 1$-valued perturbations, while 2RDSA/2RDSA-IH come in two variants - one that uses $U[-1,1]$ distributed perturbations (referred to as 2RDSA-Unif/2RDSA-IH-Unif) and the other that uses asymmetric Bernoulli perturbations (referred to as 2RDSA-AsymBer/2RDSA-IH-AsymBer).
+2SPSA algorithm uses Bernoulli $\pm 1$-valued perturbations, while 2RDSA/2RDSA-IH come in two variants - one that uses $U[-1,1]$ distributed perturbations (referred to as 2RDSA-Unif/2RDSA-IH-Unif) and the other that uses asymmetric Bernoulli perturbations (referred to as 2RDSA-AsymBer/2RDSA-IH-AsymBer)\footnote{The implementation is available at \url{https://github.com/prashla/RDSA/archive/master.zip}.}.
 
 For the empirical evaluations, we use the following two loss functions in $N=10$ dimensions:
 \paragraph{Quadratic loss}

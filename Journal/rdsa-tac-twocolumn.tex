@@ -104,7 +104,6 @@ Further, we show empirically that 2RDSA-IH that we propose here outperforms both
 %In Section~\ref{sec:expts}, we present the results from numerical experiments and finally, in  Section~\ref{sec:conclusions}, provide the concluding remarks.
 
 
-
 \section{SECOND-ORDER RDSA WITH IMPROVED HESSIAN ESTIMATION (2RDSA-IH)}
 \label{sec:2rdsa-ih}
 The second-order RDSA with improved Hessian estimate performs an update iteration as follows:
@@ -371,7 +370,7 @@ where the perturbations $\Delta_n^i$, $i=1,\ldots,N$ are i.i.d. and Bernoulli $\
 \paragraph{\textbf{Hessian estimate}}
 The $i,j$th entry of the Hessian estimate in this case is given by
 \begin{align}
-\label{eq:2rdsa-ber}
+\label{eq:2spsa-ber}
 &\left(\widehat H_n\right)_{ij} =  \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}}\right), 
 \end{align}
 %%%%%% Feedback
@@ -398,7 +397,7 @@ From the above equation we know that first and second terms are mean zero terms,
 where $M_n = [1/\Delta_n^1, \ldots ,1/\Delta_n^N]\tr [1/\Delta_n^1, \ldots ,1/\Delta_n^N]$.
 Now consider the second term in the \eqref{eq:2spsaexp}. It can be written as following 
 \begin{align}
-\nabla^2_{ij} f(x_n) + \frac{1}{\Delta_n^i \widehat\Delta_n^j} \sum_{l=1}^N \sum_{m=1}^{N} \Delta_n^l \nabla^2_{lm} f(x_n) \widehat\Delta_n^m
+\nabla^2_{ij} f(x_n) + \frac{1}{\Delta_n^i \widehat\Delta_n^j} \mathop{\sum_{l=1}^N \sum_{m=1}^{N}}_{lm \neq ij} \Delta_n^l \nabla^2_{lm} f(x_n) \widehat\Delta_n^m
 \end{align}
 Now in the above equation the second term is mean zero term and it can be represented as follows
 \begin{align}
@@ -422,16 +421,113 @@ Given that we operate in a simulation optimization setting, which implies $\nabl
 \widehat \Psi_n = \Psi_{n} (\overline H_{n-1}).
 \end{align}
 
+\paragraph{\textbf{Optimizing the step-sizes }$b_n$}
+
+The optimal choice for $b_n$ in \eqref{eq:2rdsa-H} \textbf {for this set up} is the following:
+\begin{align}
+\label{eq:spsawieghts}
+b_i  = \delta_i^{4}/\sum\limits_{j=0}^{i} \delta_j^{4}.
+\end{align}
+The main idea behind the above choice is provided below.
+From \eqref{eq:spsahnhat}, we can infer that
+\begin{align*}
+\E \parallel \widehat H_n \parallel^2 \le \dfrac{C}{\delta_n^4} \text{ for some } C<\infty. 
+\end{align*} 
+This is because the third term in \eqref{eq:spsahnhat} vanishes asymptotically, while the fourth term there dominates asymptotically. Moreover, the noise factors in the fourth term in \eqref{eq:spsahnhat} are bounded above due to \textbf{(C9) equivalent } and independent of $n$, leaving the $\delta_n^2$ term in the denominator there. 
+
+So, the optimization problem to be solved at instant $n$ is as follows:
+\begin{align}
+\sum \limits_{i=0}^{n} (\tilde b_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:spsawn-opt}\\
+\tilde b_i \geq 0 ~\forall i \text{ and }\sum \limits_{i=0}^{n} \tilde b_i = 1.
+\end{align}
+The optimization variable $\tilde b_i$ from the above is related to the Hessian recursion \eqref{eq:2rdsa-H} as follows:
+\begin{align}
+\label{eq:spsahess}
+\overline H_n = \sum\limits_{i=0}^{n} \tilde b_k(\widehat H_i -\widehat \Psi_i).
+\end{align}
+The solution to \eqref{eq:spsawn-opt} is achieved for $\tilde b_i^* = \delta_i^{4}/\sum \limits_{j=0}^{n} \delta_j^{4}, i=1,\ldots,n$. The optimal choice $\tilde b_i^*$ can be translated to the step-sizes $b_i$, leading to \eqref{eq:spsawieghts}.
 
 
 
 
 
-\section{CONVERGENCE ANALYSIS}
+
+
+\section{CONVERGENCE ANALYSIS FOR 2RDSA-IH}
 \label{sec:2rdsa-results}
-
 \input{results}
 
+\section{COVERGENCE ANALYSIS FOR 2SPSA-IH}
+\label{sec:2spsa-results}
+We make the same assumptions as those used in the analysis of \cite{prashanth2015rdsa}, with a few minor alterations. The assumptions are listed below:
+\begin{enumerate}[label=(\textbf{C\arabic*}),resume]
+\item  The function
+$f$ is four-times differentiable\footnote{Here $\nabla^4 f(x) = \dfrac{\partial^4 f (x)}{\partial x\tr \partial x\tr \partial x\tr \partial x\tr}$ denotes the fourth derivate of $f$ at $x$ and $\nabla^4_{i_1 i_2 i_3 i_4} f(x)$ denotes the $(i_1 i_2 i_3 i_4)$th entry of $\nabla^4 f(x)$, for $i_1, i_2, i_3,i_4=1,\ldots, N$.} with $\left|\nabla^4_{i_1 i_2 i_3 i_4} f(x) \right| < \infty$, for $i_1, i_2, i_3,i_4=1,\ldots, N$ and for all $x\in \R^N$. 
+
+%\item  For some $\rho>0$  and almost all $x_n$, the function $f$ is four-times differentiable with a uniformly (in $n$) bounded fourth derivative for all $x$ such that $\left\| x_n - x\right\| \le \rho$. 
+
+\item For each $n$ and all $x$, there exists a $\rho>0$ not dependent on $n$ and $x$, such that $(x-x^*)\tr \bar f_n(x) \ge \rho \left\| x_n - x\right\|$, where $\bar f_n(x) = \Upsilon(\overline H_n)^{-1} \nabla f(x)$.
+
+\item $\{\xi_n, \xi_n^+,\xi_n^-, n=1,2,\ldots\}$ are such that, for all $n$, $\E\left[\left. \xi_n^+ + \xi_n^- - 2 \xi_n \right| \F_n\right] = 0$, where $\mathcal{F}_n = \sigma(x_m,m\le n)$ denotes the underlying sigma-field.. 
+
+\item $\{\Delta_n^i,\widehat\Delta_n^i, i=1,\ldots,N, n=1,2,\ldots\}$ are i.i.d. and independent of $\F_n$.
+
+\item  The step-sizes $a_n$ and perturbation constants $\delta_n$ are positive, for all $n$ and satisfy
+$$\hspace{-1.7em} a_n, \delta_n \rightarrow 0\text{ as } n \rightarrow \infty, 
+\sum_n a_n=\infty \text{ and } \sum_n \left(\frac{a_n}{\delta_n}\right)^2 <\infty.$$
+
+\item For each $i=1,\ldots,N$ and any $\rho>0$, 
+$P(\{ \bar f_{ni} (x_n) \ge 0 \text{ i.o}\} \cap \{ \bar f_{ni} (x_n) < 0 \text{ i.o}\} \mid \{ |x_{ni} - x^*_i| \ge \rho\quad \forall n\}) =0.$
+
+\item The operator $\Upsilon$ satisfies $\delta_n^2 \Upsilon(H_n)^{-1} \rightarrow 0$ a.s. and  $E(\left\| \Upsilon(H_n)^{-1}\right\|^{2+\zeta}) \le \rho$ for some $\zeta, \rho>0$.
+
+\item For any $\tau >0$ and nonempty $S \subseteq \{1,\ldots,N\}$, there exists a $\rho'(\tau,S)>\tau$ such that 
+$$ \limsup_{n\rightarrow \infty} \left| \dfrac{\sum_{i \notin S} (x-x^*)_i \bar f_{ni}(x)}{\sum_{i \in S} (x-x^*)_i \bar f_{ni}(x)}               \right| < 1 \text{ a.s.}$$
+for all $|(x-x^*)_i| < \tau$ when $i \notin S$ and $|(x-x^*)_i| \ge \rho'(\tau,S)$ when $i\in S$.
+\item For some $\alpha_0, \alpha_1>0$ and for all $n$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$,  $\E f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)^{2},\E f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)^{2} \le \alpha_1$ and $\E \left(\left\| \Upsilon(\overline H_n) \right\|^2 \mid \F_n\right) \le \alpha_1$. 
+\item  $\delta_n = \frac{\delta_0}{(n+1)^{\varsigma}}$, where $\delta_0 > 0$ and $0 < \varsigma \le 1/8$.
+\end{enumerate}
+The reader is referred to Section II-B of \cite{prashanth2015rdsa} for a detailed discussion of the above assumptions. We remark here that (C13)-(C20) are identical to that in \cite{prashanth2015rdsa}, while (C21) and (C22) introduce minor additional requirements on $\left\| \Upsilon(\overline H_n \right\|^2$ and $\delta_n$, respectively and these are inspired by \cite{spall-jacobian}.
+
+\begin{lemma}(\textbf{2SPSA-IH Bias in Hessian estimate})
+\label{lemma:2spsa-bias}
+Under \textbf{(C13)-(C22) equivalent}, with $\widehat H_n$ defined according to  \eqref{eq:2spsa-ber} , we have a.s. that\footnote{Here $\widehat H_n(i,j)$ and $\nabla^2_{ij}f(\cdot)$ denote the $(i,j)$th entry in the Hessian estimate $\widehat H_n$ and the true Hessian $\nabla^2 f(\cdot)$, respectively.}, for $i,j = 1,\ldots,N$,
+\begin{align}
+\left|\E\left[
+\left. \widehat H_n(i,j) \right| \F_n \right] - \nabla^2_{ij} f(x_n)\right| = O(\delta_n^2).
+\end{align} 
+\end{lemma}
+\begin{proof}
+See Proposition 4.2 in \cite{bhatnagar2015simultaneous}.
+\end{proof}
+
+\begin{theorem}(\textbf{2SPSA-IH Strong Convergence of Hessian})
+\label{thm:2spsa-H}
+Under (C13)-(C22), we have that 
+$$\overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty.$$ 
+In the above, $\overline H_n$ is updated according to \eqref{eq:2rdsa-H}. $\widehat H_n$ defined according to \eqref{eq:2spsa-ber} and the step-sizes $b_n$ are chosen as suggested in \eqref{eq:spsawieghts}. 
+\end{theorem}
+\begin{proof}
+This proof is exactly similar to the proof of the theorem \ref{thm:2rdsa-H}
+\end{proof}
+
+We next present a convergence rate result for the special case of a quadratic objective function under the following additional assumptions:
+\begin{enumerate}[label=(\textbf{C\arabic*}),resume]
+\item  $f$ is quadratic and $\nabla^2 f(x^*) > 0$. 
+\item The operator $\Upsilon$ is chosen such that $\E(\parallel \Upsilon(\overline H_n) - \overline H_n\parallel^2) = o(e^{-2wn^{1-r}/(1-r)})$ and $\parallel \Upsilon(H) - H \parallel^2 / (1+\parallel H \parallel^2)$ is uniformly bounded.
+\end{enumerate}
+\begin{theorem}(\textbf{2SPSA-IH Quadratic case - Convergence rate})
+\label{thm:spsaquad-bound}
+Assume (C16), (C22), (C23) and (C24) and also that the setting is noise-free. 
+Let $b_n = b_0/n^r$, $n=1,2,\ldots,k$, where $1/2 < r < 1$ and $0 < b_0 \leq 1$. For notational simplicity, let $H^*=\nabla^2 f(x^*)$. Letting $\Lambda_k = \overline H_k - H^*$, we have 
+\begin{align}
+\text{trace}[\E (\Lambda_n \tr \Lambda_n)] = O(e^{-2b_0n^{1-r} / {1-r}}).
+\label{eq:spsaquad-bigo}
+\end{align}
+\end{theorem}
+\begin{proof}
+This proof directly follows from the proof of theorem 3 of \cite{spall-jacobian}
+\end{proof}
 
 
 

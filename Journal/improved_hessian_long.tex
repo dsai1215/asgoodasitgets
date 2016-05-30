@@ -199,7 +199,7 @@ Algorithm \ref{alg:structure} presents the pseudocode
 Let $y_n$, $y_n^+$ and $y_n^-$ denote the function evaluations at $x_n$, $x_n+\delta_n d_n$ and $x_n - \delta_n d_n$ respectively, i.e., 
 $y_n = f(x_n) + \xi_n$, $y_n^+ = f(x_n+\delta_n d_n) + \xi_n^+$ and 
 $y_n^- = f(x_n-\delta_n d_n) + \xi_n^-$,
-where the noise terms $\xi_n, \xi_n^+, \xi_n^-$ satisfy $\E\left[\left.\xi_n^+ + \xi_n^- - 2\xi_n \right| \F_n\right] = 0$ with $\F_n = \sigma(x_m,m\le n)$ denoting the underlying sigma-field.
+where the noise terms $\xi_n, \xi_n^+, \xi_n^-$ satisfy $\E\left[\left.\xi_n^+ + \xi_n^- - 2\xi_n \right| \F_n, d_n\right] = 0$ with $\F_n = \sigma(x_m,m < n)$ denoting the underlying sigma-field.
 
 Further, $\delta_n, n\geq 0$ is a sequence of diminishing positive real numbers and $d_n = (d_n^1,\ldots,d_n^N)\tr$ is the perturbation random vector at instant $n$ with $d_n^i,i=1,\ldots,N$ given in \eqref{eq:det-proj}.  
 
@@ -353,9 +353,9 @@ The feedback term that we propose can be easily extended to the case of uniform 
 Let $y_n$, $y_n^+$ and $y_n^-$ denote the function evaluations at $x_n$, $x_n+\delta_n \Delta_n+\delta_n \widehat \Delta_n$ and $x_n -\delta_n\Delta_n-\delta_n\widehat\Delta_n$ respectively, i.e., 
 $y_n = f(x_n) + \xi_n$, $y_n^+ = f(x_n+\delta_n \Delta_n +\delta_n \widehat\Delta_n) + \xi_n^+$ and 
 $y_n^- = f(x_n -\delta_n\Delta_n-\delta_n\widehat\Delta_n) + \xi_n^-$,
-where the noise terms $\xi_n, \xi_n^+, \xi_n^-$ satisfy $\E\left[\left.\xi_n^+ + \xi_n^- - 2\xi_n \right| \F_n\right] = 0$ with $\F_n = \sigma(x_m,m\le n)$ denoting the underlying sigma-field.
+where the noise terms $\xi_n, \xi_n^+, \xi_n^-$ satisfy $\E\left[\left.\xi_n^+ + \xi_n^- - 2\xi_n \right| \F_n, \Delta_n, \widehat \Delta_n\right] = 0$ with $\F_n = \sigma(x_m,m <  n)$ denoting the underlying sigma-field.
 
-Further, $\delta_n, n\geq 0$ is a sequence of diminishing positive real numbers and $\Delta_n = (\Delta_n^1,\ldots,\Delta_n^N)\tr$ , $\widehat\Delta_n = (\widehat\Delta_n^1,\ldots,\widehat\Delta_n^N)\tr$ are the perturbation random vector at instant $n$ with $\Delta_n^i,i=1,\ldots,N$, and $\widehat\Delta_n^i,i=1,\ldots,N$ as Bernoulli $\pm$1 random variables.  
+Further, $\delta_n, n\geq 0$ is a sequence of diminishing positive real numbers and $\Delta_n = (\Delta_n^1,\ldots,\Delta_n^N)\tr$ , $\widehat\Delta_n = (\widehat\Delta_n^1,\ldots,\widehat\Delta_n^N)\tr$ are the perturbation random vector at instant $n$ with $\Delta_n^i,i=1,\ldots,N$, and $\widehat\Delta_n^i,i=1,\ldots,N$ are independent identically distributed (i.i.d), mean-zero random varibles having finite inverse movements of order greater than 2 \textbf{need to be refered to appropriate condition}.  
 
 \paragraph{\textbf{Gradient estimate}}
 The SPSA estimate of the gradient $\nabla f(x_n)$ is given by
@@ -363,7 +363,7 @@ The SPSA estimate of the gradient $\nabla f(x_n)$ is given by
 \label{eq:grad-spsa}
 \widehat\nabla_{(i)} f(x_n) =  \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n \Delta_n^{(i)}}\right],
 \end{align}
-where the perturbations $\Delta_n^i$, $i=1,\ldots,N$ are i.i.d. and Bernoulli $\pm$1 random variables.
+where the perturbations $\Delta_n^i$, $i=1,\ldots,N$ are i.i.d. and as mentioned above.
 
 %Note that $E d_n^i = 0$, $E (d_n^i)^2 = 1+\epsilon$ and $E (d_n^i)^4 = \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$.
 
@@ -468,9 +468,9 @@ $f$ is four-times differentiable\footnote{Here $\nabla^4 f(x) = \dfrac{\partial^
 
 \item For each $n$ and all $x$, there exists a $\rho>0$ not dependent on $n$ and $x$, such that $(x-x^*)\tr \bar f_n(x) \ge \rho \left\| x_n - x\right\|$, where $\bar f_n(x) = \Upsilon(\overline H_n)^{-1} \nabla f(x)$.
 
-\item $\{\xi_n, \xi_n^+,\xi_n^-, n=1,2,\ldots\}$ are such that, for all $n$, $\E\left[\left. \xi_n^+ + \xi_n^- - 2 \xi_n \right| \F_n\right] = 0$, where $\mathcal{F}_n = \sigma(x_m,m\le n)$ denotes the underlying sigma-field.. 
+\item $\{\xi_n, \xi_n^+,\xi_n^-, n=1,2,\ldots\}$ are such that, for all $n$, $\E\left[\left. \xi_n^+ + \xi_n^- - 2 \xi_n \right| \F_n, \Delta_n, \widehat \Delta_n \right] = 0$, where $\mathcal{F}_n = \sigma(x_m,m < n)$ denotes the underlying sigma-field.. 
 
-\item $\{\Delta_n^i,\widehat\Delta_n^i, i=1,\ldots,N, n=1,2,\ldots\}$ are i.i.d. and independent of $\F_n$.
+\item $\{\Delta_n^i,\widehat\Delta_n^i, i=1,\ldots,N, n=1,2,\ldots\}$ are i.i.d independent of $\F_n$ and for some $\alpha_0 > 0$ and for all $n,l$ $|\Delta_{nl}|\le \alpha_0$, $\Delta_{nl}$ is symmetrically distributed about 0, $\Delta_{nl}$ are mutually independent across $n$ and $l$ and they satisfy $\E (\Delta_{nl}^{-2})$,$\E (\widehat\Delta_{nl}^{-2}) \le \alpha_0$.
 
 \item  The step-sizes $a_n$ and perturbation constants $\delta_n$ are positive, for all $n$ and satisfy
 $$\hspace{-1.7em} a_n, \delta_n \rightarrow 0\text{ as } n \rightarrow \infty, 
@@ -484,7 +484,13 @@ $P(\{ \bar f_{ni} (x_n) \ge 0 \text{ i.o}\} \cap \{ \bar f_{ni} (x_n) < 0 \text{
 \item For any $\tau >0$ and nonempty $S \subseteq \{1,\ldots,N\}$, there exists a $\rho'(\tau,S)>\tau$ such that 
 $$ \limsup_{n\rightarrow \infty} \left| \dfrac{\sum_{i \notin S} (x-x^*)_i \bar f_{ni}(x)}{\sum_{i \in S} (x-x^*)_i \bar f_{ni}(x)}               \right| < 1 \text{ a.s.}$$
 for all $|(x-x^*)_i| < \tau$ when $i \notin S$ and $|(x-x^*)_i| \ge \rho'(\tau,S)$ when $i\in S$.
-\item For some $\alpha_0, \alpha_1>0$ and for all $n$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$,  $\E f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)^{2},\E f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)^{2} \le \alpha_1$ and $\E \left(\left\| \Upsilon(\overline H_n) \right\|^2 \mid \F_n\right) \le \alpha_1$. 
+\item For some $\alpha_0, \alpha_1, \alpha_2 >0$ and for all $n,l,m$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$,  $\E f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)^{2},\E f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)^{2} \le \alpha_1$, 
+$\E \left[ f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)^{2}/ (\Delta_{nl}\widehat\Delta_{nm})^2 \mid \F_n\right]$,
+$\E \left[| f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)/ (\Delta_{nl}\widehat\Delta_{nm})|^{2+\alpha_2} \mid \F_n\right]$,
+$\E \left[ f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)^{2}/ (\Delta_{nl}\widehat\Delta_{nm})^2 \mid \F_n\right]$,
+$\E \left[ |f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)/ (\Delta_{nl}\widehat\Delta_{nm})|^{2+\alpha_2} \mid \F_n\right]$,
+ $\E\left[\left. (\xi_n^+ + \xi_n^- - 2 \xi_n)^2/(\Delta_{nl}\widehat\Delta_{nm})^2 \right| \F_n \right] \le \alpha_1$ 
+and $\E \left(\left\| \Upsilon(\overline H_n) \right\|^2 \mid \F_n\right) \le \alpha_1$. 
 \item  $\delta_n = \frac{\delta_0}{(n+1)^{\varsigma}}$, where $\delta_0 > 0$ and $0 < \varsigma \le 1/8$.
 \end{enumerate}
 The reader is referred to Section II-B of \cite{prashanth2015rdsa} for a detailed discussion of the above assumptions. We remark here that (C13)-(C20) are identical to that in \cite{prashanth2015rdsa}, while (C21) and (C22) introduce minor additional requirements on $\left\| \Upsilon(\overline H_n \right\|^2$ and $\delta_n$, respectively and these are inspired by \cite{spall-jacobian}.

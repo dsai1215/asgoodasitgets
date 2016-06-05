@@ -229,14 +229,14 @@ with $\epsilon>0$ being a constant that can be chosen to be arbitrarily small.
 & M_n =
 \left[
 \begin{array}{ccc}
-\frac{1}{\kappa}\left((d_n^1)^2\!-(1+\epsilon)\right) & \cdots & \frac{1}{2(1+\epsilon)^2}d_n^1 d_n^N\\
-\frac{1}{2(1+\epsilon)^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2(1+\epsilon)^2}d_n^2 d_n^N\\
+\frac{1}{\kappa}\left((d_n^1)^2\!-\lambda\right) & \cdots & \frac{1}{2 \lambda^2}d_n^1 d_n^N\\
+\frac{1}{2 \lambda^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2 \lambda^2}d_n^2 d_n^N\\
 \cdots&\cdots&\cdots\\
-\frac{1}{2(1+\epsilon)^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
+\frac{1}{2 \lambda^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
 \end{array}
 \right],\nonumber
 \end{align}
-where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
+where $\lambda = \E(d_n^i)^2 = (1+\epsilon)$ , $\kappa = \tau \left(1- \dfrac{\lambda^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
 %%%%%% Feedback
 \paragraph{\textbf{Feedback term }$\widehat \Psi_n$}
 The Hessian estimate $\widehat H_n$ can be simplified as follows: 
@@ -333,15 +333,17 @@ The Hessian estimate in this case is given by
 \label{eq:2rdsa-estimate-unif}
 &\widehat H_n =  M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where } \\
 & M_n =
-\dfrac{9}{2\eta^4}\left[
+\dfrac{9}{10\tau}\left[
 \begin{array}{cccc}
-\frac{5}{2}\left((d_n^1)^2-\frac{\eta^2}{3}\right) & \cdots & d_n^1 d_n^N\\
+\frac{5}{2}\left((d_n^1)^2-\lambda\right) & \cdots & d_n^1 d_n^N\\
 d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
 \cdots&\cdots&\cdots\\
-d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
+d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\lambda\right) \\
 \end{array}
 \right].\nonumber
 \end{align}
+where $\lambda = \E(d_n^i)^2 = \frac{\eta^2}{3}$  and $\tau = E (d_n^i)^4= \frac{\eta^4}{5}$, for any $i=1,\ldots,N$. 
+
 
 The feedback term that we propose can be easily extended to the case of uniform perturbations by using the $M_n$ as defined above instead of that for the asymmetric Bernoulli case.
 \end{remark}
@@ -485,9 +487,9 @@ $P(\{ \bar f_{ni} (x_n) \ge 0 \text{ i.o}\} \cap \{ \bar f_{ni} (x_n) < 0 \text{
 $$ \limsup_{n\rightarrow \infty} \left| \dfrac{\sum_{i \notin S} (x-x^*)_i \bar f_{ni}(x)}{\sum_{i \in S} (x-x^*)_i \bar f_{ni}(x)}               \right| < 1 \text{ a.s.}$$
 for all $|(x-x^*)_i| < \tau$ when $i \notin S$ and $|(x-x^*)_i| \ge \rho'(\tau,S)$ when $i\in S$.
 \item For some $\alpha_0, \alpha_1, \alpha_2 >0$ and for all $n,l,m$, $\E {\xi_n}^{2} \le \alpha_0$, $\E {\xi_n^{\pm}}^{2} \le \alpha_0$, $\E f(x_n)^{2} \le \alpha_1$,  $\E f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)^{2},\E f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)^{2} \le \alpha_1$, 
-$\E \left[ f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)^{2}/ (\Delta_{nl}\widehat\Delta_{nm})^2 \mid \F_n\right]$,
+%$\E \left[ f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)^{2}/ (\Delta_{nl}\widehat\Delta_{nm})^2 \mid \F_n\right]$,
 $\E \left[| f(x_n + \delta_n \Delta_n + \delta_n \widehat \Delta_n)/ (\Delta_{nl}\widehat\Delta_{nm})|^{2+\alpha_2} \mid \F_n\right]$,
-$\E \left[ f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)^{2}/ (\Delta_{nl}\widehat\Delta_{nm})^2 \mid \F_n\right]$,
+%$\E \left[ f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)^{2}/ (\Delta_{nl}\widehat\Delta_{nm})^2 \mid \F_n\right]$,
 $\E \left[ |f(x_n - \delta_n \Delta_n - \delta_n \widehat \Delta_n)/ (\Delta_{nl}\widehat\Delta_{nm})|^{2+\alpha_2} \mid \F_n\right]$,
  $\E\left[\left. (\xi_n^+ + \xi_n^- - 2 \xi_n)^2/(\Delta_{nl}\widehat\Delta_{nm})^2 \right| \F_n \right] \le \alpha_1$ 
 and $\E \left(\left\| \Upsilon(\overline H_n) \right\|^2 \mid \F_n\right) \le \alpha_1$. 
@@ -514,7 +516,7 @@ $$\overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty
 In the above, $\overline H_n$ is updated according to \eqref{eq:2rdsa-H}. $\widehat H_n$ defined according to \eqref{eq:2spsa-ber} and the step-sizes $b_n$ are chosen as suggested in \eqref{eq:spsawieghts}. 
 \end{theorem}
 \begin{proof}
-This proof is exactly similar to the proof of the theorem \ref{thm:2rdsa-H}
+This proof is similar to the proof of the theorem \ref{thm:2rdsa-H}
 \end{proof}
 
 We next present a convergence rate result for the special case of a quadratic objective function under the following additional assumptions:
@@ -532,14 +534,12 @@ Let $b_n = b_0/n^r$, $n=1,2,\ldots,k$, where $1/2 < r < 1$ and $0 < b_0 \leq 1$.
 \end{align}
 \end{theorem}
 \begin{proof}
-This proof directly follows from the proof of theorem 3 of \cite{spall-jacobian}
+This proof follows from the proof of theorem 3 of \cite{spall-jacobian}
 \end{proof}
 
 
 
-\subsection{Gradient estimate}
 
-\subsection{Main results}
 
 \section{Numerical Experiments}
 

@@ -373,20 +373,20 @@ where the perturbations $\Delta_n^i$, $i=1,\ldots,N$ are i.i.d. and as mentioned
 The $i,j$th entry of the Hessian estimate in this case is given by
 \begin{align}
 \label{eq:2spsa-ber}
-&\left(\widehat H_n\right)_{ij} =  \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}}\right), 
+&\left(\widehat H_n\right)_{ij} =  \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{2\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}}\right), 
 \end{align}
 %%%%%% Feedback
 \paragraph{\textbf{Feedback term }$\widehat \Psi_n$}
 The $i,j$th term of the Hessian estimate $\widehat H_n$ can be simplified as follows: 
 \begin{align}
-\left(\widehat H_n \right)_{ij} & =  \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}}\right) \nonumber \\
+\left(\widehat H_n \right)_{ij} & =  \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{2\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}}\right) \nonumber \\
 %& =  \left[\left(\dfrac{f(x_n+\delta_n \Delta_n+\delta_n \widehat \Delta_n) + f(x_n -\delta_n\Delta_n-\delta_n\widehat\Delta_n) - 2 f(x_n)}{\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}}\right) \right.\nonumber \\&\hspace{10em}+\left. \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2}\right)\right] \nonumber \\
-& = \left( \frac{(\Delta_n+ \widehat \Delta_n)\tr \nabla^2 f(x_n) (\Delta_n+ \widehat \Delta_n)}{\Delta_n^{(i)} \widehat \Delta_n^{(j)}} +  O(\delta_n^2) + \right.\nonumber \\&\hspace{10em}+\left.\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}} \right)\right).\label{eq:h3}
+& = \left( \frac{(\Delta_n+ \widehat \Delta_n)\tr \nabla^2 f(x_n) (\Delta_n+ \widehat \Delta_n)}{2\Delta_n^{(i)} \widehat \Delta_n^{(j)}} +  O(\delta_n^2) + \right.\nonumber \\&\hspace{10em}+\left.\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{2\delta_n^2 \Delta_n^{(i)} \widehat \Delta_n^{(j)}} \right)\right).\label{eq:h3}
 %& = M_n \left(d_n\tr \nabla^2 f(x_n) d_n +  O(\delta_n^2) + O(\delta_n^{-2})\right). \label{eq:h0}
 \end{align}
 After expanding the first term on the RHS above, we get
 \begin{align}
-\sum\limits_{l=1}^N\sum\limits_{m=1}^N \frac{\Delta_n^l \nabla^2_{lm} f(x_n) \Delta_n^m}{\Delta_n^i \widehat\Delta_n^j} &+ 2 \sum\limits_{l=1}^N\sum\limits_{m=1}^N \frac{\Delta_n^l \nabla^2_{lm} f(x_n) \widehat\Delta_n^m}{\Delta_n^i \widehat\Delta_n^j} \nonumber \\ & + \sum\limits_{l=1}^N\sum\limits_{m=1}^N \frac{\widehat\Delta_n^l \nabla^2_{lm} f(x_n)\widehat \Delta_n^m}{\Delta_n^i \widehat\Delta_n^j}\label{eq:2spsaexp}
+\sum\limits_{l=1}^N\sum\limits_{m=1}^N \frac{\Delta_n^l \nabla^2_{lm} f(x_n) \Delta_n^m}{2\Delta_n^i \widehat\Delta_n^j} &+  \sum\limits_{l=1}^N\sum\limits_{m=1}^N \frac{\Delta_n^l \nabla^2_{lm} f(x_n) \widehat\Delta_n^m}{\Delta_n^i \widehat\Delta_n^j} \nonumber \\ & + \sum\limits_{l=1}^N\sum\limits_{m=1}^N \frac{\widehat\Delta_n^l \nabla^2_{lm} f(x_n)\widehat \Delta_n^m}{2\Delta_n^i \widehat\Delta_n^j}\label{eq:2spsaexp}
 \end{align}
 It is easy to see that 
 \begin{align}
@@ -394,7 +394,7 @@ It is easy to see that
 \end{align}
 From the above equation we know that first and second terms are mean zero terms, they can be represented in matrix form as below
 \begin{align}
-\Psi_n^1(\nabla^2 f(x_n)) = M_n \left[\Delta_n\tr \nabla^2 f(x_n) \Delta_n + \widehat\Delta_n\tr \nabla^2 f(x_n) \widehat\Delta_n\right]
+\Psi_n^1(\nabla^2 f(x_n)) =\frac{1}{2} M_n \left[\Delta_n\tr \nabla^2 f(x_n) \Delta_n + \widehat\Delta_n\tr \nabla^2 f(x_n) \widehat\Delta_n\right]
 \end{align}
 where $M_n = [1/\Delta_n^1, \ldots ,1/\Delta_n^N]\tr [1/\Delta_n^1, \ldots ,1/\Delta_n^N]$.
 Now consider the second term in the \eqref{eq:2spsaexp}. It can be written as following 
@@ -413,7 +413,7 @@ H_n = & \nabla^2 f(x_n) + \Psi_{n}(\nabla^2 f(x_n)) +  O(\delta_n^2) + O(\delta_
 where, for any matrix $H$, 
 \begin{align}
 \Psi_{n}(H) &=  \Psi_{n}^{1}(H) + \Psi_{n}^{2}(H)\nonumber\\
-&=  M_n \left[\Delta_n\tr H \Delta_n + \widehat\Delta_n\tr H \widehat\Delta_n\right] + \widehat N_n\tr H N_n  \nonumber\\ & \hspace{3.5cm}+ \widehat N_n\tr H + H N_n.\label{eq:spsapsi}
+&=  \frac{1}{2}M_n \left[\Delta_n\tr H \Delta_n + \widehat\Delta_n\tr H \widehat\Delta_n\right] + \widehat N_n\tr H N_n  \nonumber\\ & \hspace{3.5cm}+ \widehat N_n\tr H + H N_n.\label{eq:spsapsi}
 \end{align}
 
 

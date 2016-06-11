@@ -37,10 +37,7 @@ Under (C1)-(C10), with $\widehat H_n$ defined according to either \eqref{eq:2rds
 \end{align} 
 \end{lemma}
 \begin{proof}
-See Lemma 4 in \cite{prashanth2015rdsa}.
-
-
-\textbf{Case 1: Uniform perturbations}
+See Lemma 4 in \cite{prashanth2015rdsa}. The following provides general proof for both Uniform and Asymmetric Bernoulli cases
 
 By a Taylor's series expansion, we obtain
 \begin{align*}
@@ -68,31 +65,35 @@ We analyse the diagonal and off-diagonal terms in the multiplication of the matr
 
 Consider the $lth$ diagonal term inside the conditional expectation in \eqref{eq:h1}:
 \begin{align}
-& \dfrac{9}{4 \tau}  \left((d_n^l)^2-\lambda\right) \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n)\right. \nonumber\\
+& \dfrac{1}{\kappa}  \left((d_n^l)^2-\lambda\right) \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n)\right. \nonumber\\
 &\hspace{6em}\left. + 2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\right)\nonumber\\
-=& \dfrac{9}{4 \tau} (d_n^l)^2 \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \nonumber\\
-& + \dfrac{9}{2\tau} (d_n^l)^2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\nonumber\\
-& - \dfrac{9 \lambda}{4\tau} \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) - \dfrac{18 \lambda}{2 \tau} \sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n).\label{eq:h2}
+=& \dfrac{1}{\kappa} (d_n^l)^2 \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \nonumber\\
+& + \dfrac{2}{\kappa} (d_n^l)^2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\nonumber\\
+& - \dfrac{ \lambda}{\kappa} \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) - \dfrac{2 \lambda}{ \kappa} \sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n).\label{eq:h2}
 \end{align}
 From the distributions of $d_n^i,d_n^j$ and the fact that $d_n^i$ is independent of $d_n^j$ for $i<j$, it is easy to see that $\E\left(\left. (d_n^l)^2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n) \right| \F_n\right) = 0$ and $\E\left(\left.\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n) \right| \F_n\right) = 0$. Thus, the conditional expectations of the second and fourth terms on the RHS of \eqref{eq:h2} are both zero. 
 
 The first term on the RHS of \eqref{eq:h2} with the conditional expectation can be simplified as follows:
-\begin{align*}
-&\dfrac{9}{4\tau} \E\left(\left. (d_n^l)^2 \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right)\\
-= & \dfrac{9}{4\tau} \E\left((d_n^l)^4 \nabla^2_{ll} f(x_n) + \sum\limits_{i=1,i\ne l}^N (d_n^l)^2(d_n^i)^2 \nabla^2_{ii} f(x_n) \right)\\
-= & \dfrac{9}{4\tau} \left( \tau \nabla^2_{ll} f(x_n) + \lambda^2 \sum\limits_{i=1,i\ne l}^N  \nabla^2_{ii} f(x_n) \right), \text{ a.s.}
-\end{align*} 
+\begin{align}\label{eq:term1lem1}
+&\dfrac{1}{\kappa} \E\left(\left. (d_n^l)^2 \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right)\nonumber\\
+= & \dfrac{1}{\kappa} \E\left((d_n^l)^4 \nabla^2_{ll} f(x_n) + \sum\limits_{i=1,i\ne l}^N (d_n^l)^2(d_n^i)^2 \nabla^2_{ii} f(x_n) \right)\nonumber\\
+= & \dfrac{1}{\kappa} \left( \tau \nabla^2_{ll} f(x_n) + \lambda^2 \sum\limits_{i=1,i\ne l}^N  \nabla^2_{ii} f(x_n) \right), \text{ a.s.}
+\end{align} 
 For the second equality above, we have used the fact that $\E[(d_n^l)^4] =  \tau$ and $\E[(d_n^l)^2 (d_n^i)^2] = \E[(d_n^l)^2] \E[(d_n^i)^2] = \lambda^2$, $\forall l \ne i$.
 
 The third term in \eqref{eq:h2} with the conditional expectation and without the negative sign can be simplified as follows: 
+\begin{align}\label{eq:term3lem1}
+&\dfrac{ \lambda}{\kappa} \E\left(\left. \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right)\nonumber\\
+= &\dfrac{ \lambda}{\kappa} \sum\limits_{i=1}^N \E \left[(d_n^i)^2\right] \nabla^2_{ii} f(x_n) 
+=  \dfrac{\lambda^2}{\kappa} \sum\limits_{i=1}^N \nabla^2_{ii} f(x_n), \text{ a.s.}
+\end{align} 
+Combining the above followed by some algebra, i.e., $\eqref{eq:term1lem1}-\eqref{eq:term3lem1}$, we obtain
 \begin{align*}
-&\dfrac{9 \lambda}{4\tau} \E\left(\left. \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right)\\
-= &\dfrac{9 \lambda}{4\tau} \sum\limits_{i=1}^N \E \left[(d_n^i)^2\right] \nabla^2_{ii} f(x_n) 
-=  \dfrac{5}{4} \sum\limits_{i=1}^N \nabla^2_{ii} f(x_n), \text{ a.s.}
+\frac{1}{\kappa} (\tau - \lambda^2) \nabla^2_{ll} f(x_n)
 \end{align*} 
-Combining the above followed by some algebra, we obtain 
+By using the fact that $\kappa = \tau - \lambda^2$, we obtain
 \begin{align*}
-&\dfrac{9}{4\tau}  \E\left[\left. \left((d_n^l)^2-\lambda\right) \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right.\right.\right.\\
+&\dfrac{1}{\kappa}  \E\left[\left. \left((d_n^l)^2-\lambda\right) \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right.\right.\right.\\
 &\hspace{1em}\left.\left.\left. + 2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\right)\right| \F_n\right] = \nabla^2_{ll} f(x_n), \text{ a.s.}
 \end{align*}
 
@@ -100,59 +101,14 @@ Combining the above followed by some algebra, we obtain
 
 We now consider the $(k,l)$th term in \eqref{eq:h1}: Assume w.l.o.g that $k<l$. Then,
 \begin{align}
-& \dfrac{9}{10\tau} \E\left[\left.d_n^k d_n^l   \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right.\right.\right. \nonumber\\
-&\hspace{3em}\left.\left.\left.+ 2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\right)\right| \F_n \right]\nonumber\\
-=& \dfrac{9}{10 \tau} \sum\limits_{i=1}^N \E \left(d_n^k d_n^l (d_n^i)^2 \right)\nabla^2_{ii} f(x_n) \nonumber\\
-& \quad+ \dfrac{9}{5 \tau}\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N \E\left(d_n^k d_n^l d_n^i d_n^j\right) \nabla^2_{ij} f(x_n) \label{eq:crossh}\\
-= & \nabla^2_{kl} f(x_n).\nonumber
-\end{align}
-The last equality follows from the fact that the first term in \eqref{eq:crossh} is $0$ since $k\ne l$, while the second term in \eqref{eq:crossh} can be seen to be equal to $\dfrac{9}{10 \tau} \E\left((d_n^k)^2 (d_n^l)^2\right) \nabla^2_{kl} f(x_n) = \nabla^2_{kl} f(x_n)$.
-The claim follows for the case of uniform perturbations.\ \\\ \\
-
-\textbf{Case 2: Asymmetric Bernoulli perturbations}
-
-Note that the proof up to \eqref{eq:h1} is independent of the choice of perturbations. The proof differs in the analysis of the diagonal and off-diagonal terms in \eqref{eq:h1}. In the case of asymmetric Bernoulli perturbations, the normalizing scalars in the definition of $M_n$ in \eqref{eq:2rdsa-estimate-ber} are different. 
-
-\subsection*{Diagonal terms in \eqref{eq:h1}}
-Let $\tau = \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$ denote the fourth moment $E (d_n^i)^4$, for any $i=1,\ldots,N$.
-An analogue of \eqref{eq:h2} is as follows:
-\begin{align}
-& \frac{1}{\tau (1- \frac{\lambda^2}{\tau })}  \E\left(\left. \left((d_n^l)^2-\lambda\right) \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right.\right.\right. \nonumber\\ 
-&\hspace{8em}\left.\left.\left.+ 2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\right)\right| \F_n\right)\nonumber\\
-=& \frac{1}{\tau (1- \frac{\lambda^2}{\tau })} \E\left(\left. (d_n^l)^2 \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right) \nonumber\\
-& - \frac{\lambda}{\tau (1- \frac{\lambda^2}{\tau })} \E\left(\left. \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right) \label{eq:h2-a}
-\end{align}
-We have used the fact that the second term in the LHS above is conditionally zero  (see argument below \eqref{eq:h2} for a justification).
-The first term on the RHS of \eqref{eq:h2-a} be simplified as follows:
-\begin{align}
-&\frac{1}{\tau (1- \frac{\lambda^2}{\tau })} \E\left(\left. (d_n^l)^2 \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right)\nonumber\\
-= & \frac{1}{\tau (1- \frac{\lambda^2}{\tau })} \E\bigg((d_n^l)^4 \nabla^2_{ll} f(x_n)  \nonumber\\
-&\qquad + \sum\limits_{i=1,i\ne l}^N (d_n^l)^2(d_n^i)^2 \nabla^2_{ii} f(x_n) \bigg)\nonumber\\
-= & \frac{\lambda^2}{\tau (1- \frac{\lambda^2}{\tau })} \left( \nabla^2_{ll} f(x_n) + \dfrac{(1+\epsilon)^2}{\phi}\sum\limits_{i=1,i\ne l}^N  \nabla^2_{ii} f(x_n) \right).\label{eq:diag1}
-\end{align} 
-For the second equality above, we have used the fact that $\E[(d_n^l)^4] = \tau$ and $\E[(d_n^l)^2 (d_n^i)^2] = \E[(d_n^l)^2] \E[(d_n^i)^2] = \lambda^2$, $\forall l \ne i$.
-
-The second term in \eqref{eq:h2-a} with the conditional expectation and without the negative sign can be simplified as follows:
-\begin{align}
-&\frac{\lambda}{\tau (1- \frac{\lambda^2}{\tau })} \E\left(\left. \sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right| \F_n\right)\nonumber\\
-= & \frac{\lambda}{\tau (1- \frac{\lambda^2}{\tau })} \sum\limits_{i=1}^N \E \left[(d_n^i)^2\right] \nabla^2_{ii} f(x_n) \nonumber\\
-= &\frac{\lambda^2}{\tau (1- \frac{\lambda^2}{\tau })} \sum\limits_{i=1}^N \nabla^2_{ii} f(x_n).\label{eq:diag2}
-\end{align} 
-Combining \eqref{eq:diag1} and \eqref{eq:diag2}, the correctness of the Hessian estimate follows for the diagonal terms.
-
-\subsection*{Off-diagonal terms in \eqref{eq:h1}}
-Consider the $(k,l)$th term in \eqref{eq:h1}, with $k<l$. We obtain
-\begin{align}
 & \dfrac{1}{2 \lambda^2} \E\left[\left.d_n^k d_n^l   \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n) \right.\right.\right. \nonumber\\
-&\qquad\qquad \left.\left.\left. + 2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\right)\right| \F_n \right]\nonumber\\
+&\hspace{3em}\left.\left.\left.+ 2\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N d_n^i d_n^j \nabla^2_{ij} f(x_n)\right)\right| \F_n \right]\nonumber\\
 =& \dfrac{1}{2 \lambda^2} \sum\limits_{i=1}^N \E \left(d_n^k d_n^l (d_n^i)^2 \right)\nabla^2_{ii} f(x_n) \nonumber\\
-&\quad+ \dfrac{1}{2 \lambda^2}\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N \E\left(d_n^k d_n^l d_n^i d_n^j\right) \nabla^2_{ij} f(x_n) \label{eq:crossh-a}\\
+& \quad+ \dfrac{1}{\lambda^2}\sum\limits_{i=1}^{N-1}\sum\limits_{j=i+1}^N \E\left(d_n^k d_n^l d_n^i d_n^j\right) \nabla^2_{ij} f(x_n) \label{eq:crossh}\\
 = & \nabla^2_{kl} f(x_n).\nonumber
 \end{align}
-Note that the first term on the RHS of \eqref{eq:crossh-a} equals zero since $k\ne l$.
-The claim follows for the case of asymmetric Bernoulli perturbations.
-
-
+The last equality follows from the fact that the first term in \eqref{eq:crossh} is $0$ since $k\ne l$, while the second term in \eqref{eq:crossh} can be seen to be equal to $\dfrac{1}{\lambda^2} \E\left((d_n^k)^2 (d_n^l)^2\right) \nabla^2_{kl} f(x_n) = \nabla^2_{kl} f(x_n)$.
+The claim follows for the case of both for uniform and  asymmetric Bernoulli perturbations perturbations.\ \\\ \\
 
 \end{proof}
 

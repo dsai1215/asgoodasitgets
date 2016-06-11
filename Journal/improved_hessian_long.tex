@@ -237,15 +237,15 @@ Further, $\delta_n, n\geq 0$ is a sequence of diminishing positive real numbers 
 The RDSA estimate of the gradient $\nabla f(x_n)$ is given by
 \begin{align}
 \label{eq:grad-ber}
-\widehat\nabla f(x_n) = \frac1{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right],
+\widehat\nabla f(x_n) = \frac1{\lambda} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right],
 \end{align}
-where the perturbations $d_n^i$, $i=1,\ldots,N$ are i.i.d. and distributed  as follows: 
+where $\lambda = \E(d_n^i)^2 = (1+\epsilon)$ and the perturbations $d_n^i$, $i=1,\ldots,N$ are i.i.d. and distributed  as follows: 
 \begin{equation}
 \label{eq:det-proj}
  d_n^i =
   \begin{cases}
-   -1 &  \text{ w.p. } \dfrac{(1+\epsilon)}{(2+\epsilon)}, \\
-   1+\epsilon &  \text{ w.p. } \dfrac{1}{(2+\epsilon)},
+   -1 &  \text{ w.p. } \dfrac{\lambda}{(1+\lambda)}, \\
+   \lambda &  \text{ w.p. } \dfrac{1}{(1+\lambda)},
   \end{cases}
 \end{equation}
 with $\epsilon>0$ being a constant that can be chosen to be arbitrarily small.
@@ -262,11 +262,11 @@ with $\epsilon>0$ being a constant that can be chosen to be arbitrarily small.
 \frac{1}{\kappa}\left((d_n^1)^2\!-\lambda\right) & \cdots & \frac{1}{2 \lambda^2}d_n^1 d_n^N\\
 \frac{1}{2 \lambda^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2 \lambda^2}d_n^2 d_n^N\\
 \cdots&\cdots&\cdots\\
-\frac{1}{2 \lambda^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
+\frac{1}{2 \lambda^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-\lambda\right) \\
 \end{array}
 \right],\nonumber
 \end{align}
-where $\lambda = \E(d_n^i)^2 = (1+\epsilon)$ , $\kappa = \tau \left(1- \dfrac{\lambda^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
+where $\lambda = \E(d_n^i)^2 = (1+\epsilon)$ , $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, and $\kappa = \left(\tau - \lambda^2\right)$ for any $i=1,\ldots,N$. 
 %%%%%% Feedback
 \paragraph{\textbf{Feedback term }$\widehat \Psi_n$}
 The Hessian estimate $\widehat H_n$ can be simplified as follows: 
@@ -355,7 +355,7 @@ Choose $d_n^i$, $ i=1,\ldots,N$ to be i.i.d. $U[-\eta,\eta]$ for some $\eta>0$, 
 Then, the RDSA estimate of the gradient is given by
 \begin{align}
 \label{eq:grad-unif}
-\widehat\nabla f(x_n) = \frac3{\eta^2} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
+\widehat\nabla f(x_n) = \frac1{\lambda} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
 \end{align}
 
 The Hessian estimate in this case is given by
@@ -363,16 +363,16 @@ The Hessian estimate in this case is given by
 \label{eq:2rdsa-estimate-unif}
 &\widehat H_n =  M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where } \\
 & M_n =
-\dfrac{9}{10\tau}\left[
+\left[
 \begin{array}{cccc}
-\frac{5}{2}\left((d_n^1)^2-\lambda\right) & \cdots & d_n^1 d_n^N\\
-d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
+\frac{1}{\kappa}\left((d_n^1)^2-\lambda\right) & \cdots &\frac{1}{2 \lambda^2} d_n^1 d_n^N\\
+\frac{1}{2 \lambda^2} d_n^2 d_n^1  &  \cdots & \frac{1}{2 \lambda^2} d_n^2 d_n^N\\
 \cdots&\cdots&\cdots\\
-d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\lambda\right) \\
+\frac{1}{2 \lambda^2} d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-\lambda\right) \\
 \end{array}
 \right].\nonumber
 \end{align}
-where $\lambda = \E(d_n^i)^2 = \frac{\eta^2}{3}$  and $\tau = E (d_n^i)^4= \frac{\eta^4}{5}$, for any $i=1,\ldots,N$. 
+where $\lambda = \E(d_n^i)^2 = \frac{\eta^2}{3}$, $\tau = E (d_n^i)^4= \frac{\eta^4}{5}$ and $\kappa = \left(\tau - \lambda^2\right)$ for any $i=1,\ldots,N$. 
 
 
 The feedback term that we propose can be easily extended to the case of uniform perturbations by using the $M_n$ as defined above instead of that for the asymmetric Bernoulli case.

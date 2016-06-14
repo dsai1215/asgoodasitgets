@@ -119,7 +119,7 @@ $$\overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty
 In the above, $\overline H_n$ is updated according to \eqref{eq:2rdsa-H}. $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-ber} or \eqref{eq:2rdsa-estimate-unif} and the step-sizes $b_n$ are chosen as suggested in \eqref{eq:wieghts}. 
 \end{theorem}
 \begin{proof}
-For proving the main claim regarding $\overline H_n$, we closely follow the approach used to prove a corresponding result for 2SPSA (see Theorem 1 in \cite{spall-jacobian}). 
+For proving the main claim regarding $\overline H_n$, we closely follow the approach used to prove a corresponding result for N-SPSA-4 (see Theorem 1 in \cite{spall-jacobian}). 
 The first step is to prove the following:
 \begin{align}
 \sum_{k=0}^n \dfrac{\delta_k^4 \left(\widehat H_k - \widehat \Psi_k - \E(\widehat H_k \mid \F_k)\right)}{\sum_{i=0}^n \delta_i^4} \rightarrow 0.
@@ -251,7 +251,7 @@ Observing that $\beta_{kn}$ are uniformly upper-bounded, say by $\bar \beta_n$, 
 %\end{align}
 
 \noindent\textbf{Step 3: The big-O result on $\text{trace}[\E (\Lambda_n \tr \Lambda_n)]$ convergence} \\
-In comparison to Eq. (7.6) in \cite{spall-jacobian} that corresponds to \eqref{eq:thmwts} for the 2SPSA setting, there are two extra terms - the third and the fourth - in the RHS of \eqref{eq:thmwts}. 
+In comparison to Eq. (7.6) in \cite{spall-jacobian} that corresponds to \eqref{eq:thmwts} for the N-SPSA-4 setting, there are two extra terms - the third and the fourth - in the RHS of \eqref{eq:thmwts}. 
 
 Consider the third term on the RHS of \eqref{eq:thmwts}. As a consequence of (C9) and the construction of random perturbations $d_k$, it can be seen that $\text{trace}\left[\E ((\Phi_k(H^*) - H^*) \tr  (\Phi_k(H^*) - H^*))\right]$ is uniformly bounded above, say by $\top$, independent of $k$. Thus, the third term is equivalent to the following:
 \begin{align}

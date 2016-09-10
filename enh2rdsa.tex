@@ -36,15 +36,15 @@ Improved Hessian estimation for adaptive \\random directions stochastic approxim
 \thanks{
 $^\dagger$ Department of Computer Science and Automation,
 Indian Institute of Science, Bangalore,
-E-Mail: danda.reddy@csa.iisc.ernet.in}
-\thanks{
-$^\sharp$ Institute for Systems Research, University of Maryland, College Park, Maryland,
-E-Mail: prashla@isr.umd.edu.
-}
-\thanks{
-$^\ddag$ Department of Computer Science and Automation,
+E-Mail: danda.reddy@csa.iisc.ernet.in.}
+\thanks{$^\sharp$ Institute for Systems Research, University of Maryland, College Park, Maryland,
+E-Mail: prashla@isr.umd.edu.}
+\thanks{$^\ddag$ Department of Computer Science and Automation,
 Indian Institute of Science, Bangalore,
-E-Mail: shalabh@csa.iisc.ernet.in
+E-Mail: shalabh@csa.iisc.ernet.in.}
+\thanks{$\ast$ Supported by NSF under Grants CMMI-1434419, CNS-1446665,
+and CMMI-1362303,  by AFOSR under Grant FA9550-15-10050, and
+by the Robert Bosch Centre for Cyber-Physical Systems, IISc.
 }
 }
 
@@ -74,7 +74,7 @@ Numerical experiments show that 2RDSA-IH outperforms both 2SPSA-IH and 2RDSA wit
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{INTRODUCTION}
-We consider the following \textit{simulation optimization} problem:
+\noindent We consider the following \textit{simulation optimization} problem:
 \begin{align}
 \mbox{Find } x^* = \arg\min_{x \in \R^N} f(x). \label{eq:pb}
 \end{align}
@@ -120,7 +120,7 @@ The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost
 
 We establish that the proposed improvements to Hessian estimation in 2RDSA are such  that the resulting 2RDSA-IH algorithm is provably convergent to the true Hessian. 
 %Moreover, we show, for the special case of a quadratic objective, that	2RDSA-IH results in a convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. 
-Further, we show empirically that 2RDSA-IH that we propose here outperforms both 2SPSA-IH of \cite{spall-jacobian} and regular 2RDSA of \cite{prashanth2015rdsa}. Our contribution is important because 2RDSA-IH, like 2RDSA, has lower simulation cost per iteration than 2SPSA and unlike 2RDSA, has an improved Hessian estimation scheme.
+Further, we show empirically that 2RDSA-IH outperforms both 2SPSA-IH of \cite{spall-jacobian} and regular 2RDSA of \cite{prashanth2015rdsa}. Our contribution is important because 2RDSA-IH, like 2RDSA, has lower simulation cost per iteration than 2SPSA and unlike 2RDSA, has an improved Hessian estimation scheme.
 
 The rest of the paper is organized as follows: In Section~\ref{sec:2rdsa-ih}, we
 describe the improved Hessian estimation scheme, which is incorporated into the  second-order RDSA algorithm from \cite{prashanth2015rdsa}. In Section \ref{sec:2rdsa-results}, we present the theoretical results for the second-order RDSA algorithm with our improved Hessian estimation scheme.

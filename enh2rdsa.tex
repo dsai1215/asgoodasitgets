@@ -79,7 +79,7 @@ Numerical experiments show that 2RDSA-IH outperforms both 2SPSA-IH and 2RDSA wit
 \mbox{Find } x^* = \arg\min_{x \in \R^N} f(x). \label{eq:pb}
 \end{align}
 The aim is to find an algorithm that solves \eqref{eq:pb} given only noise-corrupted measurements of the objective $f$, as illustrated in Figure \ref{fig:so}.
-A natural solution approach is to devise an algorithm that incrementally updates the parameter, say $x_n$, in the descent direction using the gradient and/or Hessian of the objective $f$. However, gradient/Hessian of $f$ are unavailable directly and need to be estimated from samples of $f$. 
+A natural solution approach is to devise an algorithm that incrementally updates the parameter, say $x_n$, in the descent direction using the gradient and/or Hessian of the objective $f$. However, gradient/Hessian of $f$ are unavailable directly and need to be estimated from samples of $f$.
 To overcome this, we adopt the simultaneous perturbation (SP) approach - a popular and efficient idea especially in high dimensional problems - see \cite{bhatnagar-book} for a comprehensive treatment of this subject matter. 
 
 
@@ -220,7 +220,7 @@ where $\widehat H_n$ is chosen either according to \eqref{eq:2rdsa-estimate-ber}
 \label{alg:structure}
 \end{algorithm}
 
-Algorithm \ref{alg:structure} presents the pseudocode
+Algorithm \ref{alg:structure} presents the pseudocode.
 \paragraph{\textbf{Function evaluations}}
 Let $y_n$, $y_n^+$ and $y_n^-$ denote the function evaluations at $x_n$, $x_n+\delta_n d_n$ and $x_n - \delta_n d_n$ respectively, i.e., 
 $y_n = f(x_n) + \xi_n$, $y_n^+ = f(x_n+\delta_n d_n) + \xi_n^+$ and 
@@ -290,7 +290,7 @@ The term on the LHS in \eqref{eq:diagzero}, denoted by $\Psi_{n}^{1}(\nabla^2 f(
 
 In analyzing the off-diagonal term ($(k,l)$ where $k < l$) of \eqref{eq:h1}, the following zero-mean term appears:
 \begin{align}
-& \E\left[\left.\left([M_n]_{D}\right)_{k,l}   \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n)\right)\right| \F_n \right] = 0. 
+& \E\left[\left.\left([M_n]_{N}\right)_{k,l}   \left(\sum\limits_{i=1}^N (d_n^i)^2 \nabla^2_{ii} f(x_n)\right)\right| \F_n \right] = 0. 
 \end{align}
 The term on the LHS above, denoted by $\Psi_{n}^{2}(\nabla^2 f(x_n))$, can be written in matrix form as follows: 
 \begin{align}\label{eq:ndmat}
@@ -332,7 +332,7 @@ This is because the third term in \eqref{eq:hnhat} vanishes asymptotically, whil
 
 So, the optimization problem to be solved at instant $n$ is as follows:
 \begin{align}
-\sum \limits_{i=0}^{n} (\tilde b_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:wn-opt}\\
+\min_{ \{\tilde b_k\} } \sum \limits_{i=0}^{n} (\tilde b_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:wn-opt}\\
 \tilde b_i \geq 0 ~\forall i \text{ and }\sum \limits_{i=0}^{n} \tilde b_i = 1.
 \end{align}
 The optimization variable $\tilde b_i$ from the above is related to the Hessian recursion \eqref{eq:2rdsa-H} as follows:

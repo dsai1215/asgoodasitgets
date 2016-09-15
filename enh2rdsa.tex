@@ -79,7 +79,7 @@ Numerical experiments show that 2RDSA-IH outperforms both 2SPSA-IH and 2RDSA wit
 \mbox{Find } x^* = \arg\min_{x \in \R^N} f(x). \label{eq:pb}
 \end{align}
 The aim is to find an algorithm that solves \eqref{eq:pb} given only noise-corrupted measurements of the objective $f$, as illustrated in Figure \ref{fig:so}.
-A natural solution approach is to devise an algorithm that incrementally updates the parameter, say $x_n$, in the descent direction using the gradient and/or Hessian of the objective $f$. However, gradient/Hessian of $f$ are unavailable directly and need to be estimated from samples of $f$.
+A natural solution approach is to devise an algorithm that incrementally updates the parameter, say $x_n$, in the descent direction using the gradient and/or Hessian of the objective $f$. However, gradient/Hessian of $f$ are unavailable directly and need to be estimated from samples of $f$, largely because one does not have access to the distribution of noise.
 To overcome this, we adopt the simultaneous perturbation (SP) approach - a popular and efficient idea especially in high dimensional problems - see \cite{bhatnagar-book} for a comprehensive treatment of this subject matter. 
 
 
@@ -123,7 +123,7 @@ We establish that the proposed improvements to Hessian estimation in 2RDSA are s
 Further, we show empirically that 2RDSA-IH outperforms both 2SPSA-IH of \cite{spall-jacobian} and regular 2RDSA of \cite{prashanth2015rdsa}. Our contribution is important because 2RDSA-IH, like 2RDSA, has lower simulation cost per iteration than 2SPSA and unlike 2RDSA, has an improved Hessian estimation scheme.
 
 The rest of the paper is organized as follows: In Section~\ref{sec:2rdsa-ih}, we
-describe the improved Hessian estimation scheme, which is incorporated into the  second-order RDSA algorithm from \cite{prashanth2015rdsa}. In Section \ref{sec:2rdsa-results}, we present the theoretical results for the second-order RDSA algorithm with our improved Hessian estimation scheme.
+describe the improved Hessian estimation scheme, which is incorporated into the  2RDSA algorithm from \cite{prashanth2015rdsa}. In Section \ref{sec:2rdsa-results}, we present the theoretical results for the 2RDSA algorithm with  improved Hessian estimation.
 In Section~\ref{sec:expts}, we present the results from numerical experiments and finally, in  Section~\ref{sec:conclusions}, provide the concluding remarks.
 
 
@@ -543,7 +543,7 @@ NMSE is the ratio $\l x_{n_\text{end}} - x^* \r^2 / \l x_0 - x^*\r^2$, while nor
 
  \begin{figure}
     \centering
-\tabl{c}{\scalebox{0.9}{\begin{tikzpicture}
+\tabl{c}{\scalebox{0.8}{\begin{tikzpicture}
       \begin{axis}[
 	xlabel={number of simulations},
 	ylabel={Normalized loss},
@@ -598,7 +598,7 @@ Tables \ref{tab:norloss-4thf}--\ref{tab:norloss-quadratic} present the normalize
 
 \section{CONCLUSIONS}
 \label{sec:conclusions}
-We presented an improved Hessian estimation scheme for the second-order random directions stochastic approximation (2RDSA) algorithm \cite{prashanth2015rdsa}. 
+We presented an improved Hessian estimation scheme for the 2RDSA algorithm \cite{prashanth2015rdsa}. 
 The proposed scheme was shown to be provably convergent to the true Hessian.
  %and as a special case, for a quadratic objective resulted in a  convergence rate that is on par with the corresponding rate for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. 
 The advantage with 2RDSA-IH is that it requires only 75\% of the simulation cost per-iteration for 2SPSA with Hessian estimation improvements (2SPSA-IH) \cite{spall-jacobian}. 
@@ -630,7 +630,7 @@ Numerical experiments demonstrated that 2RDSA-IH outperforms both 2SPSA-IH and 2
     \centering
 		\begin{tabular}{c}
 		\begin{subfigure}{0.5\textwidth}
-\tabl{c}{\scalebox{0.8}{\begin{tikzpicture}
+\tabl{c}{\scalebox{0.62}{\begin{tikzpicture}
       \begin{axis}[
 	xlabel={number of simulations},
 	ylabel={Normalized loss},
@@ -673,7 +673,7 @@ anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
 \\
 %%%%%%% Norloss-Quadratic-noisy %%%%%%%%%%%%%%
 \begin{subfigure}{0.5\textwidth}
-\tabl{c}{\scalebox{0.8}{\begin{tikzpicture}
+\tabl{c}{\scalebox{0.62}{\begin{tikzpicture}
       \begin{axis}[
 	xlabel={number of simulations},
 	ylabel={Normalized loss},

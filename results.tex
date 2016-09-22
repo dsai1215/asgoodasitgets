@@ -30,7 +30,7 @@ The reader is referred to Section II-B of \cite{prashanth2015rdsa} for a detaile
 
 \begin{lemma}(\textbf{Bias in Hessian estimate})
 \label{lemma:2rdsa-bias}
-Under (C1)-(C10), with $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-unif} or \eqref{eq:2rdsa-estimate-ber}, we have a.s. that\footnote{Here $\widehat H_n(i,j)$ and $\nabla^2_{ij}f(\cdot)$ denote the $(i,j)$th entry in the Hessian estimate $\widehat H_n$ and the true Hessian $\nabla^2 f(\cdot)$, respectively.}, for $i,j = 1,\ldots,N$,
+Under (C1)-(C10), with $\widehat H_n$ defined according to \eqref{eq:2rdsa-estimate-ber}, we have a.s. that\footnote{Here $\widehat H_n(i,j)$ and $\nabla^2_{ij}f(\cdot)$ denote the $(i,j)$th entry in the Hessian estimate $\widehat H_n$ and the true Hessian $\nabla^2 f(\cdot)$, respectively.}, for $i,j = 1,\ldots,N$,
 \begin{align}
 \left|\E\left[
 \left. \widehat H_n(i,j) \right| \F_n \right] - \nabla^2_{ij} f(x_n)\right| = O(\delta_n^2).
@@ -43,11 +43,12 @@ See Lemma 4 in \cite{prashanth2015rdsa}.
 \begin{theorem}(\textbf{Strong Convergence of Hessian})
 \label{thm:2rdsa-H}
 Under (C1)-(C10), we have that 
-$$\overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty.$$ 
-In the above, $\overline H_n$ is updated according to \eqref{eq:2rdsa-H}. $\widehat H_n$ defined according to either \eqref{eq:2rdsa-estimate-ber} or \eqref{eq:2rdsa-estimate-unif} and the step-sizes $b_n$ are chosen as suggested in \eqref{eq:wieghts}. 
+$$x_n \rightarrow x^*, \overline H_n \rightarrow \nabla^2 f(x^*) \text{ a.s. as } n\rightarrow \infty.$$ 
+In the above, $x_n$ and $\overline H_n$ are updated according to \eqref{eq:e2rdsa} and \eqref{eq:2rdsa-H}, respectively, $\widehat H_n$ defined according to \eqref{eq:2rdsa-estimate-ber} and the step-sizes $b_n$ are chosen as suggested in \eqref{eq:wieghts}. 
 \end{theorem}
 \begin{proof}
-For proving the main claim regarding $\overline H_n$, we closely follow the approach used to prove a corresponding result for 2SPSA (see Theorem 1 in \cite{spall-jacobian}). 
+The first part of the claim regarding $x_n$ follows in exactly the same fashion as the proof of Theorem 5 in \cite{prashanth2015rdsa}.  
+For proving the claim regarding $\overline H_n$, we closely follow the approach used to prove a corresponding result for 2SPSA (see Theorem 1 in \cite{spall-jacobian}). 
 The first step is to prove the following:
 \begin{align}
 \sum_{k=0}^n \dfrac{\delta_k^4 \left(\widehat H_k - \widehat \Psi_k - \E(\widehat H_k \mid \F_k)\right)}{\sum_{i=0}^n \delta_i^4} \rightarrow 0.
@@ -63,7 +64,7 @@ Now \eqref{eq:step1} follows by an application of Kronecker's Lemma along with t
 From Lemma \ref{lemma:2rdsa-bias}, we have 
 $$ \E[ \widehat H_k \mid \F_k] = \nabla^2 f(x_n) + O(\delta_n^2) \text{ a.s.}$$
 Since the Hessian is continuous near $x_n$ and $x_n$ converges almost surely to $x^*$, we have
-\footnote{Since assumptions (C1)-(C10) here are similar to that in \cite{prashanth2015rdsa}, Theorem 5 of \cite{prashanth2015rdsa} holds here as well. In particular, this implies almost sure convergence of $x_n$ to $x^*$.}
+% \footnote{Since assumptions (C1)-(C10) here are similar to that in \cite{prashanth2015rdsa}, Theorem 5 of \cite{prashanth2015rdsa} holds here as well. In particular, this implies almost sure convergence of $x_n$ to $x^*$.}
 \begin{align*}
 \sum_{k=0}^n \dfrac{\delta_k^4 \left(\E(\widehat H_k \mid \F_k)\right)}{\sum_{i=0}^n \delta_i^4} 
 =&\sum_{k=0}^n \dfrac{\delta_k^4 \left(\nabla^2 f(x_n) + O(\delta_n^2)\right)}{\sum_{i=0}^n \delta_i^4}\\

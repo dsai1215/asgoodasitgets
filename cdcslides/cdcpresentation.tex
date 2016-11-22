@@ -1,0 +1,110 @@
+\documentclass{beamer}
+\mode<presentation> {
+\usetheme{Madrid}
+}
+
+%\usepackage{booktabs}
+%
+%\usepackage{bbm}
+%\usepackage{mathrsfs}
+%\usepackage{graphics}
+%\usepackage{graphicx}
+%\usepackage{mathrsfs}
+%\usepackage{cite}
+%\usepackage{amssymb}
+%\usepackage{epsfig}
+%\usepackage{url}
+%\usepackage{epstopdf}
+%\usepackage{setspace}
+%\usepackage{comment}
+\usepackage{macros}
+
+
+%\usefonttheme[onlymath]{serif}
+%\usepackage{verbatim}
+
+
+
+\title[Stochastic optimization]{Improved Hessian estimation for adaptive random directions stochastic approximation} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{ DANDA SAI KOTI REDDY } % Your name
+\institute[IISC] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+%{\large Research Advisor : Prof. Shalabh Bhatnagar} \\
+%\medskip
+%Stochastic systems lab \\
+%Department of Computer Science and Automation \\
+%Indian Institute of Science, Bangalore\\ % Your institution for the title page
+%
+%\textit{danda.reddy@csa.iisc.ernet.in} \\
+%
+% % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+
+\begin{document}
+
+
+
+
+\begin{frame}
+\titlepage 
+\end{frame}
+
+\begin{frame}
+\frametitle{Overview}
+%\begin{block}
+\tableofcontents
+%\end{block}
+\end{frame}
+
+\input{stopt.tex}
+\input{cdcwork.tex}
+%\input{journal.tex}
+
+
+
+\begin{frame}
+\frametitle{\centering  Conclusions and Future work}
+\begin{block}{Conclusions}
+\begin{itemize}
+\item Improved Hessian estimation scheme for the 2RDSA algorithm.
+\item  2RDSA-IH irequires only 75\% of the simulation cost per-iteration for 2SPSA, 2SPSA-IH.
+\end{itemize}
+\end{block}
+\begin{block}{Future work}
+To derive finite time bounds for 2RDSA-IH.
+\end{block}
+
+\end{frame}
+
+
+
+%\begin{frame}[allowframebreaks]
+%\frametitle{References}
+%\nocite{*}
+%\bibliography{reference}
+%\bibliographystyle{plain}
+%\end{frame}
+
+
+\begin{frame}
+
+\begin{block}{}
+\begin{center}
+{\Huge Thank you}
+\end{center}
+\end{block}
+\end{frame}
+
+
+
+
+
+
+
+\end{document}
+
+
+

@@ -1,0 +1,405 @@
+\section{Random directions stochastic approximation (RDSA)}
+\begin{frame}
+\frametitle{\centering  RDSA gradient estimate}
+\begin{block}{Function measurements}
+$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-$
+\end{block}
+\begin{block}{Gradient estimate}
+\begin{align}
+\label{eq:grad-unif}
+\widehat\nabla f(\theta_n) = \frac{1}{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
+\end{align}
+\end{block}
+\begin{equation}
+\label{eq:det-proj}
+ d_n^i =
+  \begin{cases}
+   -1 &  \text{ w.p. } \dfrac{(1+\epsilon)}{(2+\epsilon)}, \\
+   1+\epsilon &  \text{ w.p. } \dfrac{1}{(2+\epsilon)},
+  \end{cases}
+\end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering  Newton algorithm}
+\begin{block}{Stochastic version of Newton method}
+\begin{align}
+\label{eq:newton}
+\theta_{n+1} = \theta_n - a_n (\overline H_n)^{-1}\widehat\nabla f(\theta_n), 
+\end{align}
+\begin{itemize}
+\item $\widehat\nabla f(\theta_n)$ and $\overline H_n$ are estimates of the gradient and Hessian.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering  Newton RDSA}
+\begin{block}{2 RDSA}
+\begin{align}
+\label{eq:2rdsa}
+\theta_{n+1} = \theta_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(\theta_n), \\
+\overline H_n = \frac{n}{n+1} \overline H_{n-1} + \frac{1}{n+1} \widehat H_n.\label{eq:2rdsa-H}
+\end{align}
+\begin{itemize}
+ \item $\widehat H_n$ is an estimate of the true Hessian. 
+ \item $\overline H_n$ is a smoothed version of $\widehat H_n$. 
+ \item $\Upsilon$ projects a matrix onto the set of positive definite matrices. 
+\end{itemize}
+
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering  2RDSA Hessian estimate}
+\begin{block}{Function measurements}
+$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-,\quad y_{n} = f(\theta_n) + \xi_{n}$
+\end{block}
+\begin{block}{}
+\begin{align}
+\label{eq:2rdsa-estimate-ber}
+&\widehat H_n = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where }\\
+& M_n =
+\left[
+\begin{array}{ccc}
+\frac{1}{\kappa}\left((d_n^1)^2\!-(1+\epsilon)\right) & \cdots & \frac{1}{2(1+\epsilon)^2}d_n^1 d_n^N\\
+\frac{1}{2(1+\epsilon)^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2(1+\epsilon)^2}d_n^2 d_n^N\\
+\cdots&\cdots&\cdots\\
+\frac{1}{2(1+\epsilon)^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
+\end{array}
+\right],\nonumber
+\end{align}
+where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
+\end{block}
+\end{frame}
+
+\section{Proposed work}
+\begin{frame}
+\frametitle{\centering Proposed work}
+\begin{block}{2 RDSA - IH}
+\begin{align}
+\label{eq:e2rdsa}
+\theta_{n+1} = & \; \theta_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(\theta_n), \\
+\overline H_n = & \; (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),\label{eq:2rdsa-H}
+\end{align}
+\begin{inparaenum}[\bfseries (i)]
+\item  $\widehat \Psi_n$ is a zero-mean feedback term that reduces the error in Hessian estimate; and\\
+\item $b_n$ is a general step-size that we optimize to improve the Hessian estimate.
+\end{inparaenum}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Proposed work}
+\begin{block}{The simplified Hessian estimate $\widehat H_n$} 
+\begin{align}
+\widehat H_n & = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right) \nonumber \\
+& =  M_n \left[\left(\dfrac{f(\theta_n+\delta_n d_n) + f(\theta_n-\delta_n d_n) - 2 f(\theta_n)}{\delta_n^2}\right) \right.\nonumber \\&\hspace{10em}+\left. \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2}\right)\right] \nonumber \\
+& = M_n \left(d_n\tr \nabla^2 f(\theta_n) d_n +  O(\delta_n^2) + \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right).\label{eq:h0}
+\end{align}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Zero-mean feedback term}
+\begin{block}{Mean of the  Hessian estimate}
+\begin{align}
+ \E\left[\left.\widehat H_n\right| \F_n\right] = & \nabla^2 f(\theta_n) + \E\left[\left.\Psi_{n}(\nabla^2 f(\theta_n))\right| \F_n\right]  +  O(\delta_n^2)\nonumber\\
+&+\E\left[\left.\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right| \F_n\right], \label{eq:hnhat}
+\end{align}
+\end{block}
+\begin{block}{Feedback term}
+\begin{align}
+\Psi_{n}(H) =  [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right) +  [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right).\label{eq:psi}
+\end{align}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Zero-mean feedback term}
+\begin{block}{Problem}
+Feedback term is function of current Hessian  $\nabla^2 f$.
+\end{block}
+\begin{block}{Solution ?}
+Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
+\begin{align}
+\widehat \Psi_n = \Psi_{n} (\overline H_{n-1}).
+\label{eq:psinhat}
+\end{align}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Step-size optimization}
+\begin{block}{Rewriting the Hessian recursion}
+\begin{align}
+\label{eq:hess}
+\overline H_n = \sum\limits_{i=0}^{n} \tilde b_k(\widehat H_i -\widehat \Psi_i).
+\end{align}
+\end{block}
+\begin{block}{Optimization problem for weights}
+\begin{align}
+\min_{ \{\tilde b_k\} } \sum \limits_{i=0}^{n} (\tilde b_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:wn-opt}\\
+\tilde b_i \geq 0 ~\forall i \text{ and }\sum \limits_{i=0}^{n} \tilde b_i = 1.
+\end{align}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Step-size optimization}
+\begin{block}{Above optimization problem solution}
+\begin{align}
+\tilde b_i^* = \delta_i^{4}/\sum \limits_{j=0}^{n} \delta_j^{4}, i=1,\ldots,n.
+\end{align}
+\end{block}
+\begin{block}{Optimal weights for original Hessian recursion}
+\begin{align}
+\label{eq:wieghts}
+b_i  = \delta_i^{4}/\sum\limits_{j=0}^{i} \delta_j^{4}.
+\end{align}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Convergence analysis}
+
+\begin{lemma}(\textbf{Bias in Hessian estimate})
+\label{lemma:2rdsa-bias}
+Under (C1)-(C10), with $\widehat H_n$ defined according to \eqref{eq:2rdsa-estimate-ber}, we have a.s. that\footnote{Here $\widehat H_n(i,j)$ and $\nabla^2_{ij}f(\cdot)$ denote the $(i,j)$th entry in the Hessian estimate $\widehat H_n$ and the true Hessian $\nabla^2 f(\cdot)$, respectively.}, for $i,j = 1,\ldots,N$,
+\begin{align}
+\left|\E\left[
+\left. \widehat H_n(i,j) \right| \F_n \right] - \nabla^2_{ij} f(\theta_n)\right| = O(\delta_n^2).
+\end{align} 
+\end{lemma}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\centering Convergence analysis}
+\begin{theorem}(\textbf{Strong Convergence of Hessian})
+\label{thm:2rdsa-H}
+Under (C1)-(C10), we have that 
+$$\theta_n \rightarrow \theta^*, \overline H_n \rightarrow \nabla^2 f(\theta^*) \text{ a.s. as } n\rightarrow \infty.$$ 
+In the above, $\theta_n$ and $\overline H_n$ are updated according to \eqref{eq:e2rdsa} and \eqref{eq:2rdsa-H}, respectively, $\widehat H_n$ defined according to \eqref{eq:2rdsa-estimate-ber} and the step-sizes $b_n$ are chosen as suggested in \eqref{eq:wieghts}. 
+\end{theorem}
+\end{frame}
+
+\section{Numerical Results}
+\begin{frame}
+\frametitle{\centering Numerical Results}
+\begin{block}{Quadratic loss}
+\begin{align}
+f(x) = \theta\tr A \theta + b\tr \theta.\label{eq:quadratic}
+\end{align}
+\end{block}
+\begin{block}{Fourth-order loss}
+\begin{align} 
+f(x) = \theta\tr A\tr A \theta + 0.1 \sum_{j=1}^N (A\theta)^3_j + 0.01 \sum_{j=1}^N (A\theta)^4_j.\label{eq:4thorder}
+ \end{align} 
+ \end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Numerical Results}
+\begin{block}{Normalized MSE (NMSE) }
+\begin{align}
+\l \theta_{n_\text{end}} - \theta^* \r^2 / \l \theta_0 - \theta^*\r^2
+\end{align}
+\end{block}
+\begin{block}{ Normalized loss}
+\begin{align} 
+f(\theta_{n_\text{end}})/f(\theta_0)
+ \end{align} 
+ \end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\centering Numerical Results}
+\begin{table}
+\centering
+ \caption{Normalized loss values for fourth-order  objective \eqref{eq:4thorder} with and without noise: standard error from $500$ replications shown after $\pm$}
+\label{tab:norloss-4thf}
+\begin{tabular}{|c|c|c|}
+\toprule
+\rowcolor{gray!20}
+\multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0.1$}}}\\[1em]
+%&&&\\
+\midrule
+  & \multirow{2}{*}{\textbf{Regular}} & \textbf{Improved Hessian}  \\
+  & & \textbf{ estimation} \\
+ \midrule
+\textbf{2SPSA} & $0.132 \pm 0.0267$ & $0.104 \pm 0.0355$\\
+&&\\
+\textbf{2RDSA-Unif} &$0.115 \pm 0.0214$ & $0.0271 \pm 0.0538$\\ 
+&&\\
+\textbf{2RDSA-AsymBer}& $0.0471 \pm 0.021$& $\bm{0.0099 \pm 0.0014}$\\
+ \bottomrule
+ %%%%%%%%%%%%2nd ordr
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Numerical Results}
+\begin{table}
+\centering
+ \caption{Normalized loss values for fourth-order  objective \eqref{eq:4thorder} with and without noise: standard error from $500$ replications shown after $\pm$}
+\label{tab:norloss-4thf}
+\begin{tabular}{|c|c|c|}
+\toprule
+\rowcolor{gray!20}
+\multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0$}}}\\[1em]
+%&&&\\
+\midrule
+  & \multirow{2}{*}{\textbf{Regular}} & \textbf{Improved Hessian}  \\
+  & & \textbf{ estimation} \\
+ \midrule
+\textbf{2SPSA} & $0.0795 \pm 0.0234$ & $0.0628 \pm 0.0234$\\
+&&\\
+\textbf{2RDSA-Unif} &$0.0813 \pm 0.0275$ & $0.0214 \pm 0.00376$\\ 
+&&\\
+\textbf{2RDSA-AsymBer}& $0.0199 \pm 0.0114$& $\bm{0.0098 \pm 0.00147}$\\
+ \bottomrule
+ \end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{\centering Numerical Results}
+\begin{table}
+\centering
+ \caption{NMSE values for quadratic objective \eqref{eq:quadratic} with and without noise: standard error from $500$ replications shown after $\pm$}
+\label{tab:nmse-quadratic}
+\begin{tabular}{|c|c|c|}
+\toprule
+\rowcolor{gray!20}
+\multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0.1$}}}\\[1em]
+%&&&\\
+\midrule
+  & \multirow{2}{*}{\textbf{Regular}} & \textbf{Improved Hessian}  \\
+  & & \textbf{ estimation} \\
+ \midrule
+\textbf{2SPSA} & $0.9491 \pm 0.0131$ & $0.5495 \pm 0.0217$\\
+&&\\
+\textbf{2RDSA-Unif} &$1.0073 \pm 0.0140$ & $0.1953 \pm 0.0095$\\ 
+&&\\
+\textbf{2RDSA-AsymBer}& $0.1667 \pm 0.0095$& $\bm{0.0324 \pm 0.0007}$\\
+ \bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}
+\frametitle{\centering Numerical Results}
+\begin{table}
+\centering
+ \caption{NMSE values for quadratic objective \eqref{eq:quadratic} with and without noise: standard error from $500$ replications shown after $\pm$}
+\label{tab:nmse-quadratic}
+\begin{tabular}{|c|c|c|}
+\toprule
+\rowcolor{gray!20}
+\multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0$}}}\\[1em]
+%&&&\\
+\midrule
+  & \multirow{2}{*}{\textbf{Regular}} & \textbf{Improved Hessian}  \\
+  & & \textbf{ estimation} \\
+ \midrule
+\textbf{2SPSA} & $0.7325 \pm 0.0180$ & $0.3939 \pm 0.0230$\\
+&&\\
+\textbf{2RDSA-Unif} &$0.9834 \pm 0.0170$ & $0.1623 \pm 0.0086$\\ 
+&&\\
+\textbf{2RDSA-AsymBer}& $0.0686 \pm 0.0078$& $\bm{0.0316 \pm 0.0006}$\\
+ \bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{\centering Numerical Results}
+%\newcommand{\errorband}[5][]{ % x column, y column, error column, optional argument for setting style of the area plot
+%\pgfplotstableread[col sep=comma, skip first n=2]{#2}\datatable
+%    % Lower bound (invisible plot)
+%    \addplot [draw=none, stack plots=y, forget plot] table [
+%        x={#3},
+%        y expr=\thisrow{#4}-2*\thisrow{#5}
+%    ] {\datatable};
+%
+%    % Stack twice the error, draw as area plot
+%    \addplot [draw=none, fill=gray!40, stack plots=y, area legend, #1] table [
+%        x={#3},
+%        y expr=4*\thisrow{#5}
+%    ] {\datatable} \closedcycle;
+%
+%    % Reset stack using invisible plot
+%    \addplot [forget plot, stack plots=y,draw=none] table [x={#3}, y expr=-(\thisrow{#4}+2*\thisrow{#5})] {\datatable};
+%}
+%
+% \begin{figure}
+%    \centering
+%\tabl{c}{\scalebox{0.9}{\begin{tikzpicture}
+%      \begin{axis}[
+%	xlabel={number of simulations},
+%	ylabel={Normalized loss},
+%       legend entries={
+%	 ,2SPSA,,2SPSA-IH,,2RDSA-Unif,,2RDSA-Unif-IH,,2RDSA-AsymBer,,2RDSA-AsymBer-IH },
+%        %legend pos=outer north east,
+%			legend style={
+%at={(0,0)},
+%anchor=north,at={(axis description cs:0.5,-0.2)},legend columns=2}	]
+%      % 2SPSA
+%      \errorband[red!50!white, opacity=0.3]{norloss_vs_simulations_noisycase.csv}{0}{1}{2}
+%      \addplot [thick, red,mark=square*,mark options={scale=0.7}] table [x index=0, y index=1,col sep=comma] {norloss_vs_simulations_noisycase.csv};
+%			%%% With IH
+%      % 2SPSA
+%      \errorband[darkgray!50!white, opacity=0.3]{norloss_vs_simulations_noisycase.csv}{0}{7}{8}
+%      \addplot [thick, darkgray,mark=*,mark options={scale=0.75}] table [x index=0, y index=7,col sep=comma] {norloss_vs_simulations_noisycase.csv};
+%			
+%      % 2RDSA-Unif
+%      \errorband[blue!50!white, opacity=0.3]{norloss_vs_simulations_noisycase.csv}{0}{3}{4}
+%      \addplot [thick, blue,mark=square*,mark options={scale=0.7}] table [x index=0, y index=3,col sep=comma] {norloss_vs_simulations_noisycase.csv};
+%			%%% With IH
+%      % 2RDSA-Unif
+%      \errorband[magenta!50!white, opacity=0.3]{norloss_vs_simulations_noisycase.csv}{0}{9}{10}
+%      \addplot [thick, magenta,mark=*,mark options={scale=0.75}] table [x index=0, y index=9,col sep=comma] {norloss_vs_simulations_noisycase.csv};
+%
+%
+%      % 2RDSA-AsymBer
+%      \errorband[green!50!white, opacity=0.3]{norloss_vs_simulations_noisycase.csv}{0}{5}{6}
+%      \addplot [thick, darkgreen,mark=square*,mark options={scale=0.7}] table [x index=0, y index=5,col sep=comma] {norloss_vs_simulations_noisycase.csv};
+%			%%% With IH	
+%      % 2RDSA-AsymBer
+%      \errorband[violet!50!white, opacity=0.3]{norloss_vs_simulations_noisycase.csv}{0}{11}{12}
+%      \addplot [thick, violet, mark=*,mark options={scale=0.75}] table [x index=0, y index=11,col sep=comma] {norloss_vs_simulations_noisycase.csv};
+%      \end{axis}
+%      \end{tikzpicture}}\\}
+%			\caption{Normalized loss vs. number of simulations for fourth-order loss \eqref{eq:4thorder} with $\sigma=0.1$ for 2SPSA, 2RDSA-Unif and 2RDSA-AsymBer algorithms with/without improved Hessian estimation: bands around the curves represent standard error from $500$ replications. }
+%      \label{fig:norlossvssims} 
+%\end{figure} 
+%\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

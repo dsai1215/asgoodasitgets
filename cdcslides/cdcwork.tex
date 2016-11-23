@@ -1,15 +1,20 @@
 \section{Random directions stochastic approximation (RDSA)}
 \begin{frame}
+\begin{small}
 \frametitle{\centering  RDSA gradient estimate}
+
 \begin{block}{Function measurements}
 $y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-$
 \end{block}
 \begin{block}{Gradient estimate}
+\begin{columns}[T]
+\begin{column}{.48\textwidth}
+\color{red}\rule{\linewidth}{4pt}
+Asymmetric Bernoulli
 \begin{align}
 \label{eq:grad-unif}
 \widehat\nabla f(\theta_n) = \frac{1}{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
 \end{align}
-\end{block}
 \begin{equation}
 \label{eq:det-proj}
  d_n^i =
@@ -18,22 +23,39 @@ $y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delt
    1+\epsilon &  \text{ w.p. } \dfrac{1}{(2+\epsilon)},
   \end{cases}
 \end{equation}
-\end{frame}
-
-\begin{frame}
-\frametitle{\centering  Newton algorithm}
-\begin{block}{Stochastic version of Newton method}
+\end{column}
+\begin{column}{.48\textwidth}
+\color{blue}\rule{\linewidth}{4pt}
+Uniform perturbations
 \begin{align}
-\label{eq:newton}
-\theta_{n+1} = \theta_n - a_n (\overline H_n)^{-1}\widehat\nabla f(\theta_n), 
+\label{eq:grad-unif}
+\widehat\nabla f(x_n) = \frac3{\eta^2} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
 \end{align}
-\begin{itemize}
-\item $\widehat\nabla f(\theta_n)$ and $\overline H_n$ are estimates of the gradient and Hessian.
-\end{itemize}
+\begin{equation}
+\label{eq:det-proj-unif}
+ d_n^i = Unif[-\eta,\eta], \eta>0.
+ \end{equation}
+\end{column}
+\end{columns}
 \end{block}
+\end{small}
 \end{frame}
 
+%\begin{frame}
+%\frametitle{\centering  Newton algorithm}
+%\begin{block}{Stochastic version of Newton method}
+%\begin{align}
+%\label{eq:newton}
+%\theta_{n+1} = \theta_n - a_n (\overline H_n)^{-1}\widehat\nabla f(\theta_n), 
+%\end{align}
+%\begin{itemize}
+%\item $\widehat\nabla f(\theta_n)$ and $\overline H_n$ are estimates of the gradient and Hessian.
+%\end{itemize}
+%\end{block}
+%\end{frame}
+
 \begin{frame}
+\begin{small}
 \frametitle{\centering  Newton RDSA}
 \begin{block}{2 RDSA}
 \begin{align}
@@ -48,14 +70,87 @@ $y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delt
 \end{itemize}
 
 \end{block}
+\end{small}
 \end{frame}
 
+%\begin{frame}
+%\begin{small}
+%\frametitle{\centering  2RDSA Hessian estimate}
+%\begin{block}{Function measurements}
+%$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-,\quad y_{n} = f(\theta_n) + \xi_{n}$
+%\end{block}
+%\begin{block}{}
+%\begin{align}
+%\label{eq:2rdsa-estimate-ber}
+%\widehat H_n = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where }\\
+%& M_n =
+%\left[
+%\begin{array}{ccc}
+%\frac{1}{\kappa}\left((d_n^1)^2\!-(1+\epsilon)\right) & \cdots & \frac{1}{2(1+\epsilon)^2}d_n^1 d_n^N\\
+%\frac{1}{2(1+\epsilon)^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2(1+\epsilon)^2}d_n^2 d_n^N\\
+%\cdots&\cdots&\cdots\\
+%\frac{1}{2(1+\epsilon)^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
+%\end{array}
+%\right],\nonumber
+%\end{align}
+%where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
+%\end{block}
+%%\begin{columns}[T]
+%%\begin{column}{.48\textwidth}
+%%\color{red}\rule{\linewidth}{4pt}
+%%Asymmetric Bernoulli
+%%\begin{align}
+%%%\label{eq:grad-unif}
+%%M_n =
+%%\left[
+%%\begin{array}{ccc}
+%%\frac{1}{\kappa}\left((d_n^1)^2\!-(1+\epsilon)\right) & \cdots & \frac{1}{2(1+\epsilon)^2}d_n^1 d_n^N\\
+%%\frac{1}{2(1+\epsilon)^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2(1+\epsilon)^2}d_n^2 d_n^N\\
+%%\cdots&\cdots&\cdots\\
+%%\frac{1}{2(1+\epsilon)^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
+%%\end{array}
+%%\right],\nonumber
+%%\end{align}
+%%%\begin{equation}
+%%%\label{eq:det-proj}
+%%% d_n^i =
+%%%  \begin{cases}
+%%%   -1 &  \text{ w.p. } \dfrac{(1+\epsilon)}{(2+\epsilon)}, \\
+%%%   1+\epsilon &  \text{ w.p. } \dfrac{1}{(2+\epsilon)},
+%%%  \end{cases}
+%%%\end{equation}
+%%\end{column}
+%%\begin{column}{.48\textwidth}
+%%\color{blue}\rule{\linewidth}{4pt}
+%%Uniform perturbations
+%%\begin{align}
+%%%\label{eq:grad-unif}
+%%M_n =
+%%\dfrac{9}{2\eta^4}\left[
+%%\begin{array}{cccc}
+%%\frac{5}{2}\left((d_n^1)^2-\frac{\eta^2}{3}\right) & \cdots & d_n^1 d_n^N\\
+%%d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
+%%\cdots&\cdots&\cdots\\
+%%d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
+%%\end{array}
+%%\right].\nonumber
+%%\end{align}
+%%%\begin{equation}
+%%%\label{eq:det-proj-unif}
+%%% d_n^i = Unif[-\eta,\eta], \eta>0.
+%%% \end{equation}
+%%\end{column}
+%%\end{columns}
+%\end{small}
+%\end{frame}
+
 \begin{frame}
+\begin{small}
 \frametitle{\centering  2RDSA Hessian estimate}
 \begin{block}{Function measurements}
 $y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-,\quad y_{n} = f(\theta_n) + \xi_{n}$
 \end{block}
-\begin{block}{}
+\begin{block}{Asymmetric Bernoulli Perturbation}
 \begin{align}
 \label{eq:2rdsa-estimate-ber}
 &\widehat H_n = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where }\\
@@ -71,11 +166,37 @@ $y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delt
 \end{align}
 where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
 \end{block}
+\end{small}
 \end{frame}
 
-\section{Proposed work}
 \begin{frame}
-\frametitle{\centering Proposed work}
+\begin{small}
+\frametitle{\centering  2RDSA Hessian estimate}
+\begin{block}{Uniform perturbations}
+\begin{align}
+\label{eq:2rdsa-estimate-unif}
+&\widehat H_n =  M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where } \\
+& M_n =
+\dfrac{9}{2\eta^4}\left[
+\begin{array}{cccc}
+\frac{5}{2}\left((d_n^1)^2-\frac{\eta^2}{3}\right) & \cdots & d_n^1 d_n^N\\
+d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
+\cdots&\cdots&\cdots\\
+d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
+\end{array}
+\right].\nonumber
+\end{align}
+\end{block}
+\end{small}
+\end{frame}
+
+
+
+\section{Proposed work}
+
+\begin{frame}
+\begin{small}
+\frametitle{\centering Our algorithm}
 \begin{block}{2 RDSA - IH}
 \begin{align}
 \label{eq:e2rdsa}
@@ -87,9 +208,11 @@ where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E
 \item $b_n$ is a general step-size that we optimize to improve the Hessian estimate.
 \end{inparaenum}
 \end{block}
+\end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Proposed work}
 \begin{block}{The simplified Hessian estimate $\widehat H_n$} 
 \begin{align}
@@ -98,9 +221,11 @@ where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E
 & = M_n \left(d_n\tr \nabla^2 f(\theta_n) d_n +  O(\delta_n^2) + \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right).\label{eq:h0}
 \end{align}
 \end{block}
+\end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Zero-mean feedback term}
 \begin{block}{Mean of the  Hessian estimate}
 \begin{align}
@@ -113,9 +238,11 @@ where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E
 \Psi_{n}(H) =  [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right) +  [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right).\label{eq:psi}
 \end{align}
 \end{block}
+\end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Zero-mean feedback term}
 \begin{block}{Problem}
 Feedback term is function of current Hessian  $\nabla^2 f$.
@@ -127,9 +254,11 @@ Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
 \label{eq:psinhat}
 \end{align}
 \end{block}
+\end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Step-size optimization}
 \begin{block}{Rewriting the Hessian recursion}
 \begin{align}
@@ -143,9 +272,11 @@ Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
 \tilde b_i \geq 0 ~\forall i \text{ and }\sum \limits_{i=0}^{n} \tilde b_i = 1.
 \end{align}
 \end{block}
+\end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Step-size optimization}
 \begin{block}{Above optimization problem solution}
 \begin{align}
@@ -158,9 +289,11 @@ Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
 b_i  = \delta_i^{4}/\sum\limits_{j=0}^{i} \delta_j^{4}.
 \end{align}
 \end{block}
+\end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Convergence analysis}
 
 \begin{lemma}(\textbf{Bias in Hessian estimate})
@@ -171,10 +304,12 @@ Under (C1)-(C10), with $\widehat H_n$ defined according to \eqref{eq:2rdsa-estim
 \left. \widehat H_n(i,j) \right| \F_n \right] - \nabla^2_{ij} f(\theta_n)\right| = O(\delta_n^2).
 \end{align} 
 \end{lemma}
+\end{small}
 \end{frame}
 
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Convergence analysis}
 \begin{theorem}(\textbf{Strong Convergence of Hessian})
 \label{thm:2rdsa-H}
@@ -182,10 +317,12 @@ Under (C1)-(C10), we have that
 $$\theta_n \rightarrow \theta^*, \overline H_n \rightarrow \nabla^2 f(\theta^*) \text{ a.s. as } n\rightarrow \infty.$$ 
 In the above, $\theta_n$ and $\overline H_n$ are updated according to \eqref{eq:e2rdsa} and \eqref{eq:2rdsa-H}, respectively, $\widehat H_n$ defined according to \eqref{eq:2rdsa-estimate-ber} and the step-sizes $b_n$ are chosen as suggested in \eqref{eq:wieghts}. 
 \end{theorem}
+\end{small}
 \end{frame}
 
 \section{Numerical Results}
 \begin{frame}
+\begin{small}
 \frametitle{\centering Numerical Results}
 \begin{block}{Quadratic loss}
 \begin{align}
@@ -197,9 +334,11 @@ f(x) = \theta\tr A \theta + b\tr \theta.\label{eq:quadratic}
 f(x) = \theta\tr A\tr A \theta + 0.1 \sum_{j=1}^N (A\theta)^3_j + 0.01 \sum_{j=1}^N (A\theta)^4_j.\label{eq:4thorder}
  \end{align} 
  \end{block}
+ \end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Numerical Results}
 \begin{block}{Normalized MSE (NMSE) }
 \begin{align}
@@ -211,10 +350,12 @@ f(x) = \theta\tr A\tr A \theta + 0.1 \sum_{j=1}^N (A\theta)^3_j + 0.01 \sum_{j=1
 f(\theta_{n_\text{end}})/f(\theta_0)
  \end{align} 
  \end{block}
+ \end{small}
 \end{frame}
 
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Numerical Results}
 \begin{table}
 \centering
@@ -238,9 +379,11 @@ f(\theta_{n_\text{end}})/f(\theta_0)
  %%%%%%%%%%%%2nd ordr
 \end{tabular}
 \end{table}
+ \end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Numerical Results}
 \begin{table}
 \centering
@@ -263,10 +406,12 @@ f(\theta_{n_\text{end}})/f(\theta_0)
  \bottomrule
  \end{tabular}
 \end{table}
+ \end{small}
 \end{frame}
 
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Numerical Results}
 \begin{table}
 \centering
@@ -289,9 +434,11 @@ f(\theta_{n_\text{end}})/f(\theta_0)
  \bottomrule
 \end{tabular}
 \end{table}
+ \end{small}
 \end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering Numerical Results}
 \begin{table}
 \centering
@@ -314,6 +461,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
  \bottomrule
 \end{tabular}
 \end{table}
+ \end{small}
 \end{frame}
 
 %\begin{frame}

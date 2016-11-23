@@ -1,88 +1,122 @@
-%\section{Improved Hessian estimation for adaptive random directions stochastic approximation }
+
 
 \section{Motivation}
 \begin{frame}
 \frametitle{\centering Motivation}
-\begin{block}{}
-
+\begin{small}
+\begin{block}{Optimization under uncertainity}
+\begin{columns}[T]
+\begin{column}{.48\textwidth}
+\color{red}\rule{\linewidth}{4pt}
+Energy Demand management
 \begin{itemize}
-\item Communication networks
-\begin{itemize}
-\item To optimally allocate link bandwidth amongst competing traffic flows.
+\item Consumer demand is uncertain.
+\item Energy generation is also uncertain.
+\item Objective is to minimize the difference.
 \end{itemize}
-\item Vehicular traffic network
-\begin{itemize}
-\item To find the optimal order to switch traffic lights at  junctions .
-\end{itemize}
-\item Manufacturing systems
-\begin{itemize}
-\item To decide the optimal order in which to allocate machine capacity for manufacturing various products.
-\end{itemize}
-
-\item Economics
-\end{itemize}
+\end{column}
+\begin{column}{.48\textwidth}
+\begin{figure}
+\includegraphics[width=6cm,height=4cm]{energymgmt}
+\end{figure}
+\end{column}
+\end{columns}
 \end{block}
+\end{small}
 \end{frame}
+
+
+
+
+%\begin{frame}
+%\frametitle{\centering Motivation}
+%\begin{block}{}
+%
+%\begin{itemize}
+%\item Communication networks
+%\begin{itemize}
+%\item To optimally allocate link bandwidth amongst competing traffic flows.
+%\end{itemize}
+%\item Vehicular traffic network
+%\begin{itemize}
+%\item To find the optimal order to switch traffic lights at  junctions .
+%\end{itemize}
+%\item Manufacturing systems
+%\begin{itemize}
+%\item To decide the optimal order in which to allocate machine capacity for manufacturing various products.
+%\end{itemize}
+%
+%\item Economics
+%\end{itemize}
+%\end{block}
+%\end{frame}
+
 
 \section{Introduction }
 %\subsection{Classification of optimization problems}
 \begin{frame}
 \frametitle{\centering Classification of optimization problems}
 \begin{block}{Basic optimization problem}
+\begin{small}
 To find $\theta^{*}$ that minimizes the objective function $f(\theta)$ :
 \begin{align}\label{eq:opt}
  \underset{\theta \in \Theta}{\min} ~f(\theta),
 \end{align}
+\end{small}
 \end{block}
+\begin{small}
 \begin{itemize}
 \item $f \colon \mathbb{R}^N \to \mathbb{R}$ is called the objective function.
 \item $\theta$ is tunable N-dimensional parameter
 \item $\Theta \subseteq \mathbb{R}^N$ is the constraint set in which $\theta$ takes values.
 \end{itemize}
+\end{small}
 \end{frame}
 
 \begin{frame}
 \frametitle{\centering Based on  objective function}
-\begin{block}{Deterministic optimization problem}
-If we have complete information about
+\begin{small}
+\begin{columns}[T]
+\begin{column}{.48\textwidth}
+\color{red}\rule{\linewidth}{4pt}
+Deterministic optimization problem
 \begin{itemize}
-\item Objective function $f$.
+\item Complete information about objective function $f$.
 \item First and higher order derivatives.
 \item Set $\Theta$.
 \end{itemize}
-\end{block}
-
-\end{frame}
-
-
-\begin{frame}
-\frametitle{\centering Based on objective function ctd.. }
-\begin{block}{Stochastic optimization problem}
+\end{column}
+\begin{column}{.48\textwidth}
+\color{blue}\rule{\linewidth}{4pt}
+Stochastic optimization problem
 \begin{itemize}
 \item We have little knowledge on the structure of $f$.
 \item $f$ cannot be obtained directly.
 \item $f(\theta) \equiv E_{\xi}[h(\theta,\xi)]$, where $\xi$ comprises the randomness in the system.
 \end{itemize}
 Complex  to find $\theta^{*}$ only on the basis of noisy samples.
-\end{block}
+\end{column}
+\end{columns}
+\end{small}
 \end{frame}
 
-\begin{frame}
-\frametitle{\centering Based on feasible region}
-\begin{block}{}
-Based on structure of feasible region $\Theta$, optimization problems can be classified into:
-\begin{itemize}
-\item Continuous
-\item Discrete
-\item Hybrid
-\end{itemize}
-\end{block}
-\end{frame}
+%\begin{frame}
+%\frametitle{\centering Based on feasible region}
+%\begin{block}{}
+%Based on structure of feasible region $\Theta$, optimization problems can be classified into:
+%\begin{itemize}
+%\item Continuous
+%\item Discrete
+%\item Hybrid
+%\end{itemize}
+%\end{block}
+%\end{frame}
 
 \section{Optimization via Simulation}
 
 \begin{frame}
 \frametitle{\centering  Stochastic optimization via simulation}
+\begin{small}
 \begin{block}{}
 Stochastic optimization deals with  highly nonlinear and high dimensional systems. The challenges with these problems are:
 \begin{itemize}
@@ -93,10 +127,6 @@ Stochastic optimization deals with  highly nonlinear and high dimensional system
 \begin{block}{}
 A good alternative of modelling and analysis is \textbf{"Simulation"}
 \end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{\centering Simulation optimization}
 \begin{block}{Function measurements}
 \tikzstyle{block} = [draw, fill=white, rectangle,
    minimum height=3em, minimum width=6em]
@@ -122,6 +152,7 @@ A good alternative of modelling and analysis is \textbf{"Simulation"}
 \end{figure}
 
 \end{block}
+\end{small}
 \end{frame}
 
 
@@ -268,6 +299,7 @@ A good alternative of modelling and analysis is \textbf{"Simulation"}
 %\end{frame}
 
 \begin{frame}
+\begin{small}
 \frametitle{\centering  Stochastic approximation algorithm (SA)}
 \begin{block}{General iterative form of SA algorithm}
 \begin{align}\label{saalg}
@@ -283,6 +315,7 @@ A good alternative of modelling and analysis is \textbf{"Simulation"}
 \begin{block}{}
 SA algorithm is considered  as a stochastic analog of \textbf{gradient decent method}.
 \end{block}
+\end{small}
 \end{frame}
 
 %\begin{frame}

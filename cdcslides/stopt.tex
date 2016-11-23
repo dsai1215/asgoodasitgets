@@ -10,18 +10,35 @@
 \color{red}\rule{\linewidth}{4pt}
 Energy Demand management
 \begin{itemize}
-\item Consumer demand is uncertain.
-\item Energy generation is also uncertain.
+\item Consumer demand, energy generation are uncertain.
 \item Objective is to minimize the difference.
 \end{itemize}
 \end{column}
 \begin{column}{.48\textwidth}
 \begin{figure}
-\includegraphics[width=6cm,height=4cm]{energymgmt}
+\includegraphics[width=5cm,height=3cm]{energymgmt}
 \end{figure}
 \end{column}
 \end{columns}
 \end{block}
+\begin{block}{}
+\begin{columns}[T]
+\begin{column}{.48\textwidth}
+\color{red}\rule{\linewidth}{4pt}
+Traffic signal control
+\begin{itemize}
+\item Optimal order to switch traffic lights.
+\item Objective is to minimize weighting time.
+\end{itemize}
+\end{column}
+\begin{column}{.48\textwidth}
+\begin{figure}
+\includegraphics[width=4cm,height=2.7cm]{traffic}
+\end{figure}
+\end{column}
+\end{columns}
+\end{block}
+
 \end{small}
 \end{frame}
 
@@ -55,7 +72,7 @@ Energy Demand management
 \section{Introduction }
 %\subsection{Classification of optimization problems}
 \begin{frame}
-\frametitle{\centering Classification of optimization problems}
+\frametitle{\centering Optimization problems}
 \begin{block}{Basic optimization problem}
 \begin{small}
 To find $\theta^{*}$ that minimizes the objective function $f(\theta)$ :
@@ -300,20 +317,20 @@ A good alternative of modelling and analysis is \textbf{"Simulation"}
 
 \begin{frame}
 \begin{small}
-\frametitle{\centering  Stochastic approximation algorithm (SA)}
-\begin{block}{General iterative form of SA algorithm}
+\frametitle{\centering  Stochastic approximation + Gradient descent}
+\begin{block}{Stochastic analog of gradient descent}
 \begin{align}\label{saalg}
 \theta_{n+1} = \Gamma_{\Theta} \left [\theta_{n} - a_{n} \widehat{\nabla} f(\theta_{n}) \right],
 \end{align}
 
 \begin{itemize}
 \item $ \widehat{\nabla} f(\theta_{n})$ is an \textbf{noisy} estimate of the gradient $ {\nabla} f(\theta_{n})$.
-\item $\{a_{n}\}$ is a  \textbf{pre-determined} step-sizes satisfying: $\sum_{n=1}^{\infty} a_{n}  = \infty$,  $\sum_{n = 1}^{\infty} a_{n}^{2} < \infty$.
+\item $\{a_{n}\}$ are  \textbf{pre-determined} step-sizes satisfying: $\sum_{n=1}^{\infty} a_{n}  = \infty$,  $\sum_{n = 1}^{\infty} a_{n}^{2} < \infty$.
 \item $\Gamma_{\Theta}$ denotes the projection of a point  onto $\Theta$.
 \end{itemize}
 \end{block}
 \begin{block}{}
-SA algorithm is considered  as a stochastic analog of \textbf{gradient decent method}.
+SA algorithm is a stochastic analog of \textbf{gradient decent method}.
 \end{block}
 \end{small}
 \end{frame}

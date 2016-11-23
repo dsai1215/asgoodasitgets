@@ -1,3 +1,31 @@
+
+\begin{frame}
+\begin{small}
+\frametitle{\centering  Prior Work}
+\begin{block}{Prior Work}
+\begin{itemize}
+\item Second-order SPSA which uses four function measurements for Hessian estimation was proposed.
+\item Feedback and weighting mechanisms for improving Hessian estimate of 2SPSAalgorithm  was proposed.
+\item Second-orde RDSA algorithm which uses three simulations for Hessian estimation was proposed.
+\end{itemize}
+\end{block}
+\begin{block}{Our work}
+We propose feedback and weighting mechanisms for improving Hessian estimate for 2RDSA algorithm.
+\end{block}
+\end{small}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Random directions stochastic approximation (RDSA)}
 \begin{frame}
 \begin{small}
@@ -54,24 +82,24 @@ Uniform perturbations
 %\end{block}
 %\end{frame}
 
-\begin{frame}
-\begin{small}
-\frametitle{\centering  Newton RDSA}
-\begin{block}{2 RDSA}
-\begin{align}
-\label{eq:2rdsa}
-\theta_{n+1} = \theta_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(\theta_n), \\
-\overline H_n = \frac{n}{n+1} \overline H_{n-1} + \frac{1}{n+1} \widehat H_n.\label{eq:2rdsa-H}
-\end{align}
-\begin{itemize}
- \item $\widehat H_n$ is an estimate of the true Hessian. 
- \item $\overline H_n$ is a smoothed version of $\widehat H_n$. 
- \item $\Upsilon$ projects a matrix onto the set of positive definite matrices. 
-\end{itemize}
-
-\end{block}
-\end{small}
-\end{frame}
+%\begin{frame}
+%\begin{small}
+%\frametitle{\centering  Newton RDSA}
+%\begin{block}{2 RDSA}
+%\begin{align}
+%\label{eq:2rdsa}
+%\theta_{n+1} = \theta_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(\theta_n), \\
+%\overline H_n = \frac{n}{n+1} \overline H_{n-1} + \frac{1}{n+1} \widehat H_n.\label{eq:2rdsa-H}
+%\end{align}
+%\begin{itemize}
+% \item $\widehat H_n$ is an estimate of the true Hessian. 
+% \item $\overline H_n$ is a smoothed version of $\widehat H_n$. 
+% \item $\Upsilon$ projects a matrix onto the set of positive definite matrices. 
+%\end{itemize}
+%
+%\end{block}
+%\end{small}
+%\end{frame}
 
 %\begin{frame}
 %\begin{small}
@@ -144,54 +172,6 @@ Uniform perturbations
 %\end{small}
 %\end{frame}
 
-\begin{frame}
-\begin{small}
-\frametitle{\centering  2RDSA Hessian estimate}
-\begin{block}{Function measurements}
-$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-,\quad y_{n} = f(\theta_n) + \xi_{n}$
-\end{block}
-\begin{block}{Asymmetric Bernoulli Perturbation}
-\begin{align}
-\label{eq:2rdsa-estimate-ber}
-&\widehat H_n = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where }\\
-& M_n =
-\left[
-\begin{array}{ccc}
-\frac{1}{\kappa}\left((d_n^1)^2\!-(1+\epsilon)\right) & \cdots & \frac{1}{2(1+\epsilon)^2}d_n^1 d_n^N\\
-\frac{1}{2(1+\epsilon)^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2(1+\epsilon)^2}d_n^2 d_n^N\\
-\cdots&\cdots&\cdots\\
-\frac{1}{2(1+\epsilon)^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
-\end{array}
-\right],\nonumber
-\end{align}
-where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
-\end{block}
-\end{small}
-\end{frame}
-
-\begin{frame}
-\begin{small}
-\frametitle{\centering  2RDSA Hessian estimate}
-\begin{block}{Uniform perturbations}
-\begin{align}
-\label{eq:2rdsa-estimate-unif}
-&\widehat H_n =  M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right), \text{ where } \\
-& M_n =
-\dfrac{9}{2\eta^4}\left[
-\begin{array}{cccc}
-\frac{5}{2}\left((d_n^1)^2-\frac{\eta^2}{3}\right) & \cdots & d_n^1 d_n^N\\
-d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
-\cdots&\cdots&\cdots\\
-d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
-\end{array}
-\right].\nonumber
-\end{align}
-\end{block}
-\end{small}
-\end{frame}
-
-
-
 \section{Proposed work}
 
 \begin{frame}
@@ -200,7 +180,7 @@ d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
 \begin{block}{2 RDSA - IH}
 \begin{align}
 \label{eq:e2rdsa}
-\theta_{n+1} = & \; \theta_n - a_n \Upsilon(\overline H_n)^{-1}\widehat\nabla f(\theta_n), \\
+\theta_{n+1} = & \; \theta_{n} - a_{n} \Upsilon(\overline H_{n})^{-1}\widehat\nabla f(\theta_{n}), \\
 \overline H_n = & \; (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),\label{eq:2rdsa-H}
 \end{align}
 \begin{inparaenum}[\bfseries (i)]
@@ -213,8 +193,11 @@ d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
 
 \begin{frame}
 \begin{small}
-\frametitle{\centering Proposed work}
-\begin{block}{The simplified Hessian estimate $\widehat H_n$} 
+\frametitle{\centering 2RDSA Hessian estimate}
+\begin{block}{Function measurements}
+$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-,\quad y_{n} = f(\theta_n) + \xi_{n}$
+\end{block}
+\begin{block}{Hessian estimate $\widehat H_n$} 
 \begin{align}
 \widehat H_n & = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right) \nonumber \\
 & =  M_n \left[\left(\dfrac{f(\theta_n+\delta_n d_n) + f(\theta_n-\delta_n d_n) - 2 f(\theta_n)}{\delta_n^2}\right) \right.\nonumber \\&\hspace{10em}+\left. \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2}\right)\right] \nonumber \\
@@ -223,6 +206,66 @@ d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
 \end{block}
 \end{small}
 \end{frame}
+
+
+\begin{frame}[shrink=10]
+\begin{small}
+\frametitle{\centering  2RDSA Hessian estimate}
+\begin{block}{Asymmetric Bernoulli Perturbation}
+\begin{align}
+\label{eq:2rdsa-estimate-ber}
+ M_n =
+\left[
+\begin{array}{ccc}
+\frac{1}{\kappa}\left((d_n^1)^2\!-(1+\epsilon)\right) & \cdots & \frac{1}{2(1+\epsilon)^2}d_n^1 d_n^N\\
+\frac{1}{2(1+\epsilon)^2}d_n^2 d_n^1  &  \cdots & \frac{1}{2(1+\epsilon)^2}d_n^2 d_n^N\\
+\cdots&\cdots&\cdots\\
+\frac{1}{2(1+\epsilon)^2}d_n^N d_n^1 & \cdots &  \frac{1}{\kappa}\left((d_n^N)^2-(1+\epsilon)\right) \\
+\end{array}
+\right],
+\end{align}
+where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
+\end{block}
+\begin{block}{Uniform perturbations}
+\begin{align}
+\label{eq:2rdsa-estimate-unif}
+M_n =
+\dfrac{9}{2\eta^4}\left[
+\begin{array}{cccc}
+\frac{5}{2}\left((d_n^1)^2-\frac{\eta^2}{3}\right) & \cdots & d_n^1 d_n^N\\
+d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
+\cdots&\cdots&\cdots\\
+d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
+\end{array}
+\right].
+\end{align}
+\end{block}
+
+\end{small}
+\end{frame}
+
+%\begin{frame}
+%\begin{small}
+%\frametitle{\centering  2RDSA Hessian estimate}
+%\begin{block}{Uniform perturbations}
+%\begin{align}
+%\label{eq:2rdsa-estimate-unif}
+%M_n =
+%\dfrac{9}{2\eta^4}\left[
+%\begin{array}{cccc}
+%\frac{5}{2}\left((d_n^1)^2-\frac{\eta^2}{3}\right) & \cdots & d_n^1 d_n^N\\
+%d_n^2 d_n^1  &  \cdots & d_n^2 d_n^N\\
+%\cdots&\cdots&\cdots\\
+%d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
+%\end{array}
+%\right].
+%\end{align}
+%\end{block}
+%\end{small}
+%\end{frame}
+
+
+
 
 \begin{frame}
 \begin{small}
@@ -361,6 +404,8 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 \centering
  \caption{Normalized loss values for fourth-order  objective \eqref{eq:4thorder} with and without noise: standard error from $500$ replications shown after $\pm$}
 \label{tab:norloss-4thf}
+\adjustbox{max height=\dimexpr\textheight-6cm\relax,
+           max width=\textwidth}{
 \begin{tabular}{|c|c|c|}
 \toprule
 \rowcolor{gray!20}
@@ -376,22 +421,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 &&\\
 \textbf{2RDSA-AsymBer}& $0.0471 \pm 0.021$& $\bm{0.0099 \pm 0.0014}$\\
  \bottomrule
- %%%%%%%%%%%%2nd ordr
-\end{tabular}
-\end{table}
- \end{small}
-\end{frame}
-
-\begin{frame}
-\begin{small}
-\frametitle{\centering Numerical Results}
-\begin{table}
-\centering
- \caption{Normalized loss values for fourth-order  objective \eqref{eq:4thorder} with and without noise: standard error from $500$ replications shown after $\pm$}
-\label{tab:norloss-4thf}
-\begin{tabular}{|c|c|c|}
-\toprule
-\rowcolor{gray!20}
+ \rowcolor{gray!20}
 \multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0$}}}\\[1em]
 %&&&\\
 \midrule
@@ -404,10 +434,11 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 &&\\
 \textbf{2RDSA-AsymBer}& $0.0199 \pm 0.0114$& $\bm{0.0098 \pm 0.00147}$\\
  \bottomrule
- \end{tabular}
+ \end{tabular}}
 \end{table}
  \end{small}
 \end{frame}
+
 
 
 \begin{frame}
@@ -417,6 +448,8 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 \centering
  \caption{NMSE values for quadratic objective \eqref{eq:quadratic} with and without noise: standard error from $500$ replications shown after $\pm$}
 \label{tab:nmse-quadratic}
+\adjustbox{max height=\dimexpr\textheight-6cm\relax,
+           max width=\textwidth}{
 \begin{tabular}{|c|c|c|}
 \toprule
 \rowcolor{gray!20}
@@ -432,20 +465,6 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 &&\\
 \textbf{2RDSA-AsymBer}& $0.1667 \pm 0.0095$& $\bm{0.0324 \pm 0.0007}$\\
  \bottomrule
-\end{tabular}
-\end{table}
- \end{small}
-\end{frame}
-
-\begin{frame}
-\begin{small}
-\frametitle{\centering Numerical Results}
-\begin{table}
-\centering
- \caption{NMSE values for quadratic objective \eqref{eq:quadratic} with and without noise: standard error from $500$ replications shown after $\pm$}
-\label{tab:nmse-quadratic}
-\begin{tabular}{|c|c|c|}
-\toprule
 \rowcolor{gray!20}
 \multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0$}}}\\[1em]
 %&&&\\
@@ -459,7 +478,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 &&\\
 \textbf{2RDSA-AsymBer}& $0.0686 \pm 0.0078$& $\bm{0.0316 \pm 0.0006}$\\
  \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
  \end{small}
 \end{frame}

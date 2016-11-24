@@ -5,8 +5,8 @@
 \begin{block}{Related second-order methods}
 \begin{itemize}
 \item 2SPSA\footnotemark[1]: four simulations 
-\item Feedback and weighting mechanisms for improving Hessian estimate of 2SPSAalgorithm  was proposed.
-\item Second-orde RDSA algorithm which uses three simulations for Hessian estimation was proposed.
+\item Feedback and weighting mechanisms for improving Hessian estimate of 2SPSA algorithm  was proposed.
+\item Second-order RDSA algorithm which uses three simulations for Hessian estimation was proposed.
 \end{itemize}
 \end{block}
 \begin{block}{Our work}
@@ -35,7 +35,7 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 \begin{block}{Function measurements}
 $y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-$
 \end{block}
-\begin{block}{Gradient estimate}
+\begin{block}{}
 \begin{columns}[T]
 \begin{column}{.48\textwidth}
 \color{red}\rule{\linewidth}{4pt}
@@ -178,19 +178,45 @@ Uniform perturbations
 \begin{frame}
 \begin{small}
 \frametitle{\centering Our algorithm}
-\begin{block}{2 RDSA - IH}
-\begin{align}
+\tikzstyle{na} = [baseline=-.5ex]
+%\begin{block}{2 RDSA - IH}
+\begin{itemize}
+    \item Projection 
+        \tikz[na]\node [coordinate] (nL) {};
+   \end{itemize}
+   
+\begin{equation}
 \label{eq:e2rdsa}
-\theta_{n+1} = & \; \theta_{n} - a_{n} \Upsilon(\overline H_{n})^{-1}\widehat\nabla f(\theta_{n}), \\
-\overline H_n = & \; (1-b_{n})  \overline H_{n-1} + b_{n} ( \widehat H_n - \widehat \Psi_n),\label{eq:2rdsa-H}
-\end{align}
-\begin{inparaenum}[\bfseries (i)]
-\item  $\widehat \Psi_n$ is a zero-mean feedback term that reduces the error in Hessian estimate; and\\
-\item $b_n$ is a general step-size that we optimize to improve the Hessian estimate.
-\end{inparaenum}
-\end{block}
+\theta_{n+1} =   \theta_{n} - a_{n} \tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\Upsilon$};} (\overline H_{n})^{-1}\widehat\nabla f(\theta_{n}), 
+\end{equation}
+\begin{equation}
+\overline H_{n} =   (1-\tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};})  \overline H_{n-1} + \tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};} ( \widehat H_n - \tikz[baseline]{\node[fill=red!60,anchor=base] (tPPP) {$\widehat \Psi_n$};}),\label{eq:2rdsa-H}
+\end{equation}
+   \begin{itemize}
+   \item Optimal step-sizes
+        \tikz[na]\node [coordinate] (n3) {};
+
+    \item Feedback term
+        \tikz[na]\node [coordinate] (nPPP) {};
+    
+\end{itemize}
+
+\begin{tikzpicture}[overlay]
+%        \path[->]<1-> (nCPP) edge [bend left] (tCPP);
+        \path[->]<1-> (nL) edge [bend left] (tL);
+       \path[->]<2-> (n3) edge [out=0, in=-90] (t3);
+        \path[->]<3-> (nPPP) edge [out=0, in=-90] (tPPP);
+\end{tikzpicture}
+
+%\begin{inparaenum}[\bfseries (i)]
+%\item  $\widehat \Psi_n$ is a zero-mean feedback term that reduces the error in Hessian estimate; and\\
+%\item $b_n$ is a general step-size that we optimize to improve the Hessian estimate.
+%\end{inparaenum}
+%\end{block}
 \end{small}
 \end{frame}
+
+
 
 \begin{frame}
 \begin{small}
@@ -271,12 +297,17 @@ d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
 \begin{frame}
 \begin{small}
 \frametitle{\centering Zero-mean feedback term}
-\begin{block}{Mean of the  Hessian estimate}
+\tikzstyle{na} = [baseline=-.5ex]
+ \textcolor{red!60}{Zero-mean term}\tikz[na]\node [coordinate] (n1) {};
+ \begin{block}{Mean of the  Hessian estimate}
 \begin{align}
- \E\left[\left.\widehat H_n\right| \F_n\right] = & \nabla^2 f(\theta_n) + \E\left[\left.\Psi_{n}(\nabla^2 f(\theta_n))\right| \F_n\right]  +  O(\delta_n^2)\nonumber\\
+ \E\left[\left.\widehat H_n\right| \F_n\right] = & \nabla^2 f(\theta_n) + \tikz[baseline]{ \node[fill=red!60,anchor=base] (t1){$\E\left[\left.\Psi_{n}(\nabla^2 f(\theta_n))\right| \F_n\right]$};}  +  O(\delta_n^2)\nonumber\\
 &+\E\left[\left.\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right| \F_n\right], \label{eq:hnhat}
 \end{align}
 \end{block}
+\begin{tikzpicture}[overlay]
+        \path[->]<1-> (n1) edge [bend left] (t1);   
+\end{tikzpicture}
 \begin{block}{Feedback term}
 \begin{align}
 \Psi_{n}(H) =  [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right) +  [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right).\label{eq:psi}
@@ -294,7 +325,7 @@ Feedback term is function of current Hessian  $\nabla^2 f$.
 \begin{block}{Solution ?}
 Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
 \begin{align}
-\widehat \Psi_n = \Psi_{n} (\overline H_{n-1}).
+\widehat \Psi_n = \Psi_{n} (\tikz[baseline]{ \node[fill=red!60,anchor=base] (t1){$\overline H_{n-1}$};}).
 \label{eq:psinhat}
 \end{align}
 \end{block}
@@ -405,7 +436,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 \centering
  \caption{Normalized loss values for fourth-order  objective \eqref{eq:4thorder} with and without noise: standard error from $500$ replications shown after $\pm$}
 \label{tab:norloss-4thf}
-\adjustbox{max height=\dimexpr\textheight-6cm\relax,
+\adjustbox{max height=\dimexpr\textheight-5.1cm\relax,
            max width=\textwidth}{
 \begin{tabular}{|c|c|c|}
 \toprule
@@ -449,7 +480,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 \centering
  \caption{NMSE values for quadratic objective \eqref{eq:quadratic} with and without noise: standard error from $500$ replications shown after $\pm$}
 \label{tab:nmse-quadratic}
-\adjustbox{max height=\dimexpr\textheight-6cm\relax,
+\adjustbox{max height=\dimexpr\textheight-5.1cm\relax,
            max width=\textwidth}{
 \begin{tabular}{|c|c|c|}
 \toprule

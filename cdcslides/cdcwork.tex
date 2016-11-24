@@ -28,18 +28,6 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 \end{small}
 \end{frame}
 
-
-
-
-
-
-
-
-
-
-
-
-
 %\begin{frame}
 %\frametitle{\centering  Newton algorithm}
 %\begin{block}{Stochastic version of Newton method}
@@ -151,8 +139,8 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 \tikzstyle{na} = [baseline=-.5ex]
 %\begin{block}{2 RDSA - IH}
 \begin{itemize}
-%     \item Projection 
-%         \tikz[na]\node [coordinate] (nL) {};
+     \item Matrix projection 
+         \tikz[na]\node [coordinate] (nL) {};
     \item Gradient estimate 
         \tikz[na]\node [coordinate] (nL1) {};
    \end{itemize}
@@ -161,8 +149,16 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 \label{eq:e2rdsa}
 \theta_{n+1} =   \theta_{n} - a_{n} 
 \tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\Upsilon$};} 
-(\overline H_{n})^{-1}\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL1) {$\widehat\nabla f(\theta_{n})$};}, 
+(\overline H_{n})^{-1}\tikz[baseline]{\node[fill=green!20,anchor=base] (tL1) {$\widehat\nabla f(\theta_{n})$};}, 
 \end{equation}
+
+\begin{tikzpicture}[overlay]
+%        \path[->]<1-> (nCPP) edge [bend left] (tCPP);
+         \path[->] (nL) edge [bend left] (tL);
+        \path[->] (nL1) edge [bend left] (tL1);
+      
+\end{tikzpicture}
+\pause
 \begin{equation}
 \overline H_{n} =   (1-\tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};})  \overline H_{n-1} + 
 \tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};} 
@@ -186,9 +182,7 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 
 \begin{tikzpicture}[overlay]
 %        \path[->]<1-> (nCPP) edge [bend left] (tCPP);
-%         \path[->]<1-> (nL) edge [bend left] (tL);
-        \path[->] (nL1) edge [bend left] (tL1);
-       \path[->] (n3) edge [out=0, in=-90] (t3);
+                \path[->] (n3) edge [out=0, in=-90] (t3);
         \path[->] (nPPP1) edge [out=0, in=-90] (tPPP1);
         \path[->] (nPPP) edge [out=0, in=-90] (tPPP);
 \end{tikzpicture}
@@ -207,8 +201,9 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 \frametitle{\centering  RDSA gradient estimate}
 
 \begin{block}{Function measurements}
-$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-$
+$y_{n}^+ = f(\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\theta_n+\delta_n d_n$};} ) + \xi_{n}^+,\quad y_{n}^- = f(\tikz[baseline]{\node[fill=green!20,anchor=base] (tL1) {$\theta_n-\delta_n d_n$};}) + \xi_{n}^-$
 \end{block}
+\pause
 \begin{block}{}
 \begin{columns}[T]
 \begin{column}{.48\textwidth}
@@ -227,6 +222,7 @@ Asymmetric Bernoulli
   \end{cases}
 \end{equation}
 \end{column}
+\pause
 \begin{column}{.48\textwidth}
 \color{blue}\rule{\linewidth}{4pt}
 Uniform perturbations
@@ -249,8 +245,9 @@ Uniform perturbations
 \begin{small}
 \frametitle{\centering 2RDSA Hessian estimate}
 \begin{block}{Function measurements}
-$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-,\quad y_{n} = f(\theta_n) + \xi_{n}$
+$y_{n}^+ = f(\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\theta_n+\delta_n d_n$};}) + \xi_{n}^+,\hspace{.16cm} y_{n}^- = f(\tikz[baseline]{\node[fill=green!20,anchor=base] (tL1) {$\theta_n-\delta_n d_n$};}) + \xi_{n}^-,\hspace{.16cm} y_{n} = f(\tikz[baseline]{\node[fill=red!20,anchor=base] (tL2) {$\theta_n$};}) + \xi_{n}$
 \end{block}
+\pause
 \begin{block}{Hessian estimate $\widehat H_n$} 
 \begin{align}
 \widehat H_n & = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right) \nonumber \\
@@ -280,6 +277,7 @@ $y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delt
 \end{align}
 where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E (d_n^i)^4= \dfrac{(1+\epsilon)(1+(1+\epsilon)^3)}{(2+\epsilon)}$, for any $i=1,\ldots,N$. 
 \end{block}
+\pause
 \begin{block}{Uniform perturbations}
 \begin{align}
 \label{eq:2rdsa-estimate-unif}
@@ -335,6 +333,7 @@ d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
 \begin{tikzpicture}[overlay]
         \path[->]<1-> (n1) edge [bend left] (t1);   
 \end{tikzpicture}
+\pause
 \begin{block}{Feedback term}
 \begin{align}
 \Psi_{n}(H) =  [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right) +  [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right).\label{eq:psi}
@@ -349,6 +348,7 @@ d_n^N d_n^1 & \cdots &  \frac{5}{2}\left((d_n^N)^2-\frac{\eta^2}{3}\right) \\
 \begin{block}{Problem}
 Feedback term is function of current Hessian  $\nabla^2 f$.
 \end{block}
+\pause
 \begin{block}{Solution ?}
 Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
 \begin{align}
@@ -368,6 +368,7 @@ Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
 \overline H_n = \sum\limits_{i=0}^{n} \tilde b_k(\widehat H_i -\widehat \Psi_i).
 \end{align}
 \end{block}
+\pause
 \begin{block}{Optimization problem for weights}
 \begin{align}
 \min_{ \{\tilde b_k\} } \sum \limits_{i=0}^{n} (\tilde b_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:wn-opt}\\
@@ -385,6 +386,7 @@ Can we use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$ ?
 \tilde b_i^* = \delta_i^{4}/\sum \limits_{j=0}^{n} \delta_j^{4}, i=1,\ldots,n.
 \end{align}
 \end{block}
+\pause
 \begin{block}{Optimal weights for original Hessian recursion}
 \begin{align}
 \label{eq:wieghts}

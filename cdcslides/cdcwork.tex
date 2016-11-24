@@ -195,6 +195,43 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 \end{small}
 \end{frame}
 
+\begin{frame}{Overall flow of 2RDSA-IH}
+%  \begin{figure}
+% \centering
+\tikzstyle{block} = [draw, fill=white, rectangle,
+   minimum height=5em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=white, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\begin{center}
+ \scalebox{0.6}{\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+% We start by placing the blocks
+\node (theta) at (-10,0) {$\bm{\theta_n}$};
+\node [block, fill=blue!20,right=2cm of theta,label=below:{\color{bleu2}\bf Simulation},align=center] (sample) {\textbf{Using parameters }\\
+$\bm{\theta_n, \theta_n \pm \delta_n d_n}$}; 
+\node [block, fill=green!20,above right=3cm of sample,label=above:{\color{darkgreen!90}\bf Gradient estimation},align=center] (obj) {\textbf{Estimate} $\bm{\nabla f(\theta_{n})}$};
+\node [block, fill=green!20,right=2cm of sample,label=above:{\color{darkgreen!90}\bf Hessian Estimation},align=center] (estcvar) {\textbf{Estimate} $\bm{\nabla^2 f(\theta_{n})}$};
+\node [block, fill=green!20,below right=3cm of sample,label=below:{\color{darkgreen!90}\bf Improved Hessian estimate},align=center] (cvar) {\textbf{Feedback }\\ $\bm{\widehat \Psi_n}$};
+\node [block, fill=red!20,right=8cm of sample, minimum height=8em,label=below:{\color{violet!90}\bf Gradient descent},align=center] (update) {\textbf{Update} $\bm{\theta_n}$};
+\node [right=2cm of update] (end) {$\bm{\mathbf{\theta_{n+1}}}$};
+\draw [thick,-triangle 45] (theta) --  (sample);
+\draw [thick,-triangle 45] (sample) -- (obj);
+\draw [thick,-triangle 45] (sample) -- (estcvar);
+\draw [thick,-triangle 45] (sample) -- (cvar);
+\draw [thick,-triangle 45] (obj) -- (update);
+\draw [thick,-triangle 45] (estcvar) -- (update);
+\draw [thick,-triangle 45] (cvar) -- (update);
+\draw [thick,-triangle 45] (estcvar) -- (cvar);
+\draw [thick,-triangle 45] (update) -- (end);
+\end{tikzpicture}}
+\end{center}
+% \caption{Overall flow of 2RDSA-IH}
+% \label{fig:algorithm-flow}
+% \end{figure}
+\end{frame}
+
 % \section{Random directions stochastic approximation (RDSA)}
 \begin{frame}
 \begin{small}

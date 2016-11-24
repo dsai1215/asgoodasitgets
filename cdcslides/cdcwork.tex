@@ -3,16 +3,28 @@
 \begin{small}
 \frametitle{\centering  1-slide summary}
 \begin{block}{Related second-order methods}
-\begin{itemize}
-\item 2SPSA\footnotemark[1]: four simulations 
-\item Feedback and weighting mechanisms for improving Hessian estimate of 2SPSA algorithm  was proposed.
-\item Second-order RDSA algorithm which uses three simulations for Hessian estimation was proposed.
-\end{itemize}
+\begin{tabular}{c|c|c}
+\toprule
+\multirow{2}{*}{(Spall 2000)\footnotemark[1]} & Second-order SPSA & \multirow{2}{*}{\alert{4} simulations/iteration}\\
+&  (\alert{2SPSA}) & \\\midrule
+(Spall 2009)\footnotemark[2] & 2SPSA + feedback & \alert{4} simulations/iteration\\
+\midrule
+(Prashanth L.A. & Second-order RDSA & \multirow{2}{*}{\alert{3} simulations/iteration}\\
+ et al 2016)\footnotemark[3] & (\alert{2RDSA})&\\
+\bottomrule
+\end{tabular}
 \end{block}
+
 \begin{block}{Our work}
 We propose feedback and weighting mechanisms for improving Hessian estimate for 2RDSA algorithm.
 \end{block}
-\footnotetext[1]{\tiny sdfds}
+
+\footnotetext[1]{\tiny J.~C. Spall (2000), ``Adaptive stochastic approximation by the simultaneous
+  perturbation method,'' \emph{IEEE TAC}.}
+\footnotetext[2]{\tiny J.~C. Spall (2009), ``Feedback and weighting mechanisms for improving {Jacobian}
+  estimates in the adaptive simultaneous perturbation algorithm,'' \emph{IEEE TAC}.}  
+\footnotetext[3]{\tiny  Prashanth L.~A. et al. (2016) ``Adaptive system
+  optimization using random directions stochastic approximation,'' \emph{IEEE TAC}.}
 \end{small}
 \end{frame}
 
@@ -27,48 +39,6 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 
 
 
-\section{Random directions stochastic approximation (RDSA)}
-\begin{frame}
-\begin{small}
-\frametitle{\centering  RDSA gradient estimate}
-
-\begin{block}{Function measurements}
-$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-$
-\end{block}
-\begin{block}{}
-\begin{columns}[T]
-\begin{column}{.48\textwidth}
-\color{red}\rule{\linewidth}{4pt}
-Asymmetric Bernoulli
-\begin{align}
-\label{eq:grad-unif}
-\widehat\nabla f(\theta_n) = \frac{1}{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
-\end{align}
-\begin{equation}
-\label{eq:det-proj}
- d_n^i =
-  \begin{cases}
-   -1 &  \text{ w.p. } \dfrac{(1+\epsilon)}{(2+\epsilon)}, \\
-   1+\epsilon &  \text{ w.p. } \dfrac{1}{(2+\epsilon)},
-  \end{cases}
-\end{equation}
-\end{column}
-\begin{column}{.48\textwidth}
-\color{blue}\rule{\linewidth}{4pt}
-Uniform perturbations
-\begin{align}
-\label{eq:grad-unif}
-\widehat\nabla f(x_n) = \frac3{\eta^2} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
-\end{align}
-\begin{equation}
-\label{eq:det-proj-unif}
- d_n^i = Unif[-\eta,\eta], \eta>0.
- \end{equation}
-\end{column}
-\end{columns}
-\end{block}
-\end{small}
-\end{frame}
 
 %\begin{frame}
 %\frametitle{\centering  Newton algorithm}
@@ -173,7 +143,7 @@ Uniform perturbations
 %\end{small}
 %\end{frame}
 
-\section{Proposed work}
+\section{2RDSA + improved Hessian estimation}
 
 \begin{frame}
 \begin{small}
@@ -181,20 +151,33 @@ Uniform perturbations
 \tikzstyle{na} = [baseline=-.5ex]
 %\begin{block}{2 RDSA - IH}
 \begin{itemize}
-    \item Projection 
-        \tikz[na]\node [coordinate] (nL) {};
+%     \item Projection 
+%         \tikz[na]\node [coordinate] (nL) {};
+    \item Gradient estimate 
+        \tikz[na]\node [coordinate] (nL1) {};
    \end{itemize}
    
 \begin{equation}
 \label{eq:e2rdsa}
-\theta_{n+1} =   \theta_{n} - a_{n} \tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\Upsilon$};} (\overline H_{n})^{-1}\widehat\nabla f(\theta_{n}), 
+\theta_{n+1} =   \theta_{n} - a_{n} 
+\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\Upsilon$};} 
+(\overline H_{n})^{-1}\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL1) {$\widehat\nabla f(\theta_{n})$};}, 
 \end{equation}
 \begin{equation}
-\overline H_{n} =   (1-\tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};})  \overline H_{n-1} + \tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};} ( \widehat H_n - \tikz[baseline]{\node[fill=red!60,anchor=base] (tPPP) {$\widehat \Psi_n$};}),\label{eq:2rdsa-H}
+\overline H_{n} =   (1-\tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};})  \overline H_{n-1} + 
+\tikz[baseline]{ \node[fill=green!60,anchor=base] (t3){$b_{n}$};} 
+( 
+\tikz[baseline]{ \node[fill=magenta!20,anchor=base] (tPPP1){$\widehat H_n$};} 
+- 
+\tikz[baseline]{\node[fill=red!60,anchor=base] (tPPP) {$\widehat \Psi_n$};}
+),\label{eq:2rdsa-H}
 \end{equation}
    \begin{itemize}
    \item Optimal step-sizes
         \tikz[na]\node [coordinate] (n3) {};
+
+            \item Hessian estimate
+        \tikz[na]\node [coordinate] (nPPP1) {};
 
     \item Feedback term
         \tikz[na]\node [coordinate] (nPPP) {};
@@ -203,9 +186,11 @@ Uniform perturbations
 
 \begin{tikzpicture}[overlay]
 %        \path[->]<1-> (nCPP) edge [bend left] (tCPP);
-        \path[->]<1-> (nL) edge [bend left] (tL);
-       \path[->]<2-> (n3) edge [out=0, in=-90] (t3);
-        \path[->]<3-> (nPPP) edge [out=0, in=-90] (tPPP);
+%         \path[->]<1-> (nL) edge [bend left] (tL);
+        \path[->] (nL1) edge [bend left] (tL1);
+       \path[->] (n3) edge [out=0, in=-90] (t3);
+        \path[->] (nPPP1) edge [out=0, in=-90] (tPPP1);
+        \path[->] (nPPP) edge [out=0, in=-90] (tPPP);
 \end{tikzpicture}
 
 %\begin{inparaenum}[\bfseries (i)]
@@ -216,6 +201,48 @@ Uniform perturbations
 \end{small}
 \end{frame}
 
+% \section{Random directions stochastic approximation (RDSA)}
+\begin{frame}
+\begin{small}
+\frametitle{\centering  RDSA gradient estimate}
+
+\begin{block}{Function measurements}
+$y_{n}^+ = f(\theta_n+\delta_n d_n) + \xi_{n}^+,\quad y_{n}^- = f(\theta_n-\delta_n d_n) + \xi_{n}^-$
+\end{block}
+\begin{block}{}
+\begin{columns}[T]
+\begin{column}{.48\textwidth}
+\color{red}\rule{\linewidth}{4pt}
+Asymmetric Bernoulli
+\begin{align}
+\label{eq:grad-unif}
+\widehat\nabla f(\theta_n) = \frac{1}{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
+\end{align}
+\begin{equation}
+\label{eq:det-proj}
+ d_n^i =
+  \begin{cases}
+   -1 &  \text{ w.p. } \dfrac{(1+\epsilon)}{(2+\epsilon)}, \\
+   1+\epsilon &  \text{ w.p. } \dfrac{1}{(2+\epsilon)},
+  \end{cases}
+\end{equation}
+\end{column}
+\begin{column}{.48\textwidth}
+\color{blue}\rule{\linewidth}{4pt}
+Uniform perturbations
+\begin{align}
+\label{eq:grad-unif}
+\widehat\nabla f(x_n) = \frac3{\eta^2} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
+\end{align}
+\begin{equation}
+\label{eq:det-proj-unif}
+ d_n^i = Unif[-\eta,\eta], \eta>0.
+ \end{equation}
+\end{column}
+\end{columns}
+\end{block}
+\end{small}
+\end{frame}
 
 
 \begin{frame}

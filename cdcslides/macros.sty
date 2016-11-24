@@ -41,6 +41,15 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
 
 \newcommand{\tabl}[2]{\begin{tabular}{#1} #2 \end{tabular}}
 \newcommand{\ith}[2][th]{$#2^{\text{#1}}$}

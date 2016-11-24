@@ -131,7 +131,7 @@ We propose feedback and weighting mechanisms for improving Hessian estimate for 
 %\end{small}
 %\end{frame}
 
-\section{2RDSA + improved Hessian estimation}
+\section{Random directions stochastic approximation (RDSA) + improved Hessian estimation}
 
 \begin{frame}
 \begin{small}
@@ -250,6 +250,7 @@ Asymmetric Bernoulli
 \label{eq:grad-unif}
 \widehat\nabla f(\theta_n) = \frac{1}{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
 \end{align}
+
 \begin{equation}
 \label{eq:det-proj}
  d_n^i =
@@ -497,7 +498,10 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 
 \begin{frame}
 \begin{small}
-\frametitle{\centering Numerical Results}
+\frametitle{}
+
+\vspace{2ex}
+
 \begin{table}
 \centering
  \caption{Normalized loss values for fourth-order  objective \eqref{eq:4thorder} with and without noise: standard error from $500$ replications shown after $\pm$}
@@ -541,7 +545,10 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 
 \begin{frame}
 \begin{small}
-\frametitle{\centering Numerical Results}
+\frametitle{}
+
+\vspace{2ex}
+
 \begin{table}
 \centering
  \caption{NMSE values for quadratic objective \eqref{eq:quadratic} with and without noise: standard error from $500$ replications shown after $\pm$}

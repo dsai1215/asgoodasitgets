@@ -16,7 +16,7 @@
 \end{block}
 
 \begin{block}{Our work}
-We propose feedback and weighting mechanisms for improving Hessian estimate for 2RDSA algorithm.
+We propose feedback and weighting mechanisms for improving Hessian estimate for 2RDSA algorithm.\\[4ex]
 \end{block}
 
 \footnotetext[1]{\tiny J.~C. Spall (2000), ``Adaptive stochastic approximation by the simultaneous
@@ -237,11 +237,14 @@ $\bm{\theta_n, \theta_n \pm \delta_n d_n}$};
 \begin{small}
 \frametitle{\centering  RDSA gradient estimate}
 
-\begin{block}{Function measurements}
+\begin{block}{\alert{Function measurements}}
 $y_{n}^+ = f(\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\theta_n+\delta_n d_n$};} ) + \xi_{n}^+,\quad y_{n}^- = f(\tikz[baseline]{\node[fill=green!20,anchor=base] (tL1) {$\theta_n-\delta_n d_n$};}) + \xi_{n}^-$
 \end{block}
+
+\vspace{1.5ex}
+
 \pause
-\begin{block}{Asymmetric Bernoulli perturbations}
+\begin{block}{\alert{Gradient estimate}}
 %\begin{columns}[T]
 %\begin{column}{.48\textwidth}
 %\color{red}\rule{\linewidth}{4pt}
@@ -250,11 +253,17 @@ $y_{n}^+ = f(\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\theta_n+\de
 \label{eq:grad-unif}
 \widehat\nabla f(\theta_n) = \frac{1}{1+\epsilon} d_n \left[ \dfrac{y_n^+ - y_n^-}{2\delta_n}\right].
 \end{align}
+
+Asymmetric Bernoulli distribution for $d_n^i, i=1,\ldots,N$:\\[1ex]
 \begin{center}
 \begin{tikzpicture}[thick]
-  \node  at ( 0,0) [circle,draw=green!90,fill=green!80,label=below:$\dfrac{(1+\epsilon)}{(2+\epsilon)}$] {-1};
-  \node  at ( 2,0) [circle,draw=green!90,fill=green!80,label=below:$\dfrac{1}{(2+\epsilon)}$] {$1+\epsilon$};
+  \node  at (0,0) [circle,draw=green!90,fill=green!80] (a1) {-1};
+  \node  at (2,0) [circle,draw=green!90,fill=green!80] (a2) {$1+\epsilon$};
+  \node at (-2, -1.5) (p1) {w.p. $\dfrac{1+\epsilon}{(2+\epsilon)}$};
+  \node at (4, -1.5) (p2) {w.p. $\dfrac{1}{(2+\epsilon)}$};
   \draw (0.35,0) --  (1.4,0);
+  \path[->] (p1.east) edge [out=0, in=-90] (a1);
+  \path[->] (p2.west) edge [out=180, in=-90] (a2);
  \end{tikzpicture}
  \end{center}
 
@@ -290,11 +299,12 @@ $y_{n}^+ = f(\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\theta_n+\de
 \begin{align}
 \widehat H_n & = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right) \nonumber \\
 & =  M_n \left[\left(\dfrac{f(\theta_n+\delta_n d_n) + f(\theta_n-\delta_n d_n) - 2 f(\theta_n)}{\delta_n^2}\right) \right.\nonumber \\&\hspace{10em}+\left. \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2}\right)\right] \nonumber \\
-& = \tikz[baseline]{\node[fill=green!20,anchor=base] (tL) {$M_n \left(\tikz[baseline]{\node[fill=red!20,anchor=base] (tL1) {$d_n\tr \nabla^2 f(\theta_n) d_n$};} +  O(\delta_n^2) + \tikz[baseline]{\node[fill=blue!20,anchor=base] (tL2) {$\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)$};}\right).$};}\label{eq:h0}
+& = 
+M_n \left(\tikz[baseline]{\node[fill=red!20,anchor=base] (tL1) {$d_n\tr \nabla^2 f(\theta_n) d_n$};} +  O(\delta_n^2) + \tikz[baseline]{\node[fill=blue!20,anchor=base] (tL2) {$\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)$};}\right).\label{eq:h0}
 \end{align}
 
-    Want to recover $\nabla^2 f(\theta_n)$ from this \tikz[na]\node [coordinate] (nL1) {};
-    \hspace{3cm}  \tikz[na]\node [coordinate] (nL2) {}; Zero-mean
+\hspace{-2em}    Want to recover\\ $\nabla^2 f(\theta_n)$ from this \tikz[na]\node [coordinate] (nL1) {};
+    \hspace{3cm}  Zero-mean \tikz[na]\node [coordinate] (nL2) {}; 
 \begin{tikzpicture}[overlay]
          \path[->] (nL1) edge [out=0, in=-90] (tL1);
         \path[->] (nL2) edge [out=0, in=-90] (tL2);
@@ -369,7 +379,7 @@ where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E
 \frametitle{\centering Zero-mean feedback term}
 \tikzstyle{na} = [baseline=-.5ex]
  \textcolor{red!60}{Zero-mean term}\tikz[na]\node [coordinate] (n1) {};
- \begin{block}{Mean of the  Hessian estimate}
+ \begin{block}{\alert{Mean of the  Hessian estimate}}
 \begin{align}
  \E\left[\left.\widehat H_n\right| \F_n\right] = & \nabla^2 f(\theta_n) + \tikz[baseline]{ \node[fill=red!60,anchor=base] (t1){$\E\left[\left.\Psi_{n}(\nabla^2 f(\theta_n))\right| \F_n\right]$};}  +  O(\delta_n^2)\nonumber\\
 &+\E\left[\left.\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right| \F_n\right], \label{eq:hnhat}
@@ -379,7 +389,7 @@ where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E
         \path[->]<1-> (n1) edge [bend left] (t1);   
 \end{tikzpicture}
 \pause
-\begin{block}{Feedback term}
+\begin{block}{\alert{Feedback term}}
 \begin{align}
 \Psi_{n}(H) =  [M_n]_{D}\left(d_{n}\tr \, [H]_{N} \, d_{n}\right) +  [M_n]_{N}\left(d_{n}\tr \, [H]_{D} \, d_{n}\right).\label{eq:psi}
 \end{align}
@@ -392,11 +402,11 @@ where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E
 \begin{frame}
 \begin{small}
 \frametitle{\centering Zero-mean feedback term}
-\begin{block}{Problem}
+\begin{block}{\alert{Problem}}
 Feedback term is function of current Hessian  $\nabla^2 f$.
 \end{block}
 \pause
-\begin{block}{Solution}
+\begin{block}{\alert{Solution}}
 Use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$.
 \begin{align}
 \widehat \Psi_n = \Psi_{n} (\tikz[baseline]{ \node[fill=red!60,anchor=base] (t1){$\overline H_{n-1}$};}).
@@ -409,14 +419,14 @@ Use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$.
 \begin{frame}
 \begin{small}
 \frametitle{\centering Step-size optimization}
-\begin{block}{Rewriting the Hessian recursion}
+\begin{block}{\alert{Rewriting the Hessian recursion}}
 \begin{align}
 \label{eq:hess}
 \overline H_n = \sum\limits_{i=0}^{n} \tilde b_k(\widehat H_i -\widehat \Psi_i).
 \end{align}
 \end{block}
 \pause
-\begin{block}{Optimization problem for weights}
+\begin{block}{\alert{Optimization problem for weights}}
 \begin{align}
 \min_{ \{\tilde b_k\} } \sum \limits_{i=0}^{n} (\tilde b_k)^2 \delta_i^{-4}, \text{ subject to} \label{eq:wn-opt}\\
 \tilde b_i \geq 0 ~\forall i \text{ and }\sum \limits_{i=0}^{n} \tilde b_i = 1.
@@ -428,13 +438,13 @@ Use $\overline H_{n-1}$ as a proxy for $\nabla^2 f$.
 \begin{frame}
 \begin{small}
 \frametitle{\centering Step-size optimization}
-\begin{block}{Above optimization problem solution}
+\begin{block}{\alert{Above optimization problem solution}}
 \begin{align}
 \tilde b_i^* = \delta_i^{4}/\sum \limits_{j=0}^{n} \delta_j^{4}, i=1,\ldots,n.
 \end{align}
 \end{block}
 \pause
-\begin{block}{Optimal weights for original Hessian recursion}
+\begin{block}{\alert{Optimal weights for original Hessian recursion}}
 \begin{align}
 \label{eq:wieghts}
 b_i  = \delta_i^{4}/\sum\limits_{j=0}^{i} \delta_j^{4}.
@@ -448,15 +458,15 @@ b_i  = \delta_i^{4}/\sum\limits_{j=0}^{i} \delta_j^{4}.
 \begin{small}
 \frametitle{\centering Convergence analysis}
 
-\begin{lemma}(\textbf{Bias in Hessian estimate})
+\begin{lemma}(\alert{Bias in Hessian estimate})
 \label{lemma:2rdsa-bias}
-The following lemma from Prashanth L.~A. et al. (2016)\footnotemark[1], we have a.s. that\footnotemark[2], for $i,j = 1,\ldots,N$,
+From Prashanth L.~A. et al. (2016)\footnotemark[1], we have a.s. that\footnotemark[2], for $i,j = 1,\ldots,N$,
 \begin{align}
 \left|\E\left[
 \left. \widehat H_n(i,j) \right| \F_n \right] - \nabla^2_{ij} f(\theta_n)\right| = O(\delta_n^2).
 \end{align} 
 \end{lemma}
-\begin{theorem}(\textbf{Strong Convergence of Hessian})
+\begin{theorem}(\alert{Strong Convergence of Hessian})
 \label{thm:2rdsa-H}
 Under assumptions similar to those for 2SPSA and 2RDSA, we have that 
 $$\theta_n \rightarrow \theta^*, \overline H_n \rightarrow \nabla^2 f(\theta^*) \text{ a.s. as } n\rightarrow \infty.$$ 
@@ -483,12 +493,12 @@ $$\theta_n \rightarrow \theta^*, \overline H_n \rightarrow \nabla^2 f(\theta^*) 
 \begin{frame}
 \begin{small}
 \frametitle{\centering Numerical Results}
-\begin{block}{Quadratic loss}
+\begin{block}{\alert{Quadratic loss}}
 \begin{align}
 f(x) = \theta\tr A \theta + b\tr \theta.\label{eq:quadratic}
 \end{align}
 \end{block}
-\begin{block}{Fourth-order loss}
+\begin{block}{\alert{Fourth-order loss}}
 \begin{align} 
 f(x) = \theta\tr A\tr A \theta + 0.1 \sum_{j=1}^N (A\theta)^3_j + 0.01 \sum_{j=1}^N (A\theta)^4_j.\label{eq:4thorder}
  \end{align} 
@@ -499,12 +509,12 @@ f(x) = \theta\tr A\tr A \theta + 0.1 \sum_{j=1}^N (A\theta)^3_j + 0.01 \sum_{j=1
 \begin{frame}
 \begin{small}
 \frametitle{\centering Numerical Results}
-\begin{block}{Normalized MSE (NMSE) }
+\begin{block}{\alert{Normalized MSE (NMSE)} }
 \begin{align}
 \l \theta_{n_\text{end}} - \theta^* \r^2 / \l \theta_0 - \theta^*\r^2
 \end{align}
 \end{block}
-\begin{block}{ Normalized loss}
+\begin{block}{ \alert{Normalized loss}}
 \begin{align} 
 f(\theta_{n_\text{end}})/f(\theta_0)
  \end{align} 
@@ -555,7 +565,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 % \bottomrule
  \end{tabular}}
 \end{table}
-\footnotetext[1]{2RDSA-Unif uses $Unif [-1,1]$ with different $M_n$.}
+\footnotetext[1]{2RDSA-Unif uses $Unif [-1,1]$ with a different $M_n$.}
  \end{small}
 \end{frame}
 

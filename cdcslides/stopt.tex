@@ -79,15 +79,15 @@ Traffic signal control
 \begin{small}
 To find $\theta^{*}$ that minimizes the objective function $f(\theta)$ :
 \begin{align}\label{eq:opt}
- \theta^* = \underset{\theta \in \Theta}{\argmin} ~f(\theta),
+\tikz[baseline]{\node[fill=green!20,anchor=base] (tL) {$ \theta^* = \underset{\theta \in \Theta}{\argmin} ~f(\theta),$};}
 \end{align}
 \end{small}
 \end{block}
 \begin{small}
 \begin{itemize}
-\item $f \colon \mathbb{R}^N \to \mathbb{R}$ is called the objective function.
+\item $f \colon \mathbb{R}^N \to \mathbb{R}$ is called the \alert{objective function}.
 \item $\theta$ is tunable N-dimensional parameter
-\item $\Theta \subseteq \mathbb{R}^N$ is the constraint set in which $\theta$ takes values.
+\item $\Theta \subseteq \mathbb{R}^N$ is the \alert{feasible region} in which $\theta$ takes values.
 \end{itemize}
 \end{small}
 \end{frame}
@@ -112,8 +112,10 @@ Stochastic optimization problem
 \begin{itemize}
 \item We have little knowledge on the structure of $f$.
 \item $f$ cannot be obtained directly.
-\item $f(\theta) \equiv E_{\xi}[h(\theta,\xi)]$, where $\xi$ comprises the randomness in the system.
+\item \tikz[baseline]{\node[fill=green!20,anchor=base] (tL) {$f(\theta) \equiv E_{\xi}[h(\theta,\tikz[baseline]{\node[fill=red!30,anchor=base] (tL1) {$\xi$};})]$};}, 
+where $\xi$ comprises the randomness in the system.
 \end{itemize}
+
 Complex  to find $\theta^{*}$ only on the basis of noisy samples.
 \end{column}
 \end{columns}
@@ -145,7 +147,7 @@ Stochastic optimization deals with  highly nonlinear and high dimensional system
 \end{block}
 \pause
 \begin{block}{}
-A good alternative of modelling and analysis is \textbf{"Simulation"}
+A good alternative of modelling and analysis is \alert{"Simulation"}
 \end{block}
 
 \begin{block}{}
@@ -163,7 +165,7 @@ A good alternative of modelling and analysis is \textbf{"Simulation"}
 \node (theta) {$\boldsymbol{\theta_n}$};
 \node [block, fill=blue!20,right=0.6cm of theta,align=center] (sample) {\makecell{\textbf{Simulator}}}; 
 \node [right=0.6cm of sample] (end) {$\boldsymbol{\mathbf{f(\theta_n) + \xi_n}}$};
-\node [ above right= 0.6cm of end] (bias) {\textbf{Zero mean}};
+\node [ above right= 0.6cm of end] (bias) {\alert{Zero mean}};
 \draw [->] (theta) --  (sample);
 \draw [->] (sample) -- (end);
 \path [darkgreen,->] (bias) edge [bend left] (end);
@@ -322,15 +324,15 @@ A good alternative of modelling and analysis is \textbf{"Simulation"}
 \begin{frame}
 \begin{small}
 \frametitle{\centering  Stochastic approximation + Gradient descent}
-\begin{block}{Stochastic analog of gradient descent}
+\begin{block}{\alert {Stochastic analog of gradient descent}}
 \begin{align}\label{saalg}
 \theta_{n+1} = \Gamma_{\Theta} \left [\theta_{n} - a_{n} \widehat{\nabla} f(\theta_{n}) \right],
 \end{align}
 
 \begin{itemize}
-\item $ \widehat{\nabla} f(\theta_{n})$ is an \textbf{noisy} estimate of the gradient $ {\nabla} f(\theta_{n})$.
-\item $\{a_{n}\}$ are  \textbf{pre-determined} step-sizes satisfying:
-$$\sum_{n=1}^{\infty} a_{n}  = \infty, \quad \sum_{n = 1}^{\infty} a_{n}^{2} < \infty$$
+\item $ \widehat{\nabla} f(\theta_{n})$ is an \alert{noisy} estimate of the gradient $ {\nabla} f(\theta_{n})$.
+\item $\{a_{n}\}$ are  \alert{pre-determined} step-sizes satisfying:
+\tikz[baseline]{\node[fill=green!20,anchor=base] (tL) {$\sum_{n=1}^{\infty} a_{n}  = \infty, \quad \sum_{n = 1}^{\infty} a_{n}^{2} < \infty$};}
 \item $\Gamma_{\Theta}$ denotes the projection of a point  onto $\Theta$.
 \end{itemize}
 \end{block}

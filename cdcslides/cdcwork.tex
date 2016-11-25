@@ -291,11 +291,11 @@ Asymmetric Bernoulli distribution for $d_n^i, i=1,\ldots,N$:\\[1ex]
 \begin{frame} 
 \begin{small}
 \frametitle{\centering 2RDSA Hessian estimate}
-\begin{block}{Function measurements}
+\begin{block}{\alert{Function measurements}}
 $y_{n}^+ = f(\tikz[baseline]{\node[fill=blue!20,anchor=base] (tL) {$\theta_n+\delta_n d_n$};}) + \xi_{n}^+,\hspace{.16cm} y_{n}^- = f(\tikz[baseline]{\node[fill=green!20,anchor=base] (tL1) {$\theta_n-\delta_n d_n$};}) + \xi_{n}^-,\hspace{.16cm} y_{n} = f(\tikz[baseline]{\node[fill=red!20,anchor=base] (tL2) {$\theta_n$};}) + \xi_{n}$
 \end{block}
 \pause
-\begin{block}{Hessian estimate $\widehat H_n$}
+\begin{block}{\alert{Hessian estimate $\widehat H_n$}}
 \begin{align}
 \widehat H_n & = M_n \left(\dfrac{y_n^+ + y_n^- - 2 y_n}{\delta_n^2}\right) \nonumber \\
 & =  M_n \left[\left(\dfrac{f(\theta_n+\delta_n d_n) + f(\theta_n-\delta_n d_n) - 2 f(\theta_n)}{\delta_n^2}\right) \right.\nonumber \\&\hspace{10em}+\left. \left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2}\right)\right] \nonumber \\
@@ -317,7 +317,7 @@ M_n \left(\tikz[baseline]{\node[fill=red!20,anchor=base] (tL1) {$d_n\tr \nabla^2
 \begin{frame}
 \begin{small}
 \frametitle{\centering  How to choose $M_n$?}
-\begin{block}{Asymmetric Bernoulli Perturbation}
+\begin{block}{\alert{Asymmetric Bernoulli Perturbation}}
 \begin{align}
 \label{eq:2rdsa-estimate-ber}
  M_n =
@@ -378,10 +378,10 @@ where $\kappa = \tau \left(1- \dfrac{(1+\epsilon)^2}{\tau}\right)$ and $\tau = E
 \begin{small}
 \frametitle{\centering Zero-mean feedback term}
 \tikzstyle{na} = [baseline=-.5ex]
- \textcolor{red!60}{Zero-mean term}\tikz[na]\node [coordinate] (n1) {};
+ \textcolor{red!80}{Zero-mean term}\tikz[na]\node [coordinate] (n1) {};
  \begin{block}{\alert{Mean of the  Hessian estimate}}
 \begin{align}
- \E\left[\left.\widehat H_n\right| \F_n\right] = & \nabla^2 f(\theta_n) + \tikz[baseline]{ \node[fill=red!60,anchor=base] (t1){$\E\left[\left.\Psi_{n}(\nabla^2 f(\theta_n))\right| \F_n\right]$};}  +  O(\delta_n^2)\nonumber\\
+ \E\left[\left.\widehat H_n\right| \F_n\right] = & \nabla^2 f(\theta_n) + \tikz[baseline]{ \node[fill=green!60,anchor=base] (t1){$\E\left[\left.\Psi_{n}(\nabla^2 f(\theta_n))\right| \F_n\right]$};}  +  O(\delta_n^2)\nonumber\\
 &+\E\left[\left.\left(\dfrac{\xi_n^+ + \xi_n^- - 2 \xi_n}{\delta_n^2} \right)\right| \F_n\right], \label{eq:hnhat}
 \end{align}
 \end{block}
@@ -548,7 +548,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 &&\\
 \textbf{2RDSA-Unif\footnotemark[1]} &$0.115 \pm 0.0214$ & $0.0271 \pm 0.0538$\\ 
 &&\\
-\textbf{2RDSA-AsymBer}& $0.0471 \pm 0.021$& $\bm{0.0099 \pm 0.0014}$\\
+\textbf{2RDSA-AsymBer}& $0.0471 \pm 0.021$& \alert{$\bm{0.0099 \pm 0.0014}$}\\
  \bottomrule
 % \rowcolor{gray!20}
 %\multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0$}}}\\[1em]
@@ -596,7 +596,7 @@ f(\theta_{n_\text{end}})/f(\theta_0)
 &&\\
 \textbf{2RDSA-Unif} &$1.0073 \pm 0.0140$ & $0.1953 \pm 0.0095$\\ 
 &&\\
-\textbf{2RDSA-AsymBer}& $0.1667 \pm 0.0095$& $\bm{0.0324 \pm 0.0007}$\\
+\textbf{2RDSA-AsymBer}& $0.1667 \pm 0.0095$& \alert{$\bm{0.0324 \pm 0.0007}$}\\
  \bottomrule
 %\rowcolor{gray!20}
 %\multicolumn{3}{||c|}{\multirow{2}{*}{\textbf{Noise parameter $\sigma=0$}}}\\[1em]

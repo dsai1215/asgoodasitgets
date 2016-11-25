@@ -1,4 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\beamer@sectionintoc {1}{Simulation Optimization}{3}{0}{1}
-\beamer@sectionintoc {2}{Random directions stochastic approximation (RDSA) + improved Hessian estimation}{13}{0}{2}
-\beamer@sectionintoc {3}{Numerical Results}{31}{0}{3}
